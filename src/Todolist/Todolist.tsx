@@ -38,22 +38,16 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
     //click button -> change filter
-    const onClickAllHandler = () => {
-        props.changeFilter('all')
-    }
-    const onClickActiveHandler = () => {
-        props.changeFilter('active')
-    }
-    const onClickCompletedHandler = () => {
-        props.changeFilter('completed')
-    }
+    const onAllClickHandler = () => props.changeFilter('all')
+    const onActiveClickHandler = () => props.changeFilter('active')
+    const onCompletedClickHandler = () => props.changeFilter('completed')
 
     return (
         <div className='todolist'>
                 <h3>{props.title}</h3>
             <div>
                 <input type="text"
-                       placeholder={'Add Task'}
+                       placeholder={'Task title'}
                        value={newTaskTitle}
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
@@ -72,9 +66,9 @@ export const Todolist = (props: TodolistPropsType) => {
                     <button onClick={onClickTaskDeleteHandler}>X</button></li>})}
             </ul>
             <div>
-                <button onClick={onClickAllHandler}>All</button>
-                <button onClick={onClickActiveHandler}>Active</button>
-                <button onClick={onClickCompletedHandler}>Completed</button>
+                <button onClick={onAllClickHandler}>All</button>
+                <button onClick={onActiveClickHandler}>Active</button>
+                <button onClick={onCompletedClickHandler}>Completed</button>
             </div>
         </div>
     )
