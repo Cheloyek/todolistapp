@@ -38,7 +38,7 @@ function App() {
     //add task
     const addTask = (title: string) => {
         const newTask = {id: v1(), title: title, isDone: false}
-        setTasks([newTask, ...tasks])
+            setTasks([newTask, ...tasks])
     }
 
     //change task status
@@ -57,7 +57,8 @@ function App() {
                   removeTask={removeTask}
                   changeFilter={changeFilter}
                   addTask={addTask}
-                  changeTaskStatus={changeTaskStatus}/>
+                  changeTaskStatus={changeTaskStatus}
+                  filter={filter}/>
     </div>
   );
 }
