@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useId, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist/Todolist";
 import {v1} from "uuid";
@@ -14,17 +14,17 @@ function App() {
 
     //initialState
     let [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: 'task1', isDone: true},
-        {id: v1(), title: 'task2', isDone: false},
-        {id: v1(), title: 'task3', isDone: false}
+        {id: useId(), title: 'task1', isDone: true},
+        {id: useId(), title: 'task2', isDone: false},
+        {id: useId(), title: 'task3', isDone: false}
     ])
 
     let [todoLists, setTodoLists] = useState<Array<TodolistType>>([
-        {id: v1(), title: 'Todolist1', filter: 'all'},
-        {id: v1(), title: 'Todolist2', filter: 'all'}
+        {id: useId(), title: 'Todolist1', filter: 'all'},
+        {id: useId(), title: 'Todolist2', filter: 'all'}
     ])
 
-    let [filter, setFilter] = useState<FilterValuesType>('all')
+    // let [filter, setFilter] = useState<FilterValuesType>('all')
 
     //delete task
     const removeTask = (id: string) => {
