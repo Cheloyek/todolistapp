@@ -9,6 +9,9 @@ type TodolistType = {
     title: string
     filter: FilterValuesType
 }
+type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
 
 function App() {
 
@@ -22,7 +25,7 @@ function App() {
         {id: todoListId2, title: 'Todolist2', filter: 'all'}
     ])
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todoListId1]:[
         {id: useId(), title: 'task1', isDone: true},
         {id: useId(), title: 'task2', isDone: false},
@@ -63,6 +66,14 @@ function App() {
         setTasks({...tasks})
     }
 
+    //delete todoList
+    const removeTodoList = (todolistId: string) => {
+        let newTodoLists = todoLists.filter((tl) => tl.id !== todolistId)
+        delete tasks[todolistId]
+        setTodoLists([...newTodoLists])
+        setTasks({...tasks})
+    }
+
   return (
     <div className="App">
         {todoLists.map(todolist => {
@@ -81,12 +92,6 @@ function App() {
                         todolist.filter = value
                         setTodoLists([...todoLists])
                     }
-                }
-
-                //delete todoLists
-                const removeTodoList = (todolistId: string) => {
-                    let newTodoLists = todoLists.filter((tl) => tl.id !== todolistId)
-                    setTodoLists([...newTodoLists])
                 }
 
             return <Todolist key={todolist.id}

@@ -54,11 +54,11 @@ export const Todolist = (props: TodolistPropsType) => {
     const onClickFilterButtonHandler = (value: FilterValuesType) => props.changeFilter(value, props.todolistId)
 
     //delete todolist
-    const onClickDeleteTodoListHandler = () => props.deleteTodoList(props.todolistId)
+    const onClickRemoveTodoListHandler = () => props.deleteTodoList(props.todolistId)
 
     return (
         <div className='todolist'>
-                <h3>{props.title}<button onClick={onClickDeleteTodoListHandler}>del</button></h3>
+                <h3>{props.title}<button onClick={onClickRemoveTodoListHandler}>del</button></h3>
             <div>
                 <input type="text"
                        placeholder={'Task title'}
