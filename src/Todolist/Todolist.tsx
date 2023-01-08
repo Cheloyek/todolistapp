@@ -6,10 +6,10 @@ type TodolistPropsType = {
     title: string
     todolistId: string
     tasks: TaskType[]
-    removeTask: (id: string) => void
+    removeTask: (id: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    addTask: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     filter: FilterValuesType
 }
 
@@ -32,7 +32,7 @@ export const Todolist = (props: TodolistPropsType) => {
             setNewTaskTitle('')
             return
         } else {
-            props.addTask(newTaskTitle.trim())
+            props.addTask(newTaskTitle.trim(), props.todolistId)
             setNewTaskTitle('')
         }
     }
@@ -74,11 +74,11 @@ export const Todolist = (props: TodolistPropsType) => {
                 {props.tasks.map(task => {
                     //button -> delete task
                     const onClickTaskDeleteHandler = () => {
-                        props.removeTask(task.id)
+                        props.removeTask(task.id, props.todolistId)
                     }
                     //checkbox
                     const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(task.id, e.currentTarget.checked)
+                        props.changeTaskStatus(task.id, e.currentTarget.checked, props.todolistId)
                     }
 
                     return <li key={task.id} className={task.isDone ? 'completed-task' : ''}>
