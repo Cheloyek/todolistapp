@@ -13,16 +13,6 @@ type TodolistType = {
 function App() {
 
     //initialState
-    // let [tasks, setTasks] = useState<Array<TaskType>>([
-    //     {id: useId(), title: 'task1', isDone: true},
-    //     {id: useId(), title: 'task2', isDone: false},
-    //     {id: useId(), title: 'task3', isDone: false}
-    // ])
-
-    // let [todoLists, setTodoLists] = useState<Array<TodolistType>>([
-    //     {id: useId(), title: 'Todolist1', filter: 'all'},
-    //     {id: useId(), title: 'Todolist2', filter: 'all'}
-    // ])
 
     let todoListId1 = useId()
     let todoListId2 = useId()
@@ -55,11 +45,6 @@ function App() {
     }
 
     //add task
-
-    // const addTask = (title: string) => {
-    //     const newTask = {id: v1(), title: title, isDone: false}
-    //         setTasks([newTask, ...tasks])
-    // }
 
     const addTask = (title: string, todoListId: string) => {
         const newTask = {id: v1(), title: title, isDone: false}
@@ -98,6 +83,12 @@ function App() {
                     }
                 }
 
+                //delete todoLists
+                const removeTodoList = (todolistId: string) => {
+                    let newTodoLists = todoLists.filter((tl) => tl.id !== todolistId)
+                    setTodoLists([...newTodoLists])
+                }
+
             return <Todolist key={todolist.id}
                              todolistId={todolist.id}
                              title={todolist.title}
@@ -107,6 +98,7 @@ function App() {
                              addTask={addTask}
                              changeTaskStatus={changeTaskStatus}
                              filter={todolist.filter}
+                             deleteTodoList={removeTodoList}
         />}
             )}
 
