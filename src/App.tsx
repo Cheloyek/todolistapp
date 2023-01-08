@@ -46,8 +46,6 @@ function App() {
         ]
     })
 
-    // let [filter, setFilter] = useState<FilterValuesType>('all')
-
     //delete task
     const removeTask = (id: string, todoListId: string) => {
         let todoListTasks = tasks[todoListId]
