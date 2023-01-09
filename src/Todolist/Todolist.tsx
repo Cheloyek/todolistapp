@@ -5,9 +5,7 @@ import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "../EditableSpan";
 import { styled } from '@mui/material/styles';
 import {Button, ButtonProps, IconButton} from "@mui/material";
-import purple from '@mui/material/colors/purple';
 import {red} from "@mui/material/colors";
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type TodolistPropsType = {
