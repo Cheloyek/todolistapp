@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
 import './todolistStyle.css';
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "../AddItemForm";
+import {EditableSpan} from "../EditableSpan";
 
 type TodolistPropsType = {
     title: string
@@ -11,6 +12,7 @@ type TodolistPropsType = {
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
+    changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
     filter: FilterValuesType
     deleteTodoList: (todoListId: string) => void
 }
@@ -52,9 +54,15 @@ export const Todolist = (props: TodolistPropsType) => {
                         props.changeTaskStatus(task.id, e.currentTarget.checked, props.todolistId)
                     }
 
+                    //input
+                    const onChangeTitleHandler = (newTitle: string) => {
+                        props.changeTaskTitle(props.todolistId, task.id, newTitle)
+                    }
+
                     return <li key={task.id} className={task.isDone ? 'completed-task' : ''}>
                         <input type="checkbox" checked={task.isDone} onChange={onChangeStatusHandler}/>
-                        <span>{task.title}</span>
+                        {/*<span>{task.title}</span>*/}
+                        <EditableSpan title={task.title} onChange={onChangeTitleHandler}/>
                         <button onClick={onClickTaskDeleteHandler}>X</button>
                     </li>
                 })}

@@ -92,7 +92,6 @@ function App() {
 
   return (
     <div className="App">
-        <div><input type="text"/><button>add new TodoList</button></div>
         <AddItemForm addItem={addTodoList}/>
         {todoLists.map(todolist => {
                 //filter tasks
@@ -112,6 +111,16 @@ function App() {
                     }
                 }
 
+                //change task title
+            const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
+                        let todoListTasks = tasks[todoListId]
+                        let task = todoListTasks.find(t => t.id === taskId)
+                if (task) {
+                    task.title = newTitle
+                    setTasks({...tasks})
+                }
+            }
+
             return <Todolist key={todolist.id}
                              todolistId={todolist.id}
                              title={todolist.title}
@@ -120,6 +129,7 @@ function App() {
                              changeFilter={changeFilter}
                              addTask={addTask}
                              changeTaskStatus={changeTaskStatus}
+                             changeTaskTitle={changeTaskTitle}
                              filter={todolist.filter}
                              deleteTodoList={removeTodoList}
         />}
