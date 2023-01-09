@@ -4,7 +4,8 @@
 }
 
 .App > div {
-  margin-right: 150px;
+  /*margin-right: 150px;*/
+  margin: 20px
 }
 
 /*границы input при ошибке*/

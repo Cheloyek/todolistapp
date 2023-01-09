@@ -80,6 +80,15 @@ function App() {
         setTasks({...tasks})
     }
 
+    //change todoList title
+    const changeTodoListTitle = (todoListId: string, newTitle: string) => {
+        let todoList = todoLists.find(tl => tl.id === todoListId)
+        if (todoList) {
+            todoList.title = newTitle
+            setTodoLists([...todoLists])
+        }
+    }
+
     //add new todoList
     const addTodoList = (todoListTitle: string) => {
         let newTodoList: TodolistType = {id: v1(), title: todoListTitle, filter: 'all'}
@@ -130,6 +139,7 @@ function App() {
                              addTask={addTask}
                              changeTaskStatus={changeTaskStatus}
                              changeTaskTitle={changeTaskTitle}
+                             changeTodoListTitle={changeTodoListTitle}
                              filter={todolist.filter}
                              deleteTodoList={removeTodoList}
         />}
