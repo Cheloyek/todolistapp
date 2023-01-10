@@ -4,7 +4,7 @@ import {FilterValuesType} from "../App";
 import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "../EditableSpan";
 import { styled } from '@mui/material/styles';
-import {Button, ButtonProps, IconButton} from "@mui/material";
+import {Button, ButtonProps, Checkbox, IconButton} from "@mui/material";
 import {red} from "@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -82,7 +82,8 @@ export const Todolist = (props: TodolistPropsType) => {
                     }
 
                     return <li key={task.id} className={task.isDone ? 'completed-task' : ''}>
-                        <input type="checkbox" checked={task.isDone} onChange={onChangeStatusHandler}/>
+                        {/*<input type="checkbox" checked={task.isDone} onChange={onChangeStatusHandler}/>*/}
+                        <Checkbox checked={task.isDone} onChange={onChangeStatusHandler}/>
                         {/*<span>{task.title}</span>*/}
                         <EditableSpan title={task.title} onChange={onChangeTaskTitleHandler}/>
                         {/*<button onClick={onClickTaskDeleteHandler}>X</button>*/}
