@@ -58,7 +58,6 @@ export const Todolist = (props: TodolistPropsType) => {
         <div className='todolist' >
             <h3>
                 <EditableSpan title={props.title} onChange={changeTodoListTitle}/>
-                {/*<button onClick={onClickRemoveTodoListHandler}>del</button>*/}
                 <IconButton aria-label="delete" size="medium">
                     <DeleteIcon fontSize="small" onClick={onClickRemoveTodoListHandler}/>
                 </IconButton>
@@ -82,11 +81,8 @@ export const Todolist = (props: TodolistPropsType) => {
                     }
 
                     return <div key={task.id} className={task.isDone ? 'completed-task' : ''}>
-                        {/*<input type="checkbox" checked={task.isDone} onChange={onChangeStatusHandler}/>*/}
                         <Checkbox checked={task.isDone} onChange={onChangeStatusHandler}/>
-                        {/*<span>{task.title}</span>*/}
                         <EditableSpan title={task.title} onChange={onChangeTaskTitleHandler}/>
-                        {/*<button onClick={onClickTaskDeleteHandler}>X</button>*/}
                         <IconButton aria-label="delete" size="small">
                             <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>
                         </IconButton>
