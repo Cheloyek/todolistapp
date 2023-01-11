@@ -28,3 +28,12 @@ test('correct todolist should be added', () => {
     expect(endState![3].title).toBe(newTodoListTitle)
     expect(endState![3].filter).toBe('all')
 })
+
+test('correct todolist should change its name', () => {
+    let newTodoListTitle = 'New Todolist'
+    const endState = todolistsReducer(startState, {type: "CHANGE-TODOLIST-TITLE", id: todoListId2, title: newTodoListTitle})
+
+    expect(endState[0].title).toBe('Todolist1')
+    expect(endState[1].title).toBe('New Todolist')
+    expect(endState[2].title).toBe('Todolist3')
+})
