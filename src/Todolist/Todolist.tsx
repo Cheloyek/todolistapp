@@ -55,7 +55,7 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
     return (
-        <div className='todolist'>
+        <div className='todolist' >
             <h3>
                 <EditableSpan title={props.title} onChange={changeTodoListTitle}/>
                 {/*<button onClick={onClickRemoveTodoListHandler}>del</button>*/}
@@ -65,7 +65,7 @@ export const Todolist = (props: TodolistPropsType) => {
             </h3>
             <AddItemForm addItem={addTask}/>
 
-            <ul>
+            <div>
                 {props.tasks.map(task => {
                     //button -> delete task
                     const onClickTaskDeleteHandler = () => {
@@ -81,7 +81,7 @@ export const Todolist = (props: TodolistPropsType) => {
                         props.changeTaskTitle(props.todolistId, task.id, newTitle)
                     }
 
-                    return <li key={task.id} className={task.isDone ? 'completed-task' : ''}>
+                    return <div key={task.id} className={task.isDone ? 'completed-task' : ''}>
                         {/*<input type="checkbox" checked={task.isDone} onChange={onChangeStatusHandler}/>*/}
                         <Checkbox checked={task.isDone} onChange={onChangeStatusHandler}/>
                         {/*<span>{task.title}</span>*/}
@@ -90,19 +90,22 @@ export const Todolist = (props: TodolistPropsType) => {
                         <IconButton aria-label="delete" size="small">
                             <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>
                         </IconButton>
-                    </li>
+                    </div>
 
                 })}
-            </ul>
+            </div>
             <div>
                 <Button onClick={() => onClickFilterButtonHandler('all')}
-                        variant={props.filter === 'all' ? 'contained' : 'text'} >All
+                        variant={props.filter === 'all' ? 'contained' : 'text'}
+                style={{backgroundColor: props.filter === 'all' ? '#e17a02' : ''}}>All
                 </Button>
                 <Button onClick={() => onClickFilterButtonHandler('active')}
-                        variant={props.filter === 'active' ? 'contained' : 'text'} color='success'>Active
+                        variant={props.filter === 'active' ? 'contained' : 'text'}
+                        style={{backgroundColor: props.filter === 'active' ? '#e17a02' : '#649663'}}>Active
                 </Button>
                 <Button onClick={() => onClickFilterButtonHandler('completed')}
-                        variant={props.filter === 'completed' ? 'contained' : 'text'} color='inherit'>Completed
+                        variant={props.filter === 'completed' ? 'contained' : 'text'} color='inherit'
+                        style={{backgroundColor: props.filter === 'completed' ? '#e17a02' : '#747974'}}>Completed
                 </Button>
             </div>
         </div>

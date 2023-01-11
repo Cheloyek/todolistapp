@@ -33,7 +33,7 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         }
     }
 
-    return <div>
+    return <div style={{marginTop: '10px'}}>
         {/*<input type="text"*/}
         {/*       placeholder={'Task title'}*/}
         {/*       value={newTaskTitle}*/}
@@ -48,11 +48,11 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                onKeyDown={onKeyDownHandler}
                error={!!error}
                    helperText={error}
-               variant='standard'
+               variant='outlined'
         />
         <Button onClick={addTask} size={'medium'} variant={"contained"}
-                style={{width: '20px', height: '20px', color: '#659DBD', backgroundColor: 'white', borderColor: '#659DBD'}} >
-            +
+                style={{color: '#ffffff', backgroundColor: '#e17a02', borderColor: '#659DBD', margin: '10px'}} >
+            <AddIcon/>
         </Button>
         {/*{error && <div className='error-message'>{error}</div>}*/}
     </div>
