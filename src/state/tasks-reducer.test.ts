@@ -1,10 +1,9 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
-import {removeTaskAC, tasksReducer} from "./tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
 
 let todoListId1 = v1()
 let todoListId2 = v1()
-let todoListId3 = v1()
 
 let taskId1 = v1()
 let taskId2 = v1()
@@ -46,4 +45,34 @@ test('correct task should be deleted from correct array', () => {
     expect(endState[todoListId2].every(t => t.id !== taskId1)).toBeTruthy()
     expect(endState[todoListId1][0].id).toBe(taskId2)
     expect(endState[todoListId1][1].id).toBe(taskId3)
+})
+
+test('correct task should be added to correct array', () => {
+    const action = addTaskAC(todoListId2, 'newTask')
+    const endState = tasksReducer(startState, action)
+
+    expect(endState[todoListId1].length).toBe(3)
+    expect(endState[todoListId2].length).toBe(4)
+    expect(endState[todoListId2][0].title).toBe('newTask')
+    expect(endState[todoListId1][0].title).not.toBe('newTask')
+    expect(endState[todoListId2][0].id).toBeDefined()
+    expect(endState[todoListId2][0].isDone).toBe(false)
+})
+
+test('status of task should be changed', () => {
+    const action = changeTaskStatusAC(todoListId1, taskId2, true)
+    const endState = tasksReducer(startState, action)
+
+    expect(endState[todoListId1][1].isDone).toBeTruthy()
+    expect(endState[todoListId1][2].isDone).toBeFalsy()
+    expect(endState[todoListId2][1].isDone).toBeFalsy()
+})
+
+test('task title should be changed', () => {
+    const action = changeTaskTitleAC(todoListId1, taskId2, 'newTaskTitle')
+    const endState = tasksReducer(startState, action)
+
+    expect(endState[todoListId1][1].title).toBe('newTaskTitle')
+    expect(endState[todoListId2][1].title).toBe('task2')
+    expect(endState[todoListId1].length).toBe(3)
 })
