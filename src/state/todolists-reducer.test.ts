@@ -8,22 +8,28 @@ import {
     todolistsReducer
 } from "./todolists-reducer";
 
-let todoListId1 = v1()
-let todoListId2 = v1()
-let todoListId3 = v1()
+let todoListId1: string
+let todoListId2: string
+let todoListId3: string
+let startState: Array<TodolistType>
 
-const startState: Array<TodolistType> = [
+beforeEach(() => {
+todoListId1 = v1()
+todoListId2 = v1()
+todoListId3 = v1()
+
+startState = [
     {id: todoListId1, title: 'Todolist1', filter: 'all'},
     {id: todoListId2, title: 'Todolist2', filter: 'all'},
     {id: todoListId3, title: 'Todolist3', filter: 'all'}
 ]
-
+})
 test('correct todolist should be removed', () => {
     // const endState = todolistsReducer(startState, {type: 'REMOVE-TODOLIST', id: todoListId1})
     const endState = todolistsReducer(startState, removeTodolistAC(todoListId1))
 
-    expect(endState!.length).toBe(2)
-    expect(endState![0].id).toBe(todoListId2)
+    expect(endState.length).toBe(2)
+    expect(endState[0].id).toBe(todoListId2)
 })
 
 test('correct todolist should be added', () => {
@@ -31,9 +37,9 @@ test('correct todolist should be added', () => {
     // const endState = todolistsReducer(startState, {type: 'ADD-TODOLIST', title: newTodoListTitle})
     const endState = todolistsReducer(startState, addTodolistAC(newTodoListTitle))
 
-    expect(endState!.length).toBe(4)
-    expect(endState![0].title).toBe(newTodoListTitle)
-    expect(endState![3].filter).toBe('all')
+    expect(endState.length).toBe(4)
+    expect(endState[0].title).toBe(newTodoListTitle)
+    expect(endState[3].filter).toBe('all')
 })
 
 test('correct todolist should change its name', () => {
