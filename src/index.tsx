@@ -4,13 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import backgroundImg from './Img/146336-2560x1440.jpg'
+import AppWithReducers from "./AppWiithReducers";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   // <React.StrictMode>
-    <App />
+    <AppWithReducers />
   // </React.StrictMode>
 );
 
