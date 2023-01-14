@@ -3,28 +3,43 @@ import {v1} from "uuid";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, todolistsReducer} from "./todolists-reducer";
 
-let todoListId1 = v1()
-let todoListId2 = v1()
+let todoListId1: string
+let todoListId2: string
 
-let taskId1 = v1()
-let taskId2 = v1()
-let taskId3 = v1()
-let taskId4 = v1()
-let taskId5 = v1()
-let taskId6 = v1()
+let taskId1: string
+let taskId2: string
+let taskId3: string
+let taskId4: string
+let taskId5: string
+let taskId6: string
 
-const startState: TasksStateType = {
-    [todoListId1]: [
-        {id: taskId1, title: 'task1', isDone: true},
-        {id: taskId2, title: 'task2', isDone: false},
-        {id: taskId3, title: 'task3', isDone: false}
-    ],
-    [todoListId2]: [
-        {id: taskId4, title: 'task1', isDone: true},
-        {id: taskId5, title: 'task2', isDone: false},
-        {id: taskId6, title: 'task3', isDone: false}
-    ]
-}
+let startState: TasksStateType
+
+beforeEach(() => {
+    todoListId1 = v1()
+    todoListId2 = v1()
+
+    taskId1 = v1()
+    taskId2 = v1()
+    taskId3 = v1()
+    taskId4 = v1()
+    taskId5 = v1()
+    taskId6 = v1()
+
+    startState = {
+        [todoListId1]: [
+            {id: taskId1, title: 'task1', isDone: true},
+            {id: taskId2, title: 'task2', isDone: false},
+            {id: taskId3, title: 'task3', isDone: false}
+        ],
+        [todoListId2]: [
+            {id: taskId4, title: 'task1', isDone: true},
+            {id: taskId5, title: 'task2', isDone: false},
+            {id: taskId6, title: 'task3', isDone: false}
+        ]
+    }
+})
+
 
 test('correct task should be deleted from correct array', () => {
     const action = removeTaskAC(todoListId1, taskId1)
