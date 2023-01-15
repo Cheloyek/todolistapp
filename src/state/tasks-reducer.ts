@@ -1,4 +1,4 @@
-import {FilterValuesType, TasksStateType, TodolistType} from "../App";
+import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";
 import {
     AddTodolistActionType,
@@ -78,10 +78,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'CHANGE-TASK-TITLE': {
             let copyState = {...state}
             let todoListTasks = copyState[action.todolistId]
-            let task = todoListTasks.find(t => t.id === action.taskId)
-            if (task) {
-                task.title = action.title
-            }
+            copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, title: action.title} : t)
+            // let task = todoListTasks.find(t => t.id === action.taskId)
+            // if (task) {
+            //     task.title = action.title
+            // }
             return copyState
         }
 

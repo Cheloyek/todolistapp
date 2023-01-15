@@ -1,12 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react'
+import React, {useCallback} from 'react'
 import './todolistStyle.css';
-import {FilterValuesType} from "../App";
+import {FilterValuesType} from "../AppWiithRedux";
 import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "../EditableSpan";
-import { styled } from '@mui/material/styles';
-import {Button, ButtonProps, Checkbox, IconButton} from "@mui/material";
-import {red} from "@mui/material/colors";
+import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Task} from "./Task";
 
 type TodolistPropsType = {
     title: string
@@ -28,32 +27,24 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[500],
-    padding: 0,
-    margin: 5,
-    '&:hover': {
-        backgroundColor: red[700],
-    },
-}));
+
 export const Todolist = React.memo ( (props: TodolistPropsType) => {
     console.log('TodoList is called')
     //click button -> change filter
-    const onClickFilterButtonHandler = (value: FilterValuesType) => props.changeFilter(value, props.todolistId)
+    const onClickFilterButtonHandler = useCallback ((value: FilterValuesType) => props.changeFilter(value, props.todolistId), [props.changeFilter, props.todolistId])
 
     //click button -> delete todolist
-    const onClickRemoveTodoListHandler = () => props.deleteTodoList(props.todolistId)
+    const onClickRemoveTodoListHandler = useCallback(() => props.deleteTodoList(props.todolistId), [props.deleteTodoList, props.todolistId])
 
     //обертка addTask
     const addTask = useCallback ((title: string) => {
         props.addTask(title, props.todolistId)
-    }, [props.title])
+    }, [props.addTask, props.title])
 
     //input todoList title
     const changeTodoListTitle = useCallback ((newTitle: string) => {
         props.changeTodoListTitle(props.todolistId, newTitle)
-    }, [])
+    }, [props.changeTodoListTitle, props.todolistId])
 
     let tasksForTodoList = props.tasks
     if (props.filter === 'active') {
@@ -74,30 +65,16 @@ export const Todolist = React.memo ( (props: TodolistPropsType) => {
             <AddItemForm addItem={addTask}/>
 
             <div>
-                {tasksForTodoList.map(task => {
-                    //button -> delete task
-                    const onClickTaskDeleteHandler = () => {
-                        props.removeTask(task.id, props.todolistId)
-                    }
-                    //checkbox
-                    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(task.id, e.currentTarget.checked, props.todolistId)
-                    }
-
-                    //input task title
-                    const onChangeTaskTitleHandler = (newTitle: string) => {
-                        props.changeTaskTitle(props.todolistId, task.id, newTitle)
-                    }
-
-                    return <div key={task.id} className={task.isDone ? 'completed-task' : ''}>
-                        <Checkbox checked={task.isDone} onChange={onChangeStatusHandler}/>
-                        <EditableSpan title={task.title} onChange={onChangeTaskTitleHandler}/>
-                        <IconButton aria-label="delete" size="small">
-                            <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>
-                        </IconButton>
-                    </div>
-
-                })}
+                {tasksForTodoList.map(task =>
+                    <Task
+                    removeTask={props.removeTask}
+                    task={task}
+                    todolistId={props.todolistId}
+                    changeTaskStatus={props.changeTaskStatus}
+                    changeTaskTitle={props.changeTaskTitle}
+                    key={task.id}
+                    />
+                )}
             </div>
             <div>
                 <Button onClick={() => onClickFilterButtonHandler('all')}
@@ -116,3 +93,4 @@ export const Todolist = React.memo ( (props: TodolistPropsType) => {
         </div>
     )
 } )
+
