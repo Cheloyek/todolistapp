@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react'
 import './todolistStyle.css';
 import {FilterValuesType} from "../App";
 import {AddItemForm} from "../AddItemForm";
@@ -37,7 +37,8 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         backgroundColor: red[700],
     },
 }));
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = React.memo ( (props: TodolistPropsType) => {
+    console.log('TodoList is called')
     //click button -> change filter
     const onClickFilterButtonHandler = (value: FilterValuesType) => props.changeFilter(value, props.todolistId)
 
@@ -45,13 +46,21 @@ export const Todolist = (props: TodolistPropsType) => {
     const onClickRemoveTodoListHandler = () => props.deleteTodoList(props.todolistId)
 
     //обертка addTask
-    const addTask = (title: string) => {
+    const addTask = useCallback ((title: string) => {
         props.addTask(title, props.todolistId)
-    }
+    }, [props.title])
 
     //input todoList title
-    const changeTodoListTitle = (newTitle: string) => {
+    const changeTodoListTitle = useCallback ((newTitle: string) => {
         props.changeTodoListTitle(props.todolistId, newTitle)
+    }, [])
+
+    let tasksForTodoList = props.tasks
+    if (props.filter === 'active') {
+        tasksForTodoList = props.tasks.filter((t) => !t.isDone)
+    }
+    if (props.filter === 'completed') {
+        tasksForTodoList = props.tasks.filter((t) => t.isDone)
     }
 
     return (
@@ -65,7 +74,7 @@ export const Todolist = (props: TodolistPropsType) => {
             <AddItemForm addItem={addTask}/>
 
             <div>
-                {props.tasks.map(task => {
+                {tasksForTodoList.map(task => {
                     //button -> delete task
                     const onClickTaskDeleteHandler = () => {
                         props.removeTask(task.id, props.todolistId)
@@ -106,4 +115,4 @@ export const Todolist = (props: TodolistPropsType) => {
             </div>
         </div>
     )
-}
+} )

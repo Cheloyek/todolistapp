@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist/Todolist";
 import {AddItemForm} from "./AddItemForm";
@@ -25,57 +25,57 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
-
+    console.log('App is called')
     let dispatch = useDispatch()
     let todoLists = useSelector<AppRootState, Array<TodolistType>>( (state) => state.todolists)
     let tasks = useSelector<AppRootState, TasksStateType>( (state) => state.tasks)
 
     //add task
-    const addTask = (title: string, todoListId: string) => {
+    const addTask = useCallback ((title: string, todoListId: string) => {
         const action = addTaskAC(todoListId, title)
         dispatch(action)
-    }
+    }, [])
 
     //change task status
-    const changeTaskStatus = (taskId: string, isDone: boolean, todoListId: string) => {
+    const changeTaskStatus = useCallback ((taskId: string, isDone: boolean, todoListId: string) => {
         const action = changeTaskStatusAC(todoListId, taskId, isDone)
         dispatch(action)
-    }
+    }, [])
 
     //change task title
-    const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
+    const changeTaskTitle = useCallback ((todoListId: string, taskId: string, newTitle: string) => {
         const action = changeTaskTitleAC(todoListId, taskId, newTitle)
         dispatch(action)
-    }
+    }, [])
 
     //delete task
-    const removeTask = (id: string, todoListId: string) => {
+    const removeTask = useCallback ((id: string, todoListId: string) => {
         const action = removeTaskAC(todoListId, id)
         dispatch(action)
-    }
+    }, [])
 
     //add new todoList
-    const addTodoList = (todoListTitle: string) => {
+    const addTodoList = useCallback ((todoListTitle: string) => {
         const action = addTodolistAC(todoListTitle)
         dispatch(action)
-    }
+    }, [])
 
     //delete todoList
-    const removeTodoList = (todolistId: string) => {
+    const removeTodoList = useCallback((todolistId: string) => {
         const action = removeTodolistAC(todolistId)
         dispatch(action)
-    }
+    }, [])
 
     //change todoList title
-    const changeTodoListTitle = (todoListId: string, newTitle: string) => {
+    const changeTodoListTitle = useCallback ((todoListId: string, newTitle: string) => {
         const action = changeTodolistTitleAC(todoListId, newTitle)
         dispatch(action)
-    }
+    }, [])
 
-    const changeFilter = (value: FilterValuesType, todolistId: string) => {
+    const changeFilter = useCallback ((value: FilterValuesType, todolistId: string) => {
         const action = changeTodolistFilterAC(todolistId, value)
         dispatch(action)
-    }
+    }, [])
 
     return (
         <div className="App">
@@ -98,12 +98,13 @@ function AppWithRedux() {
                     {todoLists.map((todolist: TodolistType) => {
                             //filter tasks
                             let tasksForTodoList = tasks[todolist.id]
-                            if (todolist.filter === 'active') {
-                                tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone)
-                            }
-                            if (todolist.filter === 'completed') {
-                                tasksForTodoList = tasksForTodoList.filter((t) => t.isDone)
-                            }
+                            // let tasksForTodoList = tasks[todolist.id]
+                            // if (todolist.filter === 'active') {
+                            //     tasksForTodoList = tasksForTodoList.filter((t) => !t.isDone)
+                            // }
+                            // if (todolist.filter === 'completed') {
+                            //     tasksForTodoList = tasksForTodoList.filter((t) => t.isDone)
+                            // }
 
                             return <Grid className='todoList'>
                                 <Paper elevation={3} style={{margin: '30px', padding: '10px', backgroundColor: "#5a8b96",}}>

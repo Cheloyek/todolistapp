@@ -23,13 +23,9 @@ export type ChangeTodolistFilterActionType = {
     id: string
     filter: FilterValuesType
 }
-// export let todoListId1 = v1()
-// export let todoListId2 = v1()
-// export let todoListId3 = v1()
+
 const initialState: Array<TodolistType> = [
-    // {id: todoListId1, title: 'Todolist1', filter: 'all'},
-    // {id: todoListId2, title: 'Todolist2', filter: 'all'},
-    // {id: todoListId3, title: 'Todolist3', filter: 'all'}
+
 ]
 export type ActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType
 
