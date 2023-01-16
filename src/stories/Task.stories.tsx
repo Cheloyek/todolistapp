@@ -11,14 +11,14 @@ export default {
     },
 } as ComponentMeta<typeof Task>;
 
-const removeTaskCallback = action('removeTaskCallback')
-const changeTaskStatusCallback = action('changeTaskStatusCallback')
-const changeTaskTitleCallback = action('removeTask')
+const removeTaskCallback = action('removeTask')
+const changeTaskStatusCallback = action('changeTaskStatus')
+const changeTaskTitleCallback = action('changeTaskTitle')
 
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
-export const Remove = Template.bind({});
-Remove.args = {
+export const TaskStories = Template.bind({});
+TaskStories.args = {
     removeTask: removeTaskCallback,
     todolistId: 'todoListId_1',
     changeTaskStatus: changeTaskStatusCallback,
