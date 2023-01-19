@@ -15,8 +15,8 @@ const editTitleCallback = action('Change title')
 
 const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Title = Template.bind({});
+Title.args = {
     title: 'EditableSpan',
     onChange: editTitleCallback
 };

@@ -12,8 +12,8 @@ export default {
 
 const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Basic = Template.bind({});
+Basic.args = {
     addItem: (title: string) => {
         alert(title)
     }
