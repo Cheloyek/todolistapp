@@ -108,6 +108,7 @@ function AppWithRedux() {
 
                             return <Grid className='todoList'>
                                 <Paper elevation={3} style={{margin: '30px', padding: '10px', backgroundColor: "#5a8b96",}}>
+                                    !
                                     <Todolist key={todolist.id}
                                               todolistId={todolist.id}
                                               title={todolist.title}

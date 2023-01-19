@@ -54,7 +54,7 @@ export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
                variant='outlined'
         />
         <Button onClick={addTask} size={'medium'} variant={"contained"}
-                style={{color: '#ffffff', backgroundColor: '#e17a02', borderColor: '#659DBD', margin: '10px'}} >
+                style={{color: '#1132a8', backgroundColor: '#e17a02', borderColor: '#659DBD', margin: '10px'}} >
             <AddIcon/>
         </Button>
         {/*{error && <div className='error-message'>{error}</div>}*/}
