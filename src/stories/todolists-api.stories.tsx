@@ -30,7 +30,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let todoListId = '4742dc42-a664-43ab-9573-d22678b0ada4'
+        let todoListId = '525c7ab5-bbd0-4393-b156-2fc61b20938c'
         todoListsApi.deleteTodoList(todoListId)
             .then((res) => {
                 setState(res.data)
@@ -45,7 +45,7 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let todoListId = 'd6ff54cb-ea6e-4938-8008-1a82ad217dc0'
+        let todoListId = '580d3a32-e3be-4daf-b972-843d492b528f'
         let title = 'New TodoList title'
             todoListsApi.changeTodoListTitle(todoListId, title)
             .then((res) => {
