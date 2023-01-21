@@ -1,0 +1,46 @@
+/*.App {*/
+/*  display: flex;*/
+/*  text-align: center;*/
+/*}*/
+
+/*.App > div {*/
+/*  !*margin-right: 150px;*!*/
+/*  margin: 20px*/
+/*}*/
+
+/*границы input при ошибке*/
+/*.error {*/
+/*  border: red 1px solid;*/
+/*}*/
+
+/*вывод ошибки*/
+/*.error-message {*/
+/*  color: red;*/
+/*}*/
+
+/*подсветка кнопки фильтра*/
+/*.active-filter {*/
+/*  background-color: #0000ff;*/
+/*}*/
+
+/*выделение completed task*/
+.completed-task {
+  opacity: 0.9;
+  color: #5d5a5a;
+}
+
+body {
+  background-image: url(../../d04868048e26b5ec458e.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.todoList {
+  opacity: 0.9;
+}
+
+.todolist{
+    /*width: 215px;*/
+}
+
+/*# sourceMappingURL=main.00d71ad1.css.map*/
