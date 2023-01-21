@@ -1,21 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios";
-import {rejects} from "assert";
+import {todoListsApi} from "../api/todolists-api";
 
 export default {
     title: 'API'
 }
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        'api-key': '34d100b8-894d-4061-9da0-9a27cb217fe9'
-    }
-}
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
+        todoListsApi.getTodoLists()
         .then((res) => {
             setState(res.data)
         })
@@ -25,7 +18,8 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: 'New TodoList'} ,settings)
+        let title = 'New TodoList'
+        todoListsApi.createTodoList(title)
             .then((res) => {
                 setState(res.data)
             })
@@ -36,8 +30,8 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let todoListId = '68bf6225-cf5a-4550-aea2-4a8aebd07f21'
-        axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoListId}`, settings)
+        let todoListId = '7fe78f61-1f65-4d14-9689-eebcd1799b43'
+        todoListsApi.deleteTodoList(todoListId)
             .then((res) => {
                 setState(res.data)
             })
@@ -51,8 +45,9 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let todoListId = '6f7129e9-72a3-43ae-884a-7f59a8ce5d13'
-        axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoListId}`, {title: 'New todoList title'}, settings)
+        let todoListId = 'f9f7465b-dfa4-47fb-b1f2-eae20efe2504'
+        let title = 'New TodoList title'
+            todoListsApi.changeTodoListTitle(todoListId, title)
             .then((res) => {
                 setState(res.data)
             })
