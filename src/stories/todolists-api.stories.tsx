@@ -125,7 +125,7 @@ export const AddTask = () => {
     </div>
 }
 
-export const ChangeTaskTitle = () => {
+export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     const [todoListId, setTodoListId] = useState<any>(null)
     const [taskId, setTaskId] = useState<any>(null)

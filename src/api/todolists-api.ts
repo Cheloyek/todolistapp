@@ -1,4 +1,5 @@
 import axios from "axios";
+import {TaskType} from "../Todolist/Todolist";
 
 export type TodoListType = {
     id: string
@@ -78,10 +79,10 @@ export const todoListsApi = {
         return instance.delete<TodoListResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`)
     },
     createTask(todoListId: string, title: string) {
-        return instance.post(`/todo-lists/${todoListId}/tasks`, {title})
+        return instance.post<TodoListResponseType<TaskType>>(`/todo-lists/${todoListId}/tasks`, {title})
     },
     changeTask(todoListId: string, taskId: string, newTitle: string) {
-        return instance.put(`/todo-lists/${todoListId}/tasks/${taskId}`, {title: newTitle, description: null,
+        return instance.put<TodoListResponseType<TaskType>>(`/todo-lists/${todoListId}/tasks/${taskId}`, {title: newTitle, description: null,
             completed: false, status: 0, priority: 1, startDate: null, deadline: null})
     }
 }
