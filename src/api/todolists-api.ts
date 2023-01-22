@@ -10,13 +10,13 @@ export type TodoListType = {
 type CreateTodoListResponseType = {
     item: TodoListType
 }
-export type TodoListResponseType<D> = {
+export type TodoListResponseType<D = {}> = {
     data: D
     messages: Array<string>
     resultCode: number
 }
 
-type getTasksResponseType = {
+type GetTasksResponseType = {
     error: string | null
     totalCount: number
     items: Array<TaskResponseType>
@@ -47,6 +47,15 @@ const instance = axios.create({
     ...settings
 })
 
+type UpdateTaskType = {
+    title: string
+    description: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
 
 export const todoListsApi = {
     getTodoLists() {
@@ -54,18 +63,25 @@ export const todoListsApi = {
         return instance.get<Array<TodoListResponseType<CreateTodoListResponseType>>>('/todo-lists')
     },
     createTodoList(title: string) {
-        return instance.post<TodoListResponseType<{}>>('/todo-lists', {title})
+        return instance.post<TodoListResponseType>('/todo-lists', {title})
     },
     deleteTodoList(todoListId: string) {
-        return instance.delete<TodoListResponseType<{}>>(`/todo-lists/${todoListId}`)
+        return instance.delete<TodoListResponseType>(`/todo-lists/${todoListId}`)
     },
     changeTodoListTitle(todoListId: string, title: string) {
-        return instance.put<TodoListResponseType<{}>>(`/todo-lists/${todoListId}`, {title})
+        return instance.put<TodoListResponseType>(`/todo-lists/${todoListId}`, {title})
     },
     getTasks(todoListId: string) {
-        return instance.get<getTasksResponseType>(`/todo-lists/${todoListId}/tasks`)
+        return instance.get<GetTasksResponseType>(`/todo-lists/${todoListId}/tasks`)
     },
     deleteTask(todoListId: string, taskId: string) {
-        return instance.delete(`/todo-lists/${todoListId}/tasks/${taskId}`)
+        return instance.delete<TodoListResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`)
+    },
+    createTask(todoListId: string, title: string) {
+        return instance.post(`/todo-lists/${todoListId}/tasks`, {title})
+    },
+    changeTask(todoListId: string, taskId: string, newTitle: string) {
+        return instance.put(`/todo-lists/${todoListId}/tasks/${taskId}`, {title: newTitle, description: null,
+            completed: false, status: 0, priority: 1, startDate: null, deadline: null})
     }
 }

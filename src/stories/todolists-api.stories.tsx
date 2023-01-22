@@ -73,8 +73,43 @@ export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         let todoListId = 'e5f6e88d-5b14-4a36-ae47-679e9b6e2dcf'
-        let taskId = '7334ecb2-b644-48ee-a20c-977f695be79a'
+        let taskId = '64e8e852-536d-40e9-8e23-794aa07cb33c'
         todoListsApi.deleteTask(todoListId, taskId)
+            .then((res) => {
+                setState(res.data)
+            })
+            .catch((rej) => {
+                alert(rej.message)
+            })
+    }, [])
+
+    return <div>{JSON.stringify(state)}</div>
+}
+
+export const AddTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todoListId = 'e5f6e88d-5b14-4a36-ae47-679e9b6e2dcf'
+        let title = 'New task'
+        todoListsApi.createTask(todoListId, title)
+            .then((res) => {
+                setState(res.data)
+            })
+            .catch((rej) => {
+                alert(rej.message)
+            })
+    }, [])
+
+    return <div>{JSON.stringify(state)}</div>
+}
+
+export const ChangeTaskTitle = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todoListId = 'e5f6e88d-5b14-4a36-ae47-679e9b6e2dcf'
+        let taskId = '1075a04d-b819-4b13-b33f-2d1401a34982'
+        let newTitle = 'Update task title'
+        todoListsApi.changeTask(todoListId, taskId, newTitle)
             .then((res) => {
                 setState(res.data)
             })
