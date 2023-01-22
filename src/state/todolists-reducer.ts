@@ -1,5 +1,5 @@
-import {FilterValuesType, TodolistType} from "../AppWiithRedux";
 import {v1} from "uuid";
+import {TodoListType} from "../api/todolists-api";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
@@ -24,13 +24,17 @@ export type ChangeTodolistFilterActionType = {
     filter: FilterValuesType
 }
 
-const initialState: Array<TodolistType> = [
+export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
+
+export type TodoListDomainType = TodoListType & { filter: FilterValuesType }
+
+const initialState: Array<TodoListDomainType> = [
 
 ]
 export type ActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType
 
 
-export const todolistsReducer = (state: Array<TodolistType> = initialState, action: ActionsType): TodolistType[] => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: ActionsType): TodoListDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             let copyState = [...state]
@@ -38,7 +42,7 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState, acti
         }
 
         case 'ADD-TODOLIST': {
-            let newTodoList: TodolistType = {id: action.todolistId, title: action.title, filter: 'all'}
+            let newTodoList: TodoListDomainType = {id: action.todolistId, title: action.title, filter: 'all', addedDate: '', order: 0}
             return [newTodoList, ...state]
         }
 

@@ -1,11 +1,12 @@
 import React, {useCallback} from 'react'
 import './todolistStyle.css';
-import {FilterValuesType} from "../AppWiithRedux";
 import {AddItemForm} from "../AddItemForm";
 import {EditableSpan} from "../EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "./Task";
+import {FilterValuesType} from "../state/todolists-reducer";
+import {TaskStatuses, TaskType} from "../api/todolists-api";
 
 type TodolistPropsType = {
     title: string
@@ -14,7 +15,7 @@ type TodolistPropsType = {
     removeTask: (id: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todoListId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
     changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
     changeTodoListTitle: (todoListId: string, newTitle: string) => void
     filter: FilterValuesType
@@ -22,11 +23,11 @@ type TodolistPropsType = {
 }
 
 //type for task
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+// export type TaskType = {
+//     id: string
+//     title: string
+//     status: TaskStatuses
+// }
 
 export const Todolist = React.memo ( (props: TodolistPropsType) => {
     console.log('TodoList is called')
@@ -48,10 +49,10 @@ export const Todolist = React.memo ( (props: TodolistPropsType) => {
 
     let tasksForTodoList = props.tasks
     if (props.filter === 'active') {
-        tasksForTodoList = props.tasks.filter((t) => !t.isDone)
+        tasksForTodoList = props.tasks.filter((t) => t.status === TaskStatuses.New)
     }
     if (props.filter === 'completed') {
-        tasksForTodoList = props.tasks.filter((t) => t.isDone)
+        tasksForTodoList = props.tasks.filter((t) => t.status === TaskStatuses.Completed)
     }
 
     return (

@@ -2,12 +2,12 @@ import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "../EditableSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskType} from "./Todolist";
+import {TaskStatuses, TaskType} from "../api/todolists-api";
 
 type TaskPropsType = {
     removeTask: (id: string, todoListId: string) => void
     todolistId: string
-    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
     changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
     task: TaskType
 }
@@ -18,7 +18,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     },[props.removeTask, props.todolistId])
     //checkbox
     const onChangeStatusHandler = useCallback ((e: ChangeEvent<HTMLInputElement>) => {
-        props.changeTaskStatus(props.task.id, e.currentTarget.checked, props.todolistId)
+        props.changeTaskStatus(props.task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, props.todolistId)
     }, [props.changeTaskStatus, props.task.id, props.todolistId])
 
     //input task title
@@ -26,8 +26,8 @@ export const Task = React.memo((props: TaskPropsType) => {
         props.changeTaskTitle(props.todolistId, props.task.id, newTitle)
     }, [props.changeTaskTitle, props.todolistId, props.task.id])
 
-    return <div key={props.task.id} className={props.task.isDone ? 'completed-task' : ''}>
-        <Checkbox checked={props.task.isDone} onChange={onChangeStatusHandler}/>
+    return <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'completed-task' : ''}>
+        <Checkbox checked={props.task.status === TaskStatuses.Completed} onChange={onChangeStatusHandler}/>
         <EditableSpan title={props.task.title} onChange={onChangeTaskTitleHandler}/>
         <IconButton aria-label="delete" size="small">
             <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>

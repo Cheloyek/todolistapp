@@ -1,5 +1,4 @@
 import axios from "axios";
-import {TaskType} from "../Todolist/Todolist";
 
 export type TodoListType = {
     id: string
@@ -20,17 +19,32 @@ export type TodoListResponseType<D = {}> = {
 type GetTasksResponseType = {
     error: string | null
     totalCount: number
-    items: Array<TaskResponseType>
+    items: Array<TaskType>
 }
 
-export type TaskResponseType = {
+export enum TaskStatuses {
+    New ,
+    InProgress,
+    Completed,
+    Draft
+}
+
+export enum TaskPriorities {
+    Low ,
+    Middle,
+    Hi,
+    Urgently,
+    Later
+}
+
+export type TaskType = {
     id: string
     title: string
     description: string
     todoListId: string
     order: number
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
     addedDate: string

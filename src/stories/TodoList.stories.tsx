@@ -2,6 +2,8 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 import React from "react";
 import {action} from "@storybook/addon-actions";
 import {Todolist} from "../Todolist/Todolist";
+import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {v1} from "uuid";
 
 export default {
     title: 'Example/TodoList',
@@ -24,7 +26,7 @@ export const TodoListStories = Template.bind({});
 TodoListStories.args = {
     title: 'TodoList title',
     todolistId: '1',
-    tasks: [{id: '1', isDone: true, title: 'taskId_1'}],
+    tasks: [{id: '1', status: TaskStatuses.Completed, title: 'taskId_1', todoListId: v1(), addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi}],
     removeTask: removeTaskCallback,
     changeFilter: changeFilterCallback,
     addTask: addTaskCallback,

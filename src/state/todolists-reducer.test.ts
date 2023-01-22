@@ -1,17 +1,16 @@
-import {FilterValuesType, TodolistType} from "../AppWiithRedux";
 import {v1} from "uuid";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
+    changeTodolistTitleAC, FilterValuesType,
+    removeTodolistAC, TodoListDomainType,
     todolistsReducer
 } from "./todolists-reducer";
 
 let todoListId1: string
 let todoListId2: string
 let todoListId3: string
-let startState: Array<TodolistType>
+let startState: Array<TodoListDomainType>
 
 beforeEach(() => {
 todoListId1 = v1()
@@ -19,9 +18,9 @@ todoListId2 = v1()
 todoListId3 = v1()
 
 startState = [
-    {id: todoListId1, title: 'Todolist1', filter: 'all'},
-    {id: todoListId2, title: 'Todolist2', filter: 'all'},
-    {id: todoListId3, title: 'Todolist3', filter: 'all'}
+    {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: ''},
+    {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: ''},
+    {id: todoListId3, title: 'Todolist3', filter: 'all', order: 0, addedDate: ''}
 ]
 })
 test('correct todolist should be removed', () => {

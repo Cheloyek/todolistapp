@@ -4,6 +4,7 @@ import {
     AddTodolistActionType,
     RemoveTodolistActionType,
 } from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -21,7 +22,7 @@ export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
     todolistId: string
     taskId: string
-    status: boolean
+    status: TaskStatuses
 }
 
 export type ChangeTaskTitleActionType = {
@@ -61,7 +62,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         }
 
         case 'ADD-TASK': {
-            const newTask = {id: v1(), title: action.title, isDone: false}
+            const newTask = {id: v1(), title: action.title, status: TaskStatuses.New, todoListId: action.todolistId, addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi}
             let copyState = {...state}
             let todoListTasks = copyState[action.todolistId]
             copyState[action.todolistId] = [newTask, ...todoListTasks]
@@ -71,7 +72,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'CHANGE-TASK-STATUS': {
             let copyState = {...state}
             let todoListTasks = copyState[action.todolistId]
-            copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, isDone: action.status} : t)
+            copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, status: action.status} : t)
             return copyState
         }
 
@@ -110,7 +111,7 @@ export const addTaskAC = (todolistId: string, title: string): AddTaskActionType 
     return {type: 'ADD-TASK', todolistId, title}
 }
 
-export const changeTaskStatusAC = (todolistId: string, taskId: string, status: boolean): ChangeTaskStatusActionType => {
+export const changeTaskStatusAC = (todolistId: string, taskId: string, status: TaskStatuses): ChangeTaskStatusActionType => {
     return {type: 'CHANGE-TASK-STATUS', todolistId, taskId, status}
 }
 
