@@ -1,11 +1,12 @@
 import {combineReducers, legacy_createStore} from "redux";
-import {todolistsReducer} from "./todolists-reducer";
+import {TodoListDomainType, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
+import {TasksStateType} from "../AppWiithRedux";
 
-// type AppRootStateType = {
-//     todolists: Array<TodolistType>
-//     tasks: TasksStateType
-// }
+export type AppRootStateType = {
+    todolists: Array<TodoListDomainType>
+    tasks: TasksStateType
+}
 
 export type AppRootState = ReturnType<typeof rootReducer>
 

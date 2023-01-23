@@ -62,15 +62,15 @@ const instance = axios.create({
     ...settings
 })
 
-type UpdateTaskType = {
-    title: string
-    description: string
-    completed: boolean
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-}
+// type UpdateTaskType = {
+//     title: string
+//     description: string
+//     completed: boolean
+//     status: number
+//     priority: number
+//     startDate: string
+//     deadline: string
+// }
 
 export const todoListsApi = {
     getTodoLists() {
