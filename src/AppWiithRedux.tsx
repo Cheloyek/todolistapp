@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist/Todolist";
 import {AddItemForm} from "./AddItemForm";
@@ -8,12 +8,12 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, TodoListDomainType,
+    removeTodolistAC, setTodolistsAC, TodoListDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {TaskStatuses, TaskType} from "./api/todolists-api";
+import {TaskStatuses, TaskType, todoListsApi} from "./api/todolists-api";
 
 // export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
 // export type TodolistType = {
@@ -26,6 +26,12 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
+
+    useEffect(() => {
+        todoListsApi.getTodoLists()
+            .then((res) => dispatch(setTodolistsAC(res.data)))
+    }, [])
+
     console.log('App is called')
     let dispatch = useDispatch()
     let todoLists = useSelector<AppRootState, Array<TodoListDomainType>>( (state) => state.todolists)
@@ -78,8 +84,6 @@ function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
 
-    // @ts-ignore
-    // @ts-ignore
     return (
         <div className="App">
             <AppBar position="static">

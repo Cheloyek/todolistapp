@@ -2,7 +2,7 @@ import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";
 import {
     AddTodolistActionType,
-    RemoveTodolistActionType,
+    RemoveTodolistActionType, SetTodolistsActionType,
 } from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
@@ -32,7 +32,7 @@ export type ChangeTaskTitleActionType = {
     title: string
 }
 
-export type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistActionType | RemoveTodolistActionType
+export type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistActionType | RemoveTodolistActionType | SetTodolistsActionType
 
 const initialState: TasksStateType = {
 //     [todoListId1]: [
@@ -92,9 +92,16 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             copyState[action.todolistId] = []
             return copyState
         }
+
         case 'REMOVE-TODOLIST': {
             let copyState = {...state}
             delete copyState[action.id]
+            return copyState
+        }
+
+        case 'SET-TODOLISTS': {
+            let copyState = {...state}
+            action.todoLists.forEach((tl) => copyState[tl.id] = [])
             return copyState
         }
 
@@ -118,3 +125,4 @@ export const changeTaskStatusAC = (todolistId: string, taskId: string, status: T
 export const changeTaskTitleAC = (todolistId: string, taskId: string, title: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', todolistId, taskId, title}
 }
+
