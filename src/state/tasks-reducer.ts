@@ -80,10 +80,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             let copyState = {...state}
             let todoListTasks = copyState[action.todolistId]
             copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, title: action.title} : t)
-            // let task = todoListTasks.find(t => t.id === action.taskId)
-            // if (task) {
-            //     task.title = action.title
-            // }
             return copyState
         }
 

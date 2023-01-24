@@ -1,7 +1,7 @@
 import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
 let todoListId1: string
@@ -117,4 +117,21 @@ test('property with todolistId should be deleted', () => {
 
     expect(keys.length).toBe(1)
     expect(endState[todoListId1]).toBeUndefined()
+})
+
+test('set todoLists', () => {
+    const todoListId1 = v1()
+    const todoListId2 = v1()
+    const startTodoLists: Array<TodoListDomainType> = [
+        {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: ''},
+        {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: ''}
+    ]
+    const action = setTodolistsAC(startTodoLists)
+    const endState = tasksReducer({}, action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(2)
+    expect(startTodoLists[0]).toBeDefined()
+    expect(startTodoLists[1]).toBeDefined()
 })
