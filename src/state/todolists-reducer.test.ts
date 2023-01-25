@@ -6,6 +6,7 @@ import {
     removeTodolistAC, setTodolistsAC, TodoListDomainType,
     todolistsReducer
 } from "./todolists-reducer";
+import {setTasksAC, tasksReducer} from "./tasks-reducer";
 
 let todoListId1: string
 let todoListId2: string
@@ -73,3 +74,4 @@ test('correct set todolists', () => {
     expect(endState[1].filter).toBe('all')
     expect(endState[2].filter).toBe('all')
 })
+

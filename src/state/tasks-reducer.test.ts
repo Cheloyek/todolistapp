@@ -1,6 +1,13 @@
 import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    setTasksAC,
+    tasksReducer
+} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
@@ -134,4 +141,13 @@ test('set todoLists', () => {
     expect(keys.length).toBe(2)
     expect(startTodoLists[0]).toBeDefined()
     expect(startTodoLists[1]).toBeDefined()
+})
+
+test('tasks should be added for todolists', () => {
+
+    const action = setTasksAC(todoListId1, startState[todoListId1])
+    const endState = tasksReducer({ [todoListId1]:[], [todoListId2]:[]}, action)
+
+    expect(endState[todoListId1].length).toBe(2)
+    expect(endState[todoListId2].length).toBe(3)
 })
