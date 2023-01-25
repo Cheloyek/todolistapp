@@ -7,29 +7,27 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodoListDomainType,
+    changeTodolistTitleAC, fetchTodolistsThunkCreator, FilterValuesType,
+    removeTodolistAC, TodoListDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {TaskStatuses, TaskType, todoListsApi} from "./api/todolists-api";
+import {TaskStatuses, TaskType} from "./api/todolists-api";
 
-// export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
-// export type TodolistType = {
-//     id: string
-//     title: string
-//     filter: FilterValuesType
-// }
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function AppWithRedux() {
 
+    //получение листов с сервера
     useEffect(() => {
-        todoListsApi.getTodoLists()
-            .then((res) => dispatch(setTodolistsAC(res.data)))
+        // todoListsApi.getTodoLists()
+        //     .then((res) => dispatch(setTodolistsAC(res.data)))
+        // fetchTodolistsThunk(dispatch)
+        // @ts-ignore
+        dispatch(fetchTodolistsThunkCreator())
     }, [])
 
     console.log('App is called')
