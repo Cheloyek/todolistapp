@@ -10,7 +10,13 @@ import {
     changeTodolistTitleAC, fetchTodolistsThunkCreator, FilterValuesType,
     removeTodolistAC, TodoListDomainType,
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    removeTaskThunkCreator
+} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
@@ -23,9 +29,6 @@ function AppWithRedux() {
 
     //получение листов с сервера
     useEffect(() => {
-        // todoListsApi.getTodoLists()
-        //     .then((res) => dispatch(setTodolistsAC(res.data)))
-        // fetchTodolistsThunk(dispatch)
         // @ts-ignore
         dispatch(fetchTodolistsThunkCreator())
     }, [])
@@ -55,9 +58,12 @@ function AppWithRedux() {
 
     //delete task
     const removeTask = useCallback ((id: string, todoListId: string) => {
-        const action = removeTaskAC(todoListId, id)
+        // const action = removeTaskAC(todoListId, id)
+        // dispatch(action)
+        const action = removeTaskThunkCreator(todoListId, id)
+        // @ts-ignore
         dispatch(action)
-    }, [dispatch])
+    }, [])
 
     //add new todoList
     const addTodoList = useCallback ((todoListTitle: string) => {

@@ -147,3 +147,13 @@ export const fetchTasksThunkCreator = (todolistId: string) => (dispatch: Dispatc
         })
 }
 
+export const removeTaskThunkCreator = (todolistId: string, taskId: string) => {
+    return (dispatch: Dispatch) => {
+        todoListsApi.deleteTask(todolistId, taskId)
+            .then ((res) => {
+                const action = removeTaskAC(todolistId, taskId)
+                dispatch(action)
+            })
+    }
+}
+
