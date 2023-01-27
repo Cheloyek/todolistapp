@@ -11,7 +11,7 @@ import {
     removeTodolistAC, TodoListDomainType,
 } from "./state/todolists-reducer";
 import {
-    addTaskAC,
+    addTaskAC, addTaskThunkCreator,
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
@@ -39,10 +39,17 @@ function AppWithRedux() {
     let tasks = useSelector<AppRootState, TasksStateType>( (state) => state.tasks)
 
     //add task
+    // const addTask = useCallback ((title: string, todoListId: string) => {
+    //     const action = addTaskAC(todoListId, title)
+    //     dispatch(action)
+    // }, [dispatch])
+
     const addTask = useCallback ((title: string, todoListId: string) => {
-        const action = addTaskAC(todoListId, title)
-        dispatch(action)
+        const thunk = addTaskThunkCreator(title, todoListId)
+        // @ts-ignore
+        dispatch(thunk)
     }, [dispatch])
+
 
     //change task status
     const changeTaskStatus = useCallback ((taskId: string, status: TaskStatuses, todoListId: string) => {
@@ -60,10 +67,10 @@ function AppWithRedux() {
     const removeTask = useCallback ((id: string, todoListId: string) => {
         // const action = removeTaskAC(todoListId, id)
         // dispatch(action)
-        const action = removeTaskThunkCreator(todoListId, id)
+        const thunk = removeTaskThunkCreator(todoListId, id)
         // @ts-ignore
-        dispatch(action)
-    }, [])
+        dispatch(thunk)
+    }, [dispatch])
 
     //add new todoList
     const addTodoList = useCallback ((todoListTitle: string) => {
