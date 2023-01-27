@@ -9,8 +9,9 @@ export type RemoveTodolistActionType = {
 
 export type AddTodolistActionType = {
     type: 'ADD-TODOLIST'
-    title: string
-    todolistId: string
+    // title: string
+    // todolistId: string
+    todoList: TodoListType
 }
 
 export type ChangeTodolistTitleActionType = {
@@ -47,7 +48,8 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = initialState
         }
 
         case 'ADD-TODOLIST': {
-            let newTodoList: TodoListDomainType = {id: action.todolistId, title: action.title, filter: 'all', addedDate: '', order: 0}
+            // let newTodoList: TodoListDomainType = {id: action.todolistId, title: action.title, filter: 'all', addedDate: '', order: 0}
+            let newTodoList: TodoListDomainType = {...action.todoList, filter: 'all'}
             return [newTodoList, ...state]
         }
 
@@ -80,8 +82,9 @@ export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType =
     return {type: 'REMOVE-TODOLIST', id: todolistId}
 }
 
-export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: title, todolistId: v1()}
+export const addTodolistAC = (todoList: TodoListType): AddTodolistActionType => {
+    // return {type: 'ADD-TODOLIST', title: title, todolistId: v1()}
+    return {type: 'ADD-TODOLIST', todoList}
 }
 
 export const changeTodolistTitleAC = (todoListId: string, title: string): ChangeTodolistTitleActionType => {
@@ -92,7 +95,7 @@ export const changeTodolistFilterAC = (todoListId: string, filter: FilterValuesT
     return {type: 'CHANGE-TODOLIST-FILTER', id: todoListId, filter: filter}
 }
 
-export const setTodolistsAC = (todoLists: Array<TodoListDomainType>): SetTodolistsActionType => {
+export const setTodolistsAC = (todoLists: Array<TodoListType>): SetTodolistsActionType => {
     return {type: 'SET-TODOLISTS', todoLists}
 }
 
@@ -101,6 +104,24 @@ export const fetchTodolistsThunkCreator = () => {
         todoListsApi.getTodoLists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
+            })
+    }
+}
+
+export const removeTodolistThunkCreator = (todoListId: string) => {
+    return (dispatch: Dispatch) => {
+        todoListsApi.deleteTodoList(todoListId)
+            .then((res) => {
+                dispatch(removeTodolistAC(todoListId))
+            })
+    }
+}
+
+export const addTodoListThunkCreator = (title: string) => {
+    return (dispatch: Dispatch) => {
+        todoListsApi.createTodoList(title)
+            .then((res) => {
+                dispatch(addTodolistAC(res.data.data.item))
             })
     }
 }

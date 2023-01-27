@@ -31,8 +31,6 @@ type TodolistPropsType = {
 //     status: TaskStatuses
 // }
 
-
-
 export const Todolist = React.memo ( (props: TodolistPropsType) => {
     console.log('TodoList is called')
     const dispatch = useDispatch()
@@ -43,7 +41,6 @@ export const Todolist = React.memo ( (props: TodolistPropsType) => {
 
     //click button -> change filter
     const onClickFilterButtonHandler = useCallback ((value: FilterValuesType) => props.changeFilter(value, props.todolistId), [props.changeFilter, props.todolistId])
-
     //click button -> delete todolist
     const onClickRemoveTodoListHandler = useCallback(() => props.deleteTodoList(props.todolistId), [props.deleteTodoList, props.todolistId])
 

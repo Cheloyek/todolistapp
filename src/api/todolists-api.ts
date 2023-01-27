@@ -76,10 +76,10 @@ const instance = axios.create({
 export const todoListsApi = {
     getTodoLists() {
         // return axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
-        return instance.get<Array<TodoListDomainType>>('/todo-lists')
+        return instance.get<Array<TodoListType>>('/todo-lists')
     },
     createTodoList(title: string) {
-        return instance.post<TodoListResponseType>('/todo-lists', {title})
+        return instance.post<TodoListResponseType<{ item: TodoListType }>>('/todo-lists', {title})
     },
     deleteTodoList(todoListId: string) {
         return instance.delete<TodoListResponseType>(`/todo-lists/${todoListId}`)
