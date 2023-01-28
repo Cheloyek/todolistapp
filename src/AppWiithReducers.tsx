@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist/Todolist";
 import {v1} from "uuid";
@@ -8,11 +8,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, TodoListDomainType,
+    changeTodolistTitleAC,
+    FilterValuesType,
+    removeTodolistAC,
+    TodoListDomainType,
     todolistsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "./state/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
 
 // export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
@@ -66,13 +68,13 @@ function AppWithReducers() {
 
     //change task status
     const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
-        const action = changeTaskStatusAC(todoListId, taskId, status)
+        const action = updateTaskAC(todoListId, taskId, {status})
         dispatchToTasksReducer(action)
     }
 
     //change task title
     const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
-        const action = changeTaskTitleAC(todoListId, taskId, newTitle)
+        const action = updateTaskAC(todoListId, taskId, {title: newTitle})
         dispatchToTasksReducer(action)
     }
 

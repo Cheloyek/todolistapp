@@ -1,5 +1,4 @@
 import axios from "axios";
-import {TodoListDomainType} from "../state/todolists-reducer";
 
 export type TodoListType = {
     id: string
@@ -8,9 +7,9 @@ export type TodoListType = {
     order: number
 }
 
-type CreateTodoListResponseType = {
-    item: TodoListType
-}
+// type CreateTodoListResponseType = {
+//     item: TodoListType
+// }
 export type TodoListResponseType<D = {}> = {
     data: D
     messages: Array<string>
@@ -36,6 +35,15 @@ export enum TaskPriorities {
     Hi,
     Urgently,
     Later
+}
+
+export type UpdateTaskModelType = {
+    title: string,
+    description: string,
+    status: TaskStatuses,
+    priority: TaskPriorities,
+    startDate: string,
+    deadline: string
 }
 
 export type TaskType = {
@@ -96,8 +104,7 @@ export const todoListsApi = {
     createTask(todoListId: string, title: string) {
         return instance.post<TodoListResponseType<{ item: TaskType }>>(`/todo-lists/${todoListId}/tasks`, {title})
     },
-    changeTask(todoListId: string, taskId: string, newTitle: string) {
-        return instance.put<TodoListResponseType<TaskType>>(`/todo-lists/${todoListId}/tasks/${taskId}`, {title: newTitle, description: null,
-            completed: false, status: 0, priority: 1, startDate: null, deadline: null})
+    changeTask(todoListId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<TodoListResponseType<{ item: TaskType }>>(`/todo-lists/${todoListId}/tasks/${taskId}`, model)
     }
 }

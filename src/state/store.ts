@@ -2,8 +2,7 @@ import {Action, applyMiddleware, combineReducers, legacy_createStore} from "redu
 import {TodoListDomainType, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
 import {TasksStateType} from "../AppWiithRedux";
-import thunk, {ThunkDispatch} from "redux-thunk";
-import {useDispatch} from "react-redux";
+import thunk from "redux-thunk";
 
 // type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 

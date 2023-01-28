@@ -1,4 +1,4 @@
-import {addTodolistAC, setTodolistsAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
+import {addTodolistAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
 import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";

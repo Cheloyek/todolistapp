@@ -5,18 +5,15 @@ import {AddItemForm} from "./AddItemForm";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {
-    addTodolistAC, addTodoListThunkCreator,
+    addTodoListThunkCreator,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, changeTodoListTitleThunkCreator, fetchTodolistsThunkCreator, FilterValuesType,
-    removeTodolistAC, removeTodolistThunkCreator, TodoListDomainType,
+    changeTodoListTitleThunkCreator,
+    fetchTodolistsThunkCreator,
+    FilterValuesType,
+    removeTodolistThunkCreator,
+    TodoListDomainType,
 } from "./state/todolists-reducer";
-import {
-    addTaskAC, addTaskThunkCreator,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    removeTaskAC,
-    removeTaskThunkCreator
-} from "./state/tasks-reducer";
+import {addTaskThunkCreator, removeTaskThunkCreator, updateTaskThunkCreator} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState, AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
@@ -57,14 +54,16 @@ function AppWithRedux() {
 
     //change task status
     const changeTaskStatus = useCallback ((taskId: string, status: TaskStatuses, todoListId: string) => {
-        const action = changeTaskStatusAC(todoListId, taskId, status)
-        dispatch(action)
+        // const action = changeTaskStatusAC(todoListId, taskId, status)
+        const thunk = updateTaskThunkCreator(todoListId, taskId, {status})
+        dispatch(thunk)
     }, [dispatch])
 
     //change task title
     const changeTaskTitle = useCallback ((todoListId: string, taskId: string, newTitle: string) => {
-        const action = changeTaskTitleAC(todoListId, taskId, newTitle)
-        dispatch(action)
+        // const action = changeTaskTitleAC(todoListId, taskId, newTitle)
+        const thunk = updateTaskThunkCreator(todoListId, taskId, {title: newTitle})
+        dispatch(thunk)
     }, [dispatch])
 
     //delete task

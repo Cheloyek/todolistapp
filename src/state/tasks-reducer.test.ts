@@ -1,13 +1,6 @@
 import {TasksStateType} from "../AppWiithRedux";
 import {v1} from "uuid";
-import {
-    addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    removeTaskAC,
-    setTasksAC,
-    tasksReducer
-} from "./tasks-reducer";
+import {addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
@@ -85,7 +78,7 @@ test('correct task should be added to correct array', () => {
 })
 
 test('status of task should be changed', () => {
-    const action = changeTaskStatusAC(todoListId1, taskId2, TaskStatuses.Completed)
+    const action = updateTaskAC(todoListId1, taskId2, {status: TaskStatuses.Completed})
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].status).toBe(TaskStatuses.Completed)
@@ -94,7 +87,7 @@ test('status of task should be changed', () => {
 })
 
 test('task title should be changed', () => {
-    const action = changeTaskTitleAC(todoListId1, taskId2, 'newTaskTitle')
+    const action = updateTaskAC(todoListId1, taskId2, {title: 'newTaskTitle'})
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].title).toBe('newTaskTitle')
