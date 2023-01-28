@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
     addTodolistAC, addTodoListThunkCreator,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, fetchTodolistsThunkCreator, FilterValuesType,
+    changeTodolistTitleAC, changeTodoListTitleThunkCreator, fetchTodolistsThunkCreator, FilterValuesType,
     removeTodolistAC, removeTodolistThunkCreator, TodoListDomainType,
 } from "./state/todolists-reducer";
 import {
@@ -18,8 +18,12 @@ import {
     removeTaskThunkCreator
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "./state/store";
+import {AppRootState, AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
+import {ThunkDispatch} from "redux-thunk";
+import {Action} from "redux";
+
+type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -29,12 +33,13 @@ function AppWithRedux() {
 
     //получение листов с сервера
     useEffect(() => {
-        // @ts-ignore
-        dispatch(fetchTodolistsThunkCreator())
+        const thunk = fetchTodolistsThunkCreator()
+        dispatch(thunk)
     }, [])
 
     console.log('App is called')
-    let dispatch = useDispatch()
+    // let dispatch = useAppDispatch()
+    let dispatch = useDispatch<AppThunkType>()
     let todoLists = useSelector<AppRootState, Array<TodoListDomainType>>( (state) => state.todolists)
     let tasks = useSelector<AppRootState, TasksStateType>( (state) => state.tasks)
 
@@ -46,7 +51,6 @@ function AppWithRedux() {
 
     const addTask = useCallback ((title: string, todoListId: string) => {
         const thunk = addTaskThunkCreator(title, todoListId)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
@@ -66,9 +70,7 @@ function AppWithRedux() {
     //delete task
     const removeTask = useCallback ((id: string, todoListId: string) => {
         // const action = removeTaskAC(todoListId, id)
-        // dispatch(action)
         const thunk = removeTaskThunkCreator(todoListId, id)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
@@ -76,22 +78,21 @@ function AppWithRedux() {
     const addTodoList = useCallback ((todoListTitle: string) => {
         // const action = addTodolistAC(todoListTitle)
         const thunk = addTodoListThunkCreator(todoListTitle)
-        // @ts-ignore
         dispatch(thunk)
     }, [dispatch])
 
     //delete todoList
     const removeTodoList = useCallback((todolistId: string) => {
         // const action = removeTodolistAC(todolistId)
-        const thunk = removeTodolistThunkCreator(todolistId)
-        // @ts-ignore
-        dispatch(thunk)
+
+        dispatch(removeTodolistThunkCreator(todolistId))
     }, [dispatch])
 
     //change todoList title
     const changeTodoListTitle = useCallback ((todoListId: string, newTitle: string) => {
-        const action = changeTodolistTitleAC(todoListId, newTitle)
-        dispatch(action)
+        // const action = changeTodolistTitleAC(todoListId, newTitle)
+        const thunk = changeTodoListTitleThunkCreator(todoListId, newTitle)
+        dispatch(thunk)
     }, [dispatch])
 
     const changeFilter = useCallback ((value: FilterValuesType, todolistId: string) => {

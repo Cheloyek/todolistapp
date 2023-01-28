@@ -125,3 +125,12 @@ export const addTodoListThunkCreator = (title: string) => {
             })
     }
 }
+
+export const changeTodoListTitleThunkCreator = (todoListId: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        todoListsApi.changeTodoListTitle(todoListId, title)
+            .then((res) => {
+                dispatch(changeTodolistTitleAC(todoListId, title))
+            })
+    }
+}

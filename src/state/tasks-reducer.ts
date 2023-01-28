@@ -178,3 +178,8 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
     }
 }
 
+// export const updateTaskStatusThunkCreator = (todoListId: string, taskId: string, status: TaskStatuses) => {
+//     return (dispatch: Dispatch) => {
+//         todoListsApi.changeTodoListTitle(todoListId, title)
+//     }
+// }
