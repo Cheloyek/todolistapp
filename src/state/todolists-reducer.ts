@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {todoListsApi, TodoListType} from "../api/todolists-api";
 import {Dispatch} from "redux";
+import {AppActionsType} from "./store";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
@@ -37,10 +38,10 @@ export type TodoListDomainType = TodoListType & { filter: FilterValuesType }
 
 const initialState: Array<TodoListDomainType> = [
 ]
-export type ActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType | SetTodolistsActionType
+export type TodolistsActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType | SetTodolistsActionType
 
 
-export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: ActionsType): TodoListDomainType[] => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: AppActionsType): TodoListDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             let copyState = [...state]
@@ -99,8 +100,20 @@ export const setTodolistsAC = (todoLists: Array<TodoListType>): SetTodolistsActi
     return {type: 'SET-TODOLISTS', todoLists}
 }
 
+//thunks
+//получение листов
 export const fetchTodolistsThunkCreator = () => {
-    return (dispatch: Dispatch) => {
+    //Способы типизации:
+    //1. dispatch: Dispatch - import from redux / проверяет чтобы в dispatch приходит action у которого есть type
+    //2. добавить generic / dispatch: Dispatch<SetTodolistsActionType> / проверяет что в dispatch - только SetTodolistsActionType
+    //3. generic с типом ActionsType / dispatch: Dispatch<TodolistsActionType> / dispatch любой из типа TodolistsActionsType
+    //4. создать общий тип actions - AppActionsType / dispatch: Dispatch<AppActionsType>
+
+    //1. return (dispatch: Dispatch) => {
+    //2. return (dispatch: Dispatch<SetTodolistsActionType>) => {
+    //3. return (dispatch: Dispatch<TodolistsActionsType>) => {
+    //4. работает до момента когда нужно в thunk диспатчить другую thunk
+    return (dispatch: Dispatch<AppActionsType>) => {
         todoListsApi.getTodoLists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
@@ -108,8 +121,9 @@ export const fetchTodolistsThunkCreator = () => {
     }
 }
 
+//удаление листа
 export const removeTodolistThunkCreator = (todoListId: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<AppActionsType>) => {
         todoListsApi.deleteTodoList(todoListId)
             .then((res) => {
                 dispatch(removeTodolistAC(todoListId))
@@ -117,8 +131,9 @@ export const removeTodolistThunkCreator = (todoListId: string) => {
     }
 }
 
+//добавление листа
 export const addTodoListThunkCreator = (title: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<AppActionsType>) => {
         todoListsApi.createTodoList(title)
             .then((res) => {
                 dispatch(addTodolistAC(res.data.data.item))
@@ -126,8 +141,9 @@ export const addTodoListThunkCreator = (title: string) => {
     }
 }
 
+//редактирование листа
 export const changeTodoListTitleThunkCreator = (todoListId: string, title: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<AppActionsType>) => {
         todoListsApi.changeTodoListTitle(todoListId, title)
             .then((res) => {
                 dispatch(changeTodolistTitleAC(todoListId, title))
