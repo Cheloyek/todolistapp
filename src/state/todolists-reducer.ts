@@ -133,31 +133,34 @@ export const fetchTodolistsThunkCreator = (): AppThunk => {
 }
 
 //удаление листа
-export const removeTodolistThunkCreator = (todoListId: string) => {
-    return (dispatch: Dispatch<AppActionsType>) => {
-        todoListsApi.deleteTodoList(todoListId)
-            .then((res) => {
-                dispatch(removeTodolistAC(todoListId))
-            })
+//1. then
+// export const removeTodolistThunkCreator = (todoListId: string): AppThunk => dispatch => {
+//         todoListsApi.deleteTodoList(todoListId)
+//             .then((res) => {
+//                 dispatch(removeTodolistAC(todoListId))
+//             })
+// }
+
+//2. async await
+export const removeTodolistThunkCreator = (todoListId: string): AppThunk => async dispatch => {
+    try {
+        await todoListsApi.deleteTodoList(todoListId)
+        dispatch(removeTodolistAC(todoListId))
+    } catch (e: any) {
+        throw new Error(e)
     }
+
+
 }
 
 //добавление листа
-export const addTodoListThunkCreator = (title: string) => {
-    return (dispatch: Dispatch<AppActionsType>) => {
-        todoListsApi.createTodoList(title)
-            .then((res) => {
-                dispatch(addTodolistAC(res.data.data.item))
-            })
-    }
+export const addTodoListThunkCreator = (title: string): AppThunk => async dispatch => {
+        const res = await todoListsApi.createTodoList(title)
+        dispatch(addTodolistAC(res.data.data.item))
 }
 
 //редактирование листа
-export const changeTodoListTitleThunkCreator = (todoListId: string, title: string) => {
-    return (dispatch: Dispatch<AppActionsType>) => {
-        todoListsApi.changeTodoListTitle(todoListId, title)
-            .then((res) => {
+export const changeTodoListTitleThunkCreator = (todoListId: string, title: string): AppThunk => async dispatch => {
+        await todoListsApi.changeTodoListTitle(todoListId, title)
                 dispatch(changeTodolistTitleAC(todoListId, title))
-            })
-    }
 }
