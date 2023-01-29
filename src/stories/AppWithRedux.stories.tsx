@@ -1,6 +1,6 @@
 import {ComponentMeta} from "@storybook/react";
 import React from "react";
-import AppWithRedux from "../AppWiithRedux";
+import AppWithRedux from "../AppWithRedux";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 export default {

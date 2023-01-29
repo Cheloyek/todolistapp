@@ -1,7 +1,7 @@
-import {v1} from "uuid";
 import {todoListsApi, TodoListType} from "../api/todolists-api";
 import {Dispatch} from "redux";
-import {AppActionsType} from "./store";
+import {AppActionsType, AppRootStateType, AppThunk} from "./store";
+import {ThunkAction} from "redux-thunk";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
@@ -41,7 +41,7 @@ const initialState: Array<TodoListDomainType> = [
 export type TodolistsActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType | SetTodolistsActionType
 
 
-export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: AppActionsType): TodoListDomainType[] => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: TodolistsActionsType): TodoListDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             let copyState = [...state]
@@ -102,18 +102,29 @@ export const setTodolistsAC = (todoLists: Array<TodoListType>): SetTodolistsActi
 
 //thunks
 //получение листов
-export const fetchTodolistsThunkCreator = () => {
-    //Способы типизации:
-    //1. dispatch: Dispatch - import from redux / проверяет чтобы в dispatch приходит action у которого есть type
-    //2. добавить generic / dispatch: Dispatch<SetTodolistsActionType> / проверяет что в dispatch - только SetTodolistsActionType
-    //3. generic с типом ActionsType / dispatch: Dispatch<TodolistsActionType> / dispatch любой из типа TodolistsActionsType
-    //4. создать общий тип actions - AppActionsType / dispatch: Dispatch<AppActionsType>
+//Способы типизации:
+//1. dispatch: Dispatch - import from redux / проверяет чтобы в dispatch приходит action у которого есть type
+//2. добавить generic / dispatch: Dispatch<SetTodolistsActionType> / проверяет что в dispatch - только SetTodolistsActionType
+//3. generic с типом ActionsType / dispatch: Dispatch<TodolistsActionType> / dispatch любой из типа TodolistsActionsType
+//4. создать общий тип actions - AppActionsType / dispatch: Dispatch<AppActionsType> / работает до момента когда нужно в thunk диспатчить другую thunk
+//5. fetchTodolistsThunkCreator = (): ThunkAction<void, RootState, unknown, AnyAction> / для диспатча thunk
+//ThunkAction<R, S, E, A> из redux-thunk,
+//R - что thunk возвращает (как правило void)
+//S - state всего приложения
+//E - экстра аргументы (unknown)
+//A - все actions
+//6. вынести типизацию в store AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
+//1-4. export const fetchTodolistsThunkCreator = () => {
+//5. export const fetchTodolistsThunkCreator = (): ThunkAction<void, AppRootStateType, unknown, AppActionsType> => {
+//6.
+export const fetchTodolistsThunkCreator = (): AppThunk => {
     //1. return (dispatch: Dispatch) => {
     //2. return (dispatch: Dispatch<SetTodolistsActionType>) => {
     //3. return (dispatch: Dispatch<TodolistsActionsType>) => {
-    //4. работает до момента когда нужно в thunk диспатчить другую thunk
-    return (dispatch: Dispatch<AppActionsType>) => {
+    //4. return (dispatch: Dispatch<AppActionsType>) => {
+    //5. return (dispatch)
+    return (dispatch) => {
         todoListsApi.getTodoLists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))

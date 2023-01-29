@@ -15,7 +15,7 @@ import {
 } from "./state/todolists-reducer";
 import {addTaskThunkCreator, removeTaskThunkCreator, updateTaskThunkCreator} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState, AppRootStateType} from "./state/store";
+import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
@@ -37,8 +37,8 @@ function AppWithRedux() {
     console.log('App is called')
     // let dispatch = useAppDispatch()
     let dispatch = useDispatch<AppThunkType>()
-    let todoLists = useSelector<AppRootState, Array<TodoListDomainType>>( (state) => state.todolists)
-    let tasks = useSelector<AppRootState, TasksStateType>( (state) => state.tasks)
+    let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>( (state) => state.todolists)
+    let tasks = useSelector<AppRootStateType, TasksStateType>( (state) => state.tasks)
 
     //add task
     // const addTask = useCallback ((title: string, todoListId: string) => {

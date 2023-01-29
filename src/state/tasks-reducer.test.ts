@@ -1,4 +1,4 @@
-import {TasksStateType} from "../AppWiithRedux";
+import {TasksStateType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
