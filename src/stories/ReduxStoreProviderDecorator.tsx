@@ -5,6 +5,7 @@ import { v1 } from 'uuid'
 import {tasksReducer} from "../state/tasks-reducer";
 import {TodoListDomainType, todolistsReducer} from "../state/todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
+import {AppRootStateType} from "../state/store";
 
 
 const rootReducer = combineReducers({
@@ -12,12 +13,6 @@ const rootReducer = combineReducers({
     todolists: todolistsReducer
 })
 
-type AppRootStateType = {
-    todolists: Array<TodoListDomainType>
-    tasks: {
-        [key: string]: Array<TaskType>
-    }
-}
 
 const initialGlobalState: AppRootStateType = {
     todolists: [
@@ -35,6 +30,10 @@ const initialGlobalState: AppRootStateType = {
             {id: v1(), title: 'task 3', status: TaskStatuses.Completed, todoListId: 'todolistId2', addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi},
             {id: v1(), title: 'task 4', status: TaskStatuses.Completed, todoListId: 'todolistId2', addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi}
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 }
 

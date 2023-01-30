@@ -112,7 +112,7 @@ function AppWithRedux() {
                         News
                     </Typography>
                 </Toolbar>
-                <LinearProgress style={{backgroundColor: "#e17a02" }}/>
+                {/*{status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02"}}/>}*/}
                 <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
