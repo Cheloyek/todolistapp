@@ -3,15 +3,21 @@ import {Provider} from "react-redux";
 import {combineReducers, legacy_createStore} from 'redux'
 import { v1 } from 'uuid'
 import {tasksReducer} from "../state/tasks-reducer";
-import {todolistsReducer} from "../state/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
-import {AppRootStateType} from "../state/store";
+import {TodoListDomainType, todolistsReducer} from "../state/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
 
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer
 })
+
+type AppRootStateType = {
+    todolists: Array<TodoListDomainType>
+    tasks: {
+        [key: string]: Array<TaskType>
+    }
+}
 
 const initialGlobalState: AppRootStateType = {
     todolists: [

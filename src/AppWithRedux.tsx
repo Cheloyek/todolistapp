@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist/Todolist";
 import {AddItemForm} from "./AddItemForm";
-import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AppBar, Container, Grid, IconButton, LinearProgress, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {
     addTodoListThunkCreator,
@@ -19,6 +19,7 @@ import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
+import ErrorSnackbar from "./snackbars/errorSnackbar";
 
 type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 
@@ -111,6 +112,8 @@ function AppWithRedux() {
                         News
                     </Typography>
                 </Toolbar>
+                <LinearProgress style={{backgroundColor: "#e17a02" }}/>
+                <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
                 <Grid container>
