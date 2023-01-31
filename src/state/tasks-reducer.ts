@@ -3,6 +3,7 @@ import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType,
 import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../api/todolists-api";
 import {Dispatch} from "redux";
 import {AppActionsType, AppRootStateType} from "./store";
+import {setErrorAC, SetErrorActionsType, setStatusAC, SetStatusActionsType} from "../app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -131,32 +132,50 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskType>): SetTasks
     return {type: 'SET-TASKS', todolistId, tasks}
 }
 
-export const fetchTasksThunkCreator = (todolistId: string) => (dispatch: Dispatch<AppActionsType>) => {
+export const fetchTasksThunkCreator = (todolistId: string) => (dispatch: Dispatch<AppActionsType | SetStatusActionsType>) => {
+    dispatch(setStatusAC('loading'))
     todoListsApi.getTasks(todolistId)
         .then((res) => {
             const tasks = res.data.items
             dispatch(setTasksAC(todolistId, tasks))
+            dispatch(setStatusAC('succeeded'))
         })
 }
 
 export const removeTaskThunkCreator = (todolistId: string, taskId: string) => {
-    return (dispatch: Dispatch<AppActionsType>) => {
+    return (dispatch: Dispatch<AppActionsType | SetStatusActionsType>) => {
+        dispatch(setStatusAC('loading'))
         todoListsApi.deleteTask(todolistId, taskId)
             .then ((res) => {
                 const action = removeTaskAC(todolistId, taskId)
                 dispatch(action)
+                dispatch(setStatusAC('succeeded'))
             })
     }
 }
 
 export const addTaskThunkCreator = (title: string, todoListId: string) => {
-    return (dispatch: Dispatch<AppActionsType>) => {
-        todoListsApi.createTask(todoListId,title)
+    return (dispatch: Dispatch<AppActionsType | SetErrorActionsType | SetStatusActionsType>) => {
+        dispatch(setStatusAC('loading'))
+        todoListsApi.createTask(todoListId, title)
             .then((res) => {
-                const task = res.data.data.item
-                const action = addTaskAC(task)
-                dispatch(action)
-            })
+                if (res.data.resultCode === 0) {
+                    const task = res.data.data.item
+                    const action = addTaskAC(task)
+                    dispatch(action)
+                    dispatch(setStatusAC('succeeded'))
+                } else {
+                    // return alert(`${res.data.messages}`)
+                    if (res.data.messages.length > 0) {
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setErrorAC('unknown message'))
+
+                    }
+                    dispatch(setStatusAC('failed'))
+                }
+            }
+            );
     }
 }
 

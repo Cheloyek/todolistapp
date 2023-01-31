@@ -20,6 +20,7 @@ import {TaskStatuses, TaskType} from "./api/todolists-api";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import ErrorSnackbar from "./snackbars/errorSnackbar";
+import {RequestStatusType} from "./app-reducer";
 
 type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 
@@ -100,6 +101,8 @@ function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
 
+
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     return (
         <div className="App">
             <AppBar position="static">
@@ -112,7 +115,7 @@ function AppWithRedux() {
                         News
                     </Typography>
                 </Toolbar>
-                {/*{status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02"}}/>}*/}
+                {status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02"}}/>}
                 <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
