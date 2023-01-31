@@ -15,7 +15,7 @@ import {
     todolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "./state/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "./api/todolists-api";
 
 // export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
 // export type TodolistType = {
@@ -23,9 +23,9 @@ import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
 //     title: string
 //     filter: FilterValuesType
 // }
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
+// export type TasksStateType = {
+//     [key: string]: Array<TaskType>
+// }
 
 function AppWithReducers() {
 
@@ -36,9 +36,9 @@ function AppWithReducers() {
     let todoListId3 = v1()
 
     let [todoLists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
-        {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: ''},
-        {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: ''},
-        {id: todoListId3, title: 'Todolist3', filter: 'all', order: 0, addedDate: ''}
+        {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
+        {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
+        {id: todoListId3, title: 'Todolist3', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'}
     ])
 
     let [tasks, dispatchToTasksReducer] = useReducer(tasksReducer,{

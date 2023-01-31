@@ -2,6 +2,7 @@ import {todoListsApi, TodoListType} from "../api/todolists-api";
 import {Dispatch} from "redux";
 import {AppActionsType, AppRootStateType, AppThunk} from "./store";
 import {ThunkAction} from "redux-thunk";
+import {RequestStatusType, setStatusAC, SetStatusActionsType} from "../app-reducer";
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
@@ -32,11 +33,16 @@ export type SetTodolistsActionType = {
 
 export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
 
-export type TodoListDomainType = TodoListType & { filter: FilterValuesType }
+export type TodoListDomainType = TodoListType & { filter: FilterValuesType, todolistStatus: RequestStatusType }
 
-const initialState: Array<TodoListDomainType> = [
-]
-export type TodolistsActionsType = RemoveTodolistActionType | AddTodolistActionType | ChangeTodolistTitleActionType | ChangeTodolistFilterActionType | SetTodolistsActionType
+const initialState: Array<TodoListDomainType> = []
+export type TodolistsActionsType =
+    RemoveTodolistActionType
+    | AddTodolistActionType
+    | ChangeTodolistTitleActionType
+    | ChangeTodolistFilterActionType
+    | SetTodolistsActionType
+    | SetStatusActionsType
 
 
 export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: TodolistsActionsType): TodoListDomainType[] => {
@@ -48,7 +54,7 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = initialState
 
         case 'ADD-TODOLIST': {
             // let newTodoList: TodoListDomainType = {id: action.todolistId, title: action.title, filter: 'all', addedDate: '', order: 0}
-            let newTodoList: TodoListDomainType = {...action.todoList, filter: 'all'}
+            let newTodoList: TodoListDomainType = {...action.todoList, filter: 'all', todolistStatus: 'idle'}
             return [newTodoList, ...state]
         }
 
@@ -69,7 +75,7 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = initialState
         }
 
         case 'SET-TODOLISTS': {
-            return action.todoLists.map((tl) => ({...tl, filter: 'all'}))
+            return action.todoLists.map((tl) => ({...tl, filter: 'all', todolistStatus: 'idle'}))
         }
 
         default:
@@ -123,9 +129,11 @@ export const fetchTodolistsThunkCreator = (): AppThunk => {
     //4. return (dispatch: Dispatch<AppActionsType>) => {
     //5. return (dispatch)
     return (dispatch) => {
+        dispatch(setStatusAC('loading'))
         todoListsApi.getTodoLists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
+                dispatch(setStatusAC('succeeded'))
             })
     }
 }
@@ -141,10 +149,13 @@ export const fetchTodolistsThunkCreator = (): AppThunk => {
 
 //2. async await
 export const removeTodolistThunkCreator = (todoListId: string): AppThunk => async dispatch => {
+    dispatch(setStatusAC('loading'))
     try {
         await todoListsApi.deleteTodoList(todoListId)
         dispatch(removeTodolistAC(todoListId))
+        dispatch(setStatusAC('succeeded'))
     } catch (e: any) {
+        dispatch(setStatusAC('failed'))
         throw new Error(e)
     }
 
@@ -153,12 +164,16 @@ export const removeTodolistThunkCreator = (todoListId: string): AppThunk => asyn
 
 //добавление листа
 export const addTodoListThunkCreator = (title: string): AppThunk => async dispatch => {
-        const res = await todoListsApi.createTodoList(title)
-        dispatch(addTodolistAC(res.data.data.item))
+    dispatch(setStatusAC('loading'))
+    const res = await todoListsApi.createTodoList(title)
+    dispatch(addTodolistAC(res.data.data.item))
+    dispatch(setStatusAC('succeeded'))
 }
 
 //редактирование листа
 export const changeTodoListTitleThunkCreator = (todoListId: string, title: string): AppThunk => async dispatch => {
-        await todoListsApi.changeTodoListTitle(todoListId, title)
-                dispatch(changeTodolistTitleAC(todoListId, title))
+    dispatch(setStatusAC('loading'))
+    await todoListsApi.changeTodoListTitle(todoListId, title)
+    dispatch(changeTodolistTitleAC(todoListId, title))
+    dispatch(setStatusAC('succeeded'))
 }

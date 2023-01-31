@@ -125,8 +125,8 @@ test('set todoLists', () => {
     const todoListId1 = v1()
     const todoListId2 = v1()
     const startTodoLists: Array<TodoListDomainType> = [
-        {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: ''},
-        {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: ''}
+        {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
+        {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'}
     ]
     const action = setTodolistsAC(startTodoLists)
     const endState = tasksReducer({}, action)

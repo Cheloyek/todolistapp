@@ -18,9 +18,9 @@ todoListId2 = v1()
 todoListId3 = v1()
 
 startState = [
-    {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: ''},
-    {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: ''},
-    {id: todoListId3, title: 'Todolist3', filter: 'all', order: 0, addedDate: ''}
+    {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
+    {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
+    {id: todoListId3, title: 'Todolist3', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'}
 ]
 })
 test('correct todolist should be removed', () => {
