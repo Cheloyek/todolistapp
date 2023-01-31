@@ -149,6 +149,7 @@ function AppWithReducers() {
                                               changeFilter={changeFilter}
                                               addTask={addTask}
                                               changeTaskStatus={changeTaskStatus}
+                                              todolistStatus={todolist.todolistStatus}
                                               changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
                                               filter={todolist.filter}

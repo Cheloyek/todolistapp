@@ -9,4 +9,4 @@ export default {
     decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof AppWithRedux>;
 
-export const AppStories = () => {return <AppWithRedux />};
+export const AppStories = () => {return <AppWithRedux demo={true}/>};

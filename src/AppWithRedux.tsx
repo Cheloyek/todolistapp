@@ -28,10 +28,17 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-function AppWithRedux() {
+type PropsType = {
+    demo?: boolean
+}
+
+function AppWithRedux({demo = false}: PropsType) {
 
     //получение листов с сервера
     useEffect(() => {
+        if (demo) {
+            return
+        }
         const thunk = fetchTodolistsThunkCreator()
         dispatch(thunk)
     }, [])
@@ -137,10 +144,12 @@ function AppWithRedux() {
                                               changeFilter={changeFilter}
                                               addTask={addTask}
                                               changeTaskStatus={changeTaskStatus}
+                                              todolistStatus={todolist.todolistStatus}
                                               changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
                                               filter={todolist.filter}
                                               deleteTodoList={removeTodoList}
+                                              demo={demo}
                                     />
                                 </Paper>
                             </Grid>

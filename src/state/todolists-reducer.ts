@@ -177,3 +177,8 @@ export const changeTodoListTitleThunkCreator = (todoListId: string, title: strin
     dispatch(changeTodolistTitleAC(todoListId, title))
     dispatch(setStatusAC('succeeded'))
 }
+
+//смена статуса листа
+export const changeTodoListStatusAC = () => {
+
+}
