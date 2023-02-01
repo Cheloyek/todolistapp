@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
@@ -51,6 +52,7 @@ export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
                onKeyDown={onKeyDownHandler}
                error={!!error}
                    helperText={error}
+                   disabled={props.disabled}
                variant='outlined'
         />
         <Button onClick={addTask} size={'medium'} variant={"contained"}

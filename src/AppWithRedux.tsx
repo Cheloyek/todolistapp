@@ -17,10 +17,11 @@ import {addTaskThunkCreator, removeTaskThunkCreator, updateTaskThunkCreator} fro
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TaskStatuses, TaskType} from "./api/todolists-api";
-import {ThunkDispatch} from "redux-thunk";
+import thunk, {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import ErrorSnackbar from "./snackbars/errorSnackbar";
 import {RequestStatusType} from "./app-reducer";
+import {action} from "@storybook/addon-actions";
 
 type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 
@@ -97,18 +98,18 @@ function AppWithRedux({demo = false}: PropsType) {
     }, [dispatch])
 
     //change todoList title
-    const changeTodoListTitle = useCallback ((todoListId: string, newTitle: string) => {
+    const changeTodoListTitle = (todoListId: string, newTitle: string) => {
         // const action = changeTodolistTitleAC(todoListId, newTitle)
         const thunk = changeTodoListTitleThunkCreator(todoListId, newTitle)
         dispatch(thunk)
-    }, [dispatch])
+    }
 
-    const changeFilter = useCallback ((value: FilterValuesType, todolistId: string) => {
+    const changeFilter = (value: FilterValuesType, todolistId: string) => {
         console.log(`filter value: ${value}`)
         console.log(`filter id: ${todolistId}`)
         const action = changeTodolistFilterAC(todolistId, value)
         dispatch(action)
-    }, [dispatch])
+    }
 
 
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
