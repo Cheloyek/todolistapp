@@ -24,8 +24,9 @@ const Template: ComponentStory<typeof Todolist> = (args) => <Todolist {...args} 
 
 export const TodoListStories = Template.bind({});
 TodoListStories.args = {
-    title: 'TodoList title',
-    todolistId: '1',
+    // todolist:
+    // todolist: 'TodoList title',
+    // todolistId: '1',
     tasks: [{id: '1', status: TaskStatuses.Completed, title: 'taskId_1', todoListId: v1(), addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi}],
     removeTask: removeTaskCallback,
     changeFilter: changeFilterCallback,
@@ -33,6 +34,6 @@ TodoListStories.args = {
     changeTaskStatus: changeTaskStatusCallback,
     changeTaskTitle: changeTaskTitleCallback,
     changeTodoListTitle: changeTodoListTitleCallback,
-    filter: 'all',
+    // filter: 'all',
     deleteTodoList: changeTodoListTitleCallback,
 };

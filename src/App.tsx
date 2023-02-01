@@ -153,8 +153,9 @@ function App() {
                             return <Grid className='todoList'>
                                 <Paper elevation={3} style={{margin: '30px', padding: '10px', backgroundColor: "#5a8b96",}}>
                                     <Todolist key={todolist.id}
-                                              todolistId={todolist.id}
-                                              title={todolist.title}
+                                              todolist={todolist}
+                                              // todolistId={todolist.id}
+                                              // title={todolist.title}
                                               tasks={tasksForTodoList}
                                               removeTask={removeTask}
                                               changeFilter={changeFilter}
@@ -163,7 +164,7 @@ function App() {
                                               todolistStatus={todolist.todolistStatus}
                                               changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
-                                              filter={todolist.filter}
+                                              // filter={todolist.filter}
                                               deleteTodoList={removeTodoList}
                                     />
                                 </Paper>
