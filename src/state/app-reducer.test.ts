@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {appReducer, InitialStateType, RequestStatusType, setErrorAC, setStatusAC} from "../app-reducer";
+import {appReducer, InitialStateType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "../app-reducer";
 
 let todoListId1: string
 let todoListId2: string
@@ -21,7 +21,7 @@ beforeEach(() => {
 test('correct error message should be set', () => {
 
     const errorMessage = 'some error'
-    const endState = appReducer(startState, setErrorAC(errorMessage))
+    const endState = appReducer(startState, setAppErrorAC(errorMessage))
 
     expect(endState.error).toBe(errorMessage)
 
@@ -30,7 +30,7 @@ test('correct error message should be set', () => {
 test('correct status should be set', () => {
 
     const status: RequestStatusType = 'succeeded'
-    const endState = appReducer(startState, setStatusAC(status))
+    const endState = appReducer(startState, setAppStatusAC(status))
 
     expect(endState.status).toBe(status)
 

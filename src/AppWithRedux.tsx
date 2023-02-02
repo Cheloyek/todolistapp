@@ -105,8 +105,6 @@ function AppWithRedux({demo = false}: PropsType) {
     }
 
     const changeFilter = (value: FilterValuesType, todolistId: string) => {
-        console.log(`filter value: ${value}`)
-        console.log(`filter id: ${todolistId}`)
         const action = changeTodolistFilterAC(todolistId, value)
         dispatch(action)
     }

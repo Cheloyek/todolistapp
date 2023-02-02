@@ -7,7 +7,7 @@ type AddItemFormPropsType = {
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     console.log('AddItemForm is called')
     const [newTaskTitle, setNewTaskTitle] = useState('')
     let [error, setError] = useState<null | string>(null)
@@ -46,17 +46,17 @@ export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
         {/*       className={error ? 'error' : ''}*/}
         {/*/>*/}
         <TextField type="text"
-               label={'Task title'}
-               value={newTaskTitle}
-               onChange={onChangeHandler}
-               onKeyDown={onKeyDownHandler}
-               error={!!error}
+                   label={'Task title'}
+                   value={newTaskTitle}
+                   onChange={onChangeHandler}
+                   onKeyDown={onKeyDownHandler}
+                   error={!!error}
                    helperText={error}
                    disabled={props.disabled}
-               variant='outlined'
+                   variant='outlined'
         />
         <Button onClick={addTask} size={'medium'} variant={"contained"}
-                style={{color: '#1132a8', backgroundColor: '#e17a02', borderColor: '#659DBD', margin: '10px'}} >
+                style={{color: '#1132a8', backgroundColor: '#e17a02', borderColor: '#659DBD', margin: '10px'}} disabled={props.disabled}>
             <AddIcon/>
         </Button>
         {/*{error && <div className='error-message'>{error}</div>}*/}
