@@ -13,10 +13,10 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
 
     const activateEditMode = (value: boolean) => {
         setEditMode(value)
-        if (value === true) {
+        if (value) {
             setTitle(props.title)
         }
-        if (value === false) {
+        if (!value) {
             props.onChange(title)
         }
     }

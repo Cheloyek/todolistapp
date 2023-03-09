@@ -47,8 +47,8 @@ function AppWithRedux({demo = false}: PropsType) {
     console.log('App is called')
     // let dispatch = useAppDispatch()
     let dispatch = useDispatch<AppThunkType>()
-    let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>( (state) => state.todolists)
-    let tasks = useSelector<AppRootStateType, TasksStateType>( (state) => state.tasks)
+    let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
+    let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
 
     //add task
     // const addTask = useCallback ((title: string, todoListId: string) => {
@@ -56,35 +56,35 @@ function AppWithRedux({demo = false}: PropsType) {
     //     dispatch(action)
     // }, [dispatch])
 
-    const addTask = useCallback ((title: string, todoListId: string) => {
+    const addTask = useCallback((title: string, todoListId: string) => {
         const thunk = addTaskThunkCreator(title, todoListId)
         dispatch(thunk)
     }, [dispatch])
 
 
     //change task status
-    const changeTaskStatus = useCallback ((taskId: string, status: TaskStatuses, todoListId: string) => {
+    const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
         // const action = changeTaskStatusAC(todoListId, taskId, status)
         const thunk = updateTaskThunkCreator(todoListId, taskId, {status})
         dispatch(thunk)
     }, [dispatch])
 
     //change task title
-    const changeTaskTitle = useCallback ((todoListId: string, taskId: string, newTitle: string) => {
+    const changeTaskTitle = useCallback((todoListId: string, taskId: string, newTitle: string) => {
         // const action = changeTaskTitleAC(todoListId, taskId, newTitle)
         const thunk = updateTaskThunkCreator(todoListId, taskId, {title: newTitle})
         dispatch(thunk)
     }, [dispatch])
 
     //delete task
-    const removeTask = useCallback ((id: string, todoListId: string) => {
+    const removeTask = useCallback((id: string, todoListId: string) => {
         // const action = removeTaskAC(todoListId, id)
         const thunk = removeTaskThunkCreator(todoListId, id)
         dispatch(thunk)
     }, [dispatch])
 
     //add new todoList
-    const addTodoList = useCallback ((todoListTitle: string) => {
+    const addTodoList = useCallback((todoListTitle: string) => {
         // const action = addTodolistAC(todoListTitle)
         const thunk = addTodoListThunkCreator(todoListTitle)
         dispatch(thunk)
@@ -139,8 +139,8 @@ function AppWithRedux({demo = false}: PropsType) {
                                 <Paper elevation={3} style={{margin: '30px', padding: '10px', backgroundColor: "#5a8b96",}}>
                                     <Todolist key={todolist.id}
                                               todolist={todolist}
-                                              // todolistId={todolist.id}
-                                              // title={todolist.title}
+                                        // todolistId={todolist.id}
+                                        // title={todolist.title}
                                               tasks={tasksForTodoList}
                                               removeTask={removeTask}
                                               changeFilter={changeFilter}
@@ -149,7 +149,7 @@ function AppWithRedux({demo = false}: PropsType) {
                                               todolistStatus={todolist.todolistStatus}
                                               changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
-                                              // filter={todolist.filter}
+                                        // filter={todolist.filter}
                                               deleteTodoList={removeTodoList}
                                               demo={demo}
                                     />

@@ -175,7 +175,10 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
                     dispatch(setAppStatusAC('failed'))
                 }
             }
-            );
+            )
+        .catch((error) => {
+            dispatch(setAppErrorAC(error.message))
+        })
     }
 }
 
