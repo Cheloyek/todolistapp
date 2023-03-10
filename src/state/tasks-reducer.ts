@@ -10,52 +10,52 @@ const initialState: TasksStateType = {}
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
-            let copyState = {...state}
-            let todoListTasks = copyState[action.todolistId]
-            copyState[action.todolistId] = todoListTasks.filter(task => task.id !== action.taskId)
-            return copyState
+            return {
+                ...state,
+                [action.todolistId]: state[action.todolistId].filter(task => task.id !== action.taskId)
+            }
         }
-
         case 'ADD-TASK': {
-            const newTask = action.task
-            let copyState = {...state}
-            let todoListTasks = copyState[newTask.todoListId]
-            copyState[newTask.todoListId] = [newTask, ...todoListTasks]
-            return copyState
+            return {
+                ...state,
+                [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]
+            }
+            // const newTask = action.task
+            // let copyState = {...state}
+            // let todoListTasks = copyState[newTask.todoListId]
+            // copyState[newTask.todoListId] = [newTask, ...todoListTasks]
+            // return copyState
         }
-
         case 'UPDATE-TASK': {
-            let copyState = {...state}
-            let todoListTasks = copyState[action.todolistId]
-            copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, ...action.model} : t)
-            return copyState
+            return {
+                ...state,
+                [action.todolistId]: state[action.todolistId]
+                    .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
+            }
+            // let copyState = {...state}
+            // let todoListTasks = copyState[action.todolistId]
+            // copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, ...action.model} : t)
+            // return copyState
         }
-
         case 'ADD-TODOLIST': {
-            let copyState = {...state}
-            // copyState[action.todolistId] = []
-            copyState[action.todoList.id] = []
-            return copyState
+            return {...state, [action.todoList.id]: []}
         }
-
         case 'REMOVE-TODOLIST': {
             let copyState = {...state}
             delete copyState[action.id]
             return copyState
         }
-
         case 'SET-TODOLISTS': {
             let copyState = {...state}
             action.todoLists.forEach((tl) => copyState[tl.id] = [])
             return copyState
         }
-
         case 'SET-TASKS': {
-            let copyState = {...state}
-            copyState[action.todolistId] = action.tasks
-            return copyState
+            return {...state, [action.todolistId]: action.tasks}
+            // let copyState = {...state}
+            // copyState[action.todolistId] = action.tasks
+            // return copyState
         }
-
         default:
             return state
     }
