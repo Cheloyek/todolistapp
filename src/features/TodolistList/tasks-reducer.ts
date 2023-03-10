@@ -1,9 +1,9 @@
-import {TasksStateType} from "../AppWithRedux";
+import {TasksStateType} from "../../app/AppWithRedux";
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType,} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
 import {Dispatch} from "redux";
-import {AppActionsType, AppRootStateType} from "./store";
-import {setAppErrorAC, SetErrorActionsType, setAppStatusAC, SetStatusActionsType} from "../app-reducer";
+import {AppActionsType, AppRootStateType} from "../../app/store";
+import {setAppErrorAC, SetErrorActionsType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
 
 const initialState: TasksStateType = {}
 
@@ -107,7 +107,6 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
                     dispatch(action)
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    // return alert(`${res.data.messages}`)
                     if (res.data.messages.length > 0) {
                         dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {

@@ -1,6 +1,6 @@
-import {todoListsApi, TodoListType} from "../api/todolists-api";
-import {AppThunk} from "./store";
-import {RequestStatusType, setAppStatusAC, SetStatusActionsType} from "../app-reducer";
+import {todoListsApi, TodoListType} from "../../api/todolists-api";
+import {AppThunk} from "../../app/store";
+import {RequestStatusType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
 
 const initialState: Array<TodoListDomainType> = []
 

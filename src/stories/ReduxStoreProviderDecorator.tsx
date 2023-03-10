@@ -2,11 +2,11 @@ import React from 'react'
 import {Provider} from "react-redux";
 import {applyMiddleware, combineReducers, legacy_createStore} from 'redux'
 import {v1} from 'uuid'
-import {tasksReducer} from "../state/tasks-reducer";
-import {todolistsReducer} from "../state/todolists-reducer";
+import {tasksReducer} from "../features/TodolistList/tasks-reducer";
+import {todolistsReducer} from "../features/TodolistList/todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
-import {AppRootStateType} from "../state/store";
-import {appReducer} from "../app-reducer";
+import {AppRootStateType} from "../app/store";
+import {appReducer} from "../app/app-reducer";
 import thunk from "redux-thunk";
 
 

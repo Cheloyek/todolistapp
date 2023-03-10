@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {appReducer, InitialStateType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "../app-reducer";
+import {appReducer, InitialStateType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "./app-reducer";
 
 let todoListId1: string
 let todoListId2: string
