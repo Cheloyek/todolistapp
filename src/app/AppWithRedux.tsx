@@ -8,27 +8,37 @@ import {TaskType} from "../api/todolists-api";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
+import {Login} from "../features/Login";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 function AppWithRedux({demo = false}: DemoPropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     return (
-        <div className="App">
-            <AppBar position="static">
-                <Toolbar variant="dense" style={{backgroundColor: '#5a8b96'}}>
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" color="inherit" component="div">
-                        News
-                    </Typography>
-                </Toolbar>
-                {status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02", position: "absolute", marginTop: "44px", width: "100%"}}/>}
-                <ErrorSnackbar/>
-            </AppBar>
-            <Container fixed>
-                <TodolistsList demo={demo}/>
-            </Container>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <AppBar position="static">
+                    <Toolbar variant="dense" style={{backgroundColor: '#5a8b96'}}>
+                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography variant="h6" color="inherit" component="div">
+                            News
+                        </Typography>
+                    </Toolbar>
+                    {status === 'loading' && <LinearProgress
+                        style={{backgroundColor: "#e17a02", position: "absolute", marginTop: "44px", width: "100%"}}/>}
+                    <ErrorSnackbar/>
+                </AppBar>
+                <Container fixed>
+                    <Routes>
+                        <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>} />
+                        <Route path='*' element={<Navigate to='/404' />} />
+                    </Routes>
+                </Container>
+            </div>
+        </BrowserRouter>
     );
 }
 
