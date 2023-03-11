@@ -12,7 +12,7 @@ export const handleAppError = <D>(dispatch: Dispatch<ActionsType>, data: TodoLis
     dispatch(setAppStatusAC('failed'))
 }
 
-export const handleServerNetworkError = (dispatch: Dispatch<ActionsType>, error: any) => {
+export const handleServerNetworkError = (dispatch: Dispatch<ActionsType>, error: { message: string}) => {
     console.log("error utils network")
     dispatch(setAppErrorAC(error.message ? error.message : 'Some error'))
     dispatch(setAppStatusAC('failed'))
