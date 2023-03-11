@@ -41,6 +41,12 @@ export const todoListsApi = {
     }
 }
 
+export const authApi = {
+    login(email: string, password: string, rememberMe: boolean, captcha?: string) {
+        return instance.post<TodoListResponseType<{userId?: number}>>(`/auth/login`, {email, password, rememberMe, captcha})
+    }
+}
+
 //types
 export type TodoListType = {
     id: string

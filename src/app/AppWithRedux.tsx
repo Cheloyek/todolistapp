@@ -8,7 +8,7 @@ import {TaskType} from "../api/todolists-api";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
-import {Login} from "../features/Login";
+import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 function AppWithRedux({demo = false}: DemoPropsType) {
