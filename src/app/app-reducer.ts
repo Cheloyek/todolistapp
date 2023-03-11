@@ -30,6 +30,6 @@ export const setAppStatusAC = (status: RequestStatusType) => {
     return {type: 'APP/SET-STATUS', status} as const
 }
 
-export type SetErrorActionsType = ReturnType<typeof setAppErrorAC>;
-export type SetStatusActionsType = ReturnType<typeof setAppStatusAC>;
-type ActionsType = SetErrorActionsType | SetStatusActionsType
+export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
+export type SetStatusActionType = ReturnType<typeof setAppStatusAC>;
+export type ActionsType = SetErrorActionType | SetStatusActionType

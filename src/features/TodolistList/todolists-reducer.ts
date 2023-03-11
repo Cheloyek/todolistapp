@@ -1,6 +1,6 @@
 import {todoListsApi, TodoListType} from "../../api/todolists-api";
 import {AppThunk} from "../../app/store";
-import {RequestStatusType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
+import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusActionType} from "../../app/app-reducer";
 
 const initialState: Array<TodoListDomainType> = []
 
@@ -12,7 +12,6 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = initialState
 
 
         case 'ADD-TODOLIST':
-            // let newTodoList: TodoListDomainType = {...action.todoList, filter: 'all', todolistStatus: 'idle'}
             return [{...action.todoList, filter: 'all', todolistStatus: 'idle'}, ...state]
 
 
@@ -72,6 +71,10 @@ export const fetchTodolistsThunkCreator = (): AppThunk => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
             })
+            .catch((error) => {
+                console.log(error)
+                // dispatch(setAppErrorAC(e.))
+            })
     }
 }
 
@@ -83,9 +86,13 @@ export const removeTodolistThunkCreator = (todoListId: string): AppThunk => asyn
         dispatch(removeTodolistAC(todoListId))
         dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
+        // console.log("error")
+        // console.log(error.message)
         dispatch(setAppStatusAC('failed'))
         throw new Error(e)
+        // setAppErrorAC(e.message)
     }
+
 }
 
 export const addTodoListThunkCreator = (title: string): AppThunk => async dispatch => {
@@ -111,7 +118,7 @@ export type TodolistsActionsType =
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
     | SetTodolistsActionType
-    | SetStatusActionsType
+    | SetStatusActionType
     | ChangeTodolistStatusActionType
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>

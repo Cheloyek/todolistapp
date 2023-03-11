@@ -31,7 +31,7 @@ export default function ErrorSnackbar() {
                     {error}
                 </Alert>
             </Snackbar>
-            {open && <Alert severity="error">{error}</Alert>}
+            {/*{open && <Alert severity="error">{error}</Alert>}*/}
             {/*<Alert severity="warning">This is a warning message!</Alert>*/}
             {/*<Alert severity="info">This is an information message!</Alert>*/}
             {/*<Alert severity="success">This is a success message!</Alert>*/}
