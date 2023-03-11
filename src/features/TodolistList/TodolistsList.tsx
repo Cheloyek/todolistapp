@@ -8,18 +8,19 @@ import {
 } from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {addTaskThunkCreator, removeTaskThunkCreator, updateTaskThunkCreator} from "./tasks-reducer";
-import {TaskStatuses} from "../../api/todolists-api";
+import {TaskStatuses, TaskType} from "../../api/todolists-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
-import {demoPropsType, TasksStateType} from "../../app/AppWithRedux";
+import {DemoPropsType} from "../../app/AppWithRedux";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 
-export const TodolistsList = ({demo= false}: demoPropsType) => {
+export const TodolistsList = ({demo= false}: DemoPropsType) => {
     let dispatch = useDispatch<AppThunkType>()
 
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
+    console.log("todoLists", todoLists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
 
     useEffect(() => {
@@ -101,3 +102,6 @@ export const TodolistsList = ({demo= false}: demoPropsType) => {
 }
 
 type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}

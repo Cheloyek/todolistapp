@@ -9,15 +9,7 @@ import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
-export type demoPropsType = {
-    demo?: boolean
-}
-
-function AppWithRedux({demo = false}: demoPropsType) {
+function AppWithRedux({demo = false}: DemoPropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     return (
         <div className="App">
@@ -30,7 +22,7 @@ function AppWithRedux({demo = false}: demoPropsType) {
                         News
                     </Typography>
                 </Toolbar>
-                {status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02"}}/>}
+                {status === 'loading' && <LinearProgress style={{backgroundColor: "#e17a02", position: "absolute", marginTop: "44px", width: "100%"}}/>}
                 <ErrorSnackbar/>
             </AppBar>
             <Container fixed>
@@ -41,5 +33,13 @@ function AppWithRedux({demo = false}: demoPropsType) {
 }
 
 export default AppWithRedux;
+
+// export type TasksStateType = {
+//     [key: string]: Array<TaskType>
+// }
+
+export type DemoPropsType = {
+    demo?: boolean
+}
 
 

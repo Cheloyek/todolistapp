@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import {useDispatch, useSelector} from "react-redux";
@@ -15,7 +14,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function ErrorSnackbar() {
-    // const [open, setOpen] = React.useState(false);
     const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
     const dispatch = useDispatch()
     const open = error !== null

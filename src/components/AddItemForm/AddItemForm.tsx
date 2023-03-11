@@ -8,12 +8,12 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
-    console.log('AddItemForm is called')
     const [newTaskTitle, setNewTaskTitle] = useState('')
     let [error, setError] = useState<null | string>(null)
 
     //input -> change new task title
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.value.length >= 100) {}
         setNewTaskTitle(e.currentTarget.value)
     }
     //press key Enter -> addTask
@@ -31,7 +31,11 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             setError('Title is required')
             setNewTaskTitle('')
             return
-        } else {
+        }
+        else if (newTaskTitle.length >= 100) {
+            setError('The field Title must be a maximum length of \'100\' symbols')
+        }
+            else {
             props.addItem(newTaskTitle.trim())
             setNewTaskTitle('')
         }

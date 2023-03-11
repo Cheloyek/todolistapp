@@ -1,8 +1,8 @@
-import {TasksStateType} from "../../app/AppWithRedux";
 import {v1} from "uuid";
 import {addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import {TasksStateType} from "./TodolistsList";
 
 let todoListId1: string
 let todoListId2: string

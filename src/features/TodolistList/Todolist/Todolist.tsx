@@ -13,8 +13,6 @@ import {RequestStatusType} from "../../../app/app-reducer";
 
 type TodolistPropsType = {
     todolist: TodoListDomainType
-    // title: string
-    // todolistId: string
     tasks: TaskType[]
     removeTask: (id: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string) => void
@@ -23,7 +21,6 @@ type TodolistPropsType = {
     todolistStatus: RequestStatusType
     changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
     changeTodoListTitle: (todoListId: string, newTitle: string) => void
-    // filter: FilterValuesType
     deleteTodoList: (todoListId: string) => void
     demo?: boolean
 }
@@ -47,24 +44,15 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
     }, [])
 
     //click button -> change filter
-    // const changeTodoListFilter = useCallback ((value: FilterValuesType) => {
-    //     // props.changeFilter(value, props.todolist.id)}, [props.changeFilter, props.todolist.id])
-    //     props.changeFilter(value, props.todolist.id)}, [props.changeFilter, props.todolist.id])
     const changeTodoListFilter = useCallback ((value: FilterValuesType) => {
-        console.log('filter')
-        console.log(value)
-        console.log(props.todolist.id)
-        console.log(props.changeFilter(value, props.todolist.id))
         props.changeFilter(value, props.todolist.id)}, [props.changeFilter, props.todolist.id])
     //click button -> delete todolist
     const removeTodoList = useCallback(() => props.deleteTodoList(props.todolist.id), [props.deleteTodoList, props.todolist.id, props.todolist.filter])
 
-    //обертка addTask
     const addTask = useCallback ((title: string) => {
         props.addTask(title, props.todolist.id)
     }, [props.addTask, props.todolist.id])
 
-    //input todoList title
     const changeTodoListTitle = useCallback ((newTitle: string) => {
         props.changeTodoListTitle(props.todolist.id, newTitle)
     }, [props.changeTodoListTitle, props.todolist.id])
@@ -84,7 +72,7 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
     return (
         <div className='todolist' >
             <h3>
-                <EditableSpan title={props.todolist.title} onChange={changeTodoListTitle}/>
+                <EditableSpan title={props.todolist.title} onChange={changeTodoListTitle} disabled={props.todolistStatus === 'loading'}/>
                 <IconButton aria-label="delete" size="medium" disabled={props.todolistStatus === 'loading'}>
                     <DeleteIcon fontSize="small" onClick={removeTodoList}/>
                 </IconButton>
