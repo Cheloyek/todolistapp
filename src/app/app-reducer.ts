@@ -1,14 +1,20 @@
+import {AppThunk} from "./store";
+import {authApi} from "../api/todolists-api";
+import {AuthActionsType, setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {handleServerNetworkError} from "../utils/error-utils";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     error: null,
-    status: 'idle' as RequestStatusType
+    status: 'idle' as RequestStatusType,
+    isInitialized: false
 }
 
 export type InitialStateType = {
     error: null | string
     status: RequestStatusType
+    isInitialized: boolean
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -17,19 +23,33 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return <InitialStateType>{...state, error: action.error};
+        case 'APP/SET-IS-INITIALIZED':
+            return <InitialStateType>{...state, isInitialized: action.value}
         default:
             return state
     }
 }
 
-export const setAppErrorAC = (error: string | null) => {
-    return {type: 'APP/SET-ERROR', error} as const
+//actions
+export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
+export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
+export const setAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITIALIZED', value} as const)
+
+//thunks
+export const initializeAppThunkCreator = (): AppThunk => async dispatch => {
+    try {
+        const res = await authApi.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+        }
+    } catch (error: any) {
+        handleServerNetworkError(dispatch, error)
+    }
+    dispatch(setAppInitializedAC(true))
 }
 
-export const setAppStatusAC = (status: RequestStatusType) => {
-    return {type: 'APP/SET-STATUS', status} as const
-}
-
+//types
 export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
 export type SetStatusActionType = ReturnType<typeof setAppStatusAC>;
-export type ActionsType = SetErrorActionType | SetStatusActionType
+export type SetInitializedActionType = ReturnType<typeof setAppInitializedAC>
+export type ActionsType = SetErrorActionType | SetStatusActionType | SetInitializedActionType | AuthActionsType

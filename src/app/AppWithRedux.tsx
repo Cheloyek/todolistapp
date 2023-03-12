@@ -1,18 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {AppBar, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import {AppBar, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
-import {TaskType} from "../api/todolists-api";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
-import {RequestStatusType} from "./app-reducer";
+import {initializeAppThunkCreator, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
 import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 function AppWithRedux({demo = false}: DemoPropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(initializeAppThunkCreator())
+    }, [])
+
+    if (!isInitialized) {
+        return <div style={{position: 'fixed', marginTop: '10%', marginLeft: '50%', textAlign: 'center'}}>
+            <div>Loading</div>
+            <CircularProgress />
+        </div>
+    }
     return (
         <BrowserRouter>
             <div className="App">
@@ -33,8 +47,8 @@ function AppWithRedux({demo = false}: DemoPropsType) {
                     <Routes>
                         <Route path='/' element={<TodolistsList demo={demo}/>}/>
                         <Route path='/login' element={<Login/>}/>
-                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>} />
-                        <Route path='*' element={<Navigate to='/404' />} />
+                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path='*' element={<Navigate to='/404'/>}/>
                     </Routes>
                 </Container>
             </div>
