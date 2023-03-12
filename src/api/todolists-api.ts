@@ -45,6 +45,9 @@ export const authApi = {
     login(email: string, password: string, rememberMe: boolean, captcha?: string) {
         return instance.post<TodoListResponseType<{userId?: number}>>(`/auth/login`, {email, password, rememberMe, captcha})
     },
+    logout() {
+        return instance.delete<TodoListResponseType<{userId?: number}>>(`/auth/login`)
+    },
     me() {
         return instance.get<TodoListResponseType<{id: number, email: string, login: string}>>(`/auth/me`)
     }

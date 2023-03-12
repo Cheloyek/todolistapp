@@ -1,6 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {AppBar, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    LinearProgress,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
@@ -9,16 +18,23 @@ import {initializeAppThunkCreator, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
 import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {logoutThunkCreator} from "../features/Login/auth-reducer";
 
 function AppWithRedux({demo = false}: DemoPropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         // @ts-ignore
         dispatch(initializeAppThunkCreator())
+    }, [])
+
+    const logoutHandler = useCallback (() => {
+        //@ts-ignore
+        dispatch(logoutThunkCreator())
     }, [])
 
     if (!isInitialized) {
@@ -38,6 +54,7 @@ function AppWithRedux({demo = false}: DemoPropsType) {
                         <Typography variant="h6" color="inherit" component="div">
                             News
                         </Typography>
+                        {isLoggedIn ? <Button style={{color: 'red', justifyContent: 'flex-end'}} onClick={logoutHandler}>Logout</Button> : null}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress
                         style={{backgroundColor: "#e17a02", position: "absolute", marginTop: "44px", width: "100%"}}/>}

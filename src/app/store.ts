@@ -2,13 +2,13 @@ import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import {TodolistsActionsType, todolistsReducer} from "../features/TodolistList/todolists-reducer";
 import {TasksActionsType, tasksReducer} from "../features/TodolistList/tasks-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
-import {ActionsType, appReducer, SetErrorActionType, SetStatusActionType} from "./app-reducer";
-import {AuthActionsType, authReducer} from "../features/Login/auth-reducer";
+import {AppReducerActionsType, appReducer, SetErrorActionType, SetStatusActionType} from "./app-reducer";
+import {AuthActionType, authReducer} from "../features/Login/auth-reducer";
 
 // type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
 
 //общий тип actions, включающий все типы actions
-export type AppActionsType = TodolistsActionsType | TasksActionsType | AuthActionsType | SetErrorActionType | SetStatusActionType | ActionsType
+export type AppActionsType = TodolistsActionsType | TasksActionsType | AuthActionType | AppReducerActionsType
 
 //тип всего объекта
 // export type AppRootStateType = {

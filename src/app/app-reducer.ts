@@ -1,6 +1,6 @@
 import {AppThunk} from "./store";
 import {authApi} from "../api/todolists-api";
-import {AuthActionsType, setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {setIsLoggedInAC} from "../features/Login/auth-reducer";
 import {handleServerNetworkError} from "../utils/error-utils";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -17,7 +17,7 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: AppReducerActionsType): InitialStateType => {
     switch (action.type) {
         case 'APP/SET-STATUS':
             return {...state, status: action.status}
@@ -52,4 +52,4 @@ export const initializeAppThunkCreator = (): AppThunk => async dispatch => {
 export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
 export type SetStatusActionType = ReturnType<typeof setAppStatusAC>;
 export type SetInitializedActionType = ReturnType<typeof setAppInitializedAC>
-export type ActionsType = SetErrorActionType | SetStatusActionType | SetInitializedActionType | AuthActionsType
+export type AppReducerActionsType = SetErrorActionType | SetStatusActionType | SetInitializedActionType
