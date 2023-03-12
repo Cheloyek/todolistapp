@@ -9,12 +9,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {loginThunkCreator} from "./auth-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
 
 export const Login = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
@@ -43,7 +43,6 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            // @ts-ignore
             dispatch(loginThunkCreator(values.email, values.password, values.rememberMe))
             formik.resetForm()
         },
@@ -109,6 +108,7 @@ export const Login = () => {
     </Grid>
 }
 
+//types
 type FormikErrorType = {
     email?: string
     password?: string

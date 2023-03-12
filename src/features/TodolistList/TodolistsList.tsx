@@ -1,8 +1,11 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {
-    addTodoListThunkCreator, changeTodolistFilterAC, changeTodoListTitleThunkCreator,
-    fetchTodolistsThunkCreator, FilterValuesType,
+    addTodoListThunkCreator,
+    changeTodolistFilterAC,
+    changeTodoListTitleThunkCreator,
+    fetchTodolistsThunkCreator,
+    FilterValuesType,
     removeTodolistThunkCreator,
     TodoListDomainType
 } from "./todolists-reducer";
@@ -13,12 +16,10 @@ import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
 import {DemoPropsType} from "../../app/AppWithRedux";
-import {ThunkDispatch} from "redux-thunk";
-import {Action} from "redux";
 import {Navigate} from "react-router-dom";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
-    let dispatch = useDispatch<AppThunkType>()
+    const dispatch = useAppDispatch()
 
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
@@ -28,33 +29,27 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        const thunk = fetchTodolistsThunkCreator()
-        dispatch(thunk)
+        dispatch(fetchTodolistsThunkCreator())
     }, [])
 
     const addTask = useCallback((title: string, todoListId: string) => {
-        const thunk = addTaskThunkCreator(title, todoListId)
-        dispatch(thunk)
+        dispatch(addTaskThunkCreator(title, todoListId))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
-        const thunk = updateTaskThunkCreator(todoListId, taskId, {status})
-        dispatch(thunk)
+        dispatch(updateTaskThunkCreator(todoListId, taskId, {status}))
     }, [dispatch])
 
     const changeTaskTitle = useCallback((todoListId: string, taskId: string, newTitle: string) => {
-        const thunk = updateTaskThunkCreator(todoListId, taskId, {title: newTitle})
-        dispatch(thunk)
+        dispatch(updateTaskThunkCreator(todoListId, taskId, {title: newTitle}))
     }, [dispatch])
 
     const removeTask = useCallback((id: string, todoListId: string) => {
-        const thunk = removeTaskThunkCreator(todoListId, id)
-        dispatch(thunk)
+        dispatch(removeTaskThunkCreator(todoListId, id))
     }, [dispatch])
 
     const addTodoList = useCallback((todoListTitle: string) => {
-        const thunk = addTodoListThunkCreator(todoListTitle)
-        dispatch(thunk)
+        dispatch(addTodoListThunkCreator(todoListTitle))
     }, [dispatch])
 
     const removeTodoList = useCallback((todolistId: string) => {
@@ -62,13 +57,11 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }, [dispatch])
 
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
-        const thunk = changeTodoListTitleThunkCreator(todoListId, newTitle)
-        dispatch(thunk)
+        dispatch(changeTodoListTitleThunkCreator(todoListId, newTitle))
     }
 
     const changeFilter = (value: FilterValuesType, todolistId: string) => {
-        const action = changeTodolistFilterAC(todolistId, value)
-        dispatch(action)
+        dispatch(changeTodolistFilterAC(todolistId, value))
     }
 
     if (!isLoggedIn) {
@@ -107,7 +100,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     )
 }
 
-type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
+//types
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }

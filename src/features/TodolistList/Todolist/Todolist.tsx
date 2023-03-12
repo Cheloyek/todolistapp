@@ -7,45 +7,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "./Task/Task";
 import {FilterValuesType, TodoListDomainType} from "../todolists-reducer";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
-import {useDispatch} from "react-redux";
 import {fetchTasksThunkCreator} from "../tasks-reducer";
 import {RequestStatusType} from "../../../app/app-reducer";
-
-type TodolistPropsType = {
-    todolist: TodoListDomainType
-    tasks: TaskType[]
-    removeTask: (id: string, todoListId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
-    addTask: (title: string, todoListId: string) => void
-    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
-    todolistStatus: RequestStatusType
-    changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
-    changeTodoListTitle: (todoListId: string, newTitle: string) => void
-    deleteTodoList: (todoListId: string) => void
-    demo?: boolean
-}
-
-//type for task
-// export type TaskType = {
-//     id: string
-//     title: string
-//     status: TaskStatuses
-// }
+import {useAppDispatch} from "../../../app/store";
 
 export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsType) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
         if (demo) {
             return;
         }
-        // @ts-ignore
         dispatch(fetchTasksThunkCreator(props.todolist.id))
     }, [])
 
     //click button -> change filter
     const changeTodoListFilter = useCallback ((value: FilterValuesType) => {
         props.changeFilter(value, props.todolist.id)}, [props.changeFilter, props.todolist.id])
-    //click button -> delete todolist
+
     const removeTodoList = useCallback(() => props.deleteTodoList(props.todolist.id), [props.deleteTodoList, props.todolist.id, props.todolist.filter])
 
     const addTask = useCallback ((title: string) => {
@@ -77,7 +56,6 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask} disabled={props.todolistStatus === 'loading'}/>
-
             <div>
                 {tasksForTodoList.map(task =>
                     <Task
@@ -108,3 +86,17 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
     )
 } )
 
+//types
+type TodolistPropsType = {
+    todolist: TodoListDomainType
+    tasks: TaskType[]
+    removeTask: (id: string, todoListId: string) => void
+    changeFilter: (value: FilterValuesType, todolistId: string) => void
+    addTask: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void
+    todolistStatus: RequestStatusType
+    changeTaskTitle: (todoListId: string, taskId: string, newTitle: string) => void
+    changeTodoListTitle: (todoListId: string, newTitle: string) => void
+    deleteTodoList: (todoListId: string) => void
+    demo?: boolean
+}

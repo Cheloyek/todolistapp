@@ -17,16 +17,6 @@ import {
 import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../features/TodolistList/tasks-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
-// export type FilterValuesType = 'active' | 'completed' | 'all' //фильтр tasks
-// export type TodolistType = {
-//     id: string
-//     title: string
-//     filter: FilterValuesType
-// }
-// export type TasksStateType = {
-//     [key: string]: Array<TaskType>
-// }
-
 function AppWithReducers() {
 
     //initialState

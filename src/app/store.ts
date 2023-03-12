@@ -1,25 +1,17 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
+import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
 import {TodolistsActionsType, todolistsReducer} from "../features/TodolistList/todolists-reducer";
 import {TasksActionsType, tasksReducer} from "../features/TodolistList/tasks-reducer";
-import thunk, {ThunkAction} from "redux-thunk";
-import {AppReducerActionsType, appReducer, SetErrorActionType, SetStatusActionType} from "./app-reducer";
-import {AuthActionType, authReducer} from "../features/Login/auth-reducer";
-
-// type AppThunkType = ThunkDispatch<AppRootStateType, void, Action>
-
-//общий тип actions, включающий все типы actions
-export type AppActionsType = TodolistsActionsType | TasksActionsType | AuthActionType | AppReducerActionsType
-
-//тип всего объекта
-// export type AppRootStateType = {
-//     todolists: Array<TodoListDomainType>
-//     tasks: TasksStateType
-// }
-
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
+import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {appReducer, AppReducerActionsType} from "./app-reducer";
+import {AuthActionsType, authReducer} from "../features/Login/auth-reducer";
+import {useDispatch} from "react-redux";
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppActionsType = TodolistsActionsType | AuthActionsType | TasksActionsType | AppReducerActionsType
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks: tasksReducer,
@@ -27,8 +19,6 @@ const rootReducer = combineReducers({
     auth: authReducer
 })
 
-//create store
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
-// export const useAppDispatch = () => useDispatch<AppThunkType>()
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 // @ts-ignore
 window.store = store

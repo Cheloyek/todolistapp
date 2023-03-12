@@ -21,11 +21,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
                 ...state,
                 [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]
             }
-            // const newTask = action.task
-            // let copyState = {...state}
-            // let todoListTasks = copyState[newTask.todoListId]
-            // copyState[newTask.todoListId] = [newTask, ...todoListTasks]
-            // return copyState
         }
         case 'UPDATE-TASK': {
             return {
@@ -33,10 +28,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
                 [action.todolistId]: state[action.todolistId]
                     .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
             }
-            // let copyState = {...state}
-            // let todoListTasks = copyState[action.todolistId]
-            // copyState[action.todolistId] = todoListTasks.map(t => t.id === action.taskId ? {...t, ...action.model} : t)
-            // return copyState
         }
         case 'ADD-TODOLIST': {
             return {...state, [action.todoList.id]: []}
@@ -53,16 +44,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
         }
         case 'SET-TASKS': {
             return {...state, [action.todolistId]: action.tasks}
-            // let copyState = {...state}
-            // copyState[action.todolistId] = action.tasks
-            // return copyState
         }
         default:
             return state
     }
 }
 
-//AC
+//actions
 export const removeTaskAC = (todolistId: string, taskId: string) =>
     ({type: 'REMOVE-TASK', todolistId, taskId} as const)
 export const addTaskAC = (task: TaskType) =>
@@ -101,8 +89,6 @@ export const removeTaskThunkCreator = (todolistId: string, taskId: string) => {
             })
             .catch((error) => {
                 handleServerNetworkError(dispatch, error)
-                // dispatch(setAppErrorAC(error.message))
-                // dispatch(setAppStatusAC('failed'))
             })
     }
 }
@@ -119,18 +105,10 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
                     handleAppError(dispatch, res.data)
-                    // if (res.data.messages.length > 0) {
-                    //     dispatch(setAppErrorAC(res.data.messages[0]))
-                    // } else {
-                    //     dispatch(setAppErrorAC('unknown message'))
-                    // }
-                    // dispatch(setAppStatusAC('failed'))
                 }
             })
             .catch((error) => {
                 handleServerNetworkError(dispatch, error)
-                // dispatch(setAppErrorAC(error.message))
-                // dispatch(setAppStatusAC('failed'))
             })
     }
 }
@@ -160,18 +138,10 @@ export const updateTaskThunkCreator = (todoListId: string, taskId: string, model
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
                     handleAppError(dispatch, res.data)
-                    // if (res.data.messages.length > 0) {
-                    //     dispatch(setAppErrorAC(res.data.messages[0]))
-                    // } else {
-                    //     dispatch(setAppErrorAC('unknown message'))
-                    // }
-                    // dispatch(setAppStatusAC('failed'))
                 }
             })
             .catch((error) => {
                 handleServerNetworkError(dispatch, error)
-                // dispatch(setAppErrorAC(error.message))
-                // dispatch(setAppStatusAC('failed'))
             })
 
     }

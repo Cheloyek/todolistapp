@@ -15,7 +15,6 @@ const instance = axios.create({
 //api
 export const todoListsApi = {
     getTodoLists() {
-        // return axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
         return instance.get<Array<TodoListType>>('/todo-lists')
     },
     createTodoList(title: string) {

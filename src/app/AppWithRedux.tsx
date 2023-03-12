@@ -11,8 +11,8 @@ import {
     Typography
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "./store";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {initializeAppThunkCreator, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
@@ -21,19 +21,17 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {logoutThunkCreator} from "../features/Login/auth-reducer";
 
 function AppWithRedux({demo = false}: DemoPropsType) {
+    const dispatch = useAppDispatch()
+
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
-    const dispatch = useDispatch()
-
     useEffect(() => {
-        // @ts-ignore
         dispatch(initializeAppThunkCreator())
     }, [])
 
     const logoutHandler = useCallback (() => {
-        //@ts-ignore
         dispatch(logoutThunkCreator())
     }, [])
 
@@ -43,6 +41,7 @@ function AppWithRedux({demo = false}: DemoPropsType) {
             <CircularProgress />
         </div>
     }
+
     return (
         <BrowserRouter>
             <div className="App">
@@ -75,10 +74,7 @@ function AppWithRedux({demo = false}: DemoPropsType) {
 
 export default AppWithRedux;
 
-// export type TasksStateType = {
-//     [key: string]: Array<TaskType>
-// }
-
+//types
 export type DemoPropsType = {
     demo?: boolean
 }

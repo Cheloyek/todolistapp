@@ -8,33 +8,23 @@ const initialState: Array<TodoListDomainType> = []
 export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: TodolistsActionsType): TodoListDomainType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
-            // let copyState = [...state]
             return state.filter(tl => tl.id !== action.id)
-
-
         case 'ADD-TODOLIST':
             return [{...action.todoList, filter: 'all', todolistStatus: 'idle'}, ...state]
-
-
         case 'CHANGE-TODOLIST-TITLE':
             return state.map((tl) => tl.id === action.id ? {...tl, title: action.title} : tl)
-
         case 'CHANGE-TODOLIST-STATUS':
             return state.map((tl) => tl.id === action.id ? {...tl, todolistStatus: action.todoListStatus} : tl)
-
         case 'CHANGE-TODOLIST-FILTER':
             return state.map((tl) => tl.id === action.id ? {...tl, filter: action.filter} : tl)
-
-
         case 'SET-TODOLISTS':
             return action.todoLists.map((tl) => ({...tl, filter: 'all', todolistStatus: 'idle'}))
-
         default:
             return state
     }
 }
 
-//AC
+//actions
 export const removeTodolistAC = (id: string) => ({type: 'REMOVE-TODOLIST', id} as const)
 export const addTodolistAC = (todoList: TodoListType) => ({type: 'ADD-TODOLIST', todoList} as const)
 export const changeTodolistTitleAC = (id: string, title: string) => ({type: 'CHANGE-TODOLIST-TITLE', id, title} as const)
@@ -74,7 +64,6 @@ export const fetchTodolistsThunkCreator = (): AppThunk => {
             })
             .catch((error) => {
                 handleServerNetworkError(dispatch, error)
-                // dispatch(setAppErrorAC(e.))
             })
     }
 }
@@ -89,20 +78,12 @@ export const removeTodolistThunkCreator = (todoListId: string): AppThunk => asyn
     } catch (error: any) {
         dispatch(changeTodolistStatusAC(todoListId, 'failed'))
         handleServerNetworkError(dispatch, error)
-        // console.log("error")
-        // console.log(error.message)
-        // dispatch(setAppStatusAC('failed'))
-        // throw new Error(e)
-        // setAppErrorAC(e.message)
     }
 
 }
 
 export const addTodoListThunkCreator = (title: string): AppThunk => async dispatch => {
     dispatch(setAppStatusAC('loading'))
-    // const res = await todoListsApi.createTodoList(title)
-    // dispatch(addTodolistAC(res.data.data.item))
-    // dispatch(setAppStatusAC('succeeded'))
     try {
         const res = await todoListsApi.createTodoList(title)
         dispatch(addTodolistAC(res.data.data.item))
