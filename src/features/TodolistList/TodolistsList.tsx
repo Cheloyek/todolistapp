@@ -15,16 +15,17 @@ import {Todolist} from "./Todolist/Todolist";
 import {DemoPropsType} from "../../app/AppWithRedux";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
     let dispatch = useDispatch<AppThunkType>()
 
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
-    console.log("todoLists", todoLists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         const thunk = fetchTodolistsThunkCreator()
@@ -69,6 +70,11 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
         const action = changeTodolistFilterAC(todolistId, value)
         dispatch(action)
     }
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
+
     return (
         <>
             <Grid container>
