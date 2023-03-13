@@ -4,14 +4,14 @@ import {Dispatch} from "redux";
 
 export const handleAppError = <D>(dispatch: Dispatch<AppReducerActionsType>, data: TodoListResponseType<D>) => {
     if (data.messages.length > 0) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {
-        dispatch(setAppErrorAC('unknown message'))
+        dispatch(setAppErrorAC({error: 'unknown message'}))
     }
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppStatusAC({status: 'failed'}))
 }
 
 export const handleServerNetworkError = (dispatch: Dispatch<AppReducerActionsType>, error: { message: string}) => {
-    dispatch(setAppErrorAC(error.message ? error.message : 'Some error'))
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppErrorAC({error: error.message ? error.message : 'Some error'}))
+    dispatch(setAppStatusAC({status: 'failed'}))
 }

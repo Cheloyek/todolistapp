@@ -61,7 +61,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }
 
     const changeFilter = (value: FilterValuesType, todolistId: string) => {
-        dispatch(changeTodolistFilterAC(todolistId, value))
+        dispatch(changeTodolistFilterAC({id: todolistId, filter: value}))
     }
 
     if (!isLoggedIn) {

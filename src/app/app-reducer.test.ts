@@ -22,7 +22,8 @@ beforeEach(() => {
 test('correct error message should be set', () => {
 
     const errorMessage = 'some error'
-    const endState = appReducer(startState, setAppErrorAC(errorMessage))
+    // @ts-ignore
+    const endState = appReducer(startState, setAppErrorAC({error: errorMessage}))
 
     expect(endState.error).toBe(errorMessage)
 
@@ -31,7 +32,8 @@ test('correct error message should be set', () => {
 test('correct status should be set', () => {
 
     const status: RequestStatusType = 'succeeded'
-    const endState = appReducer(startState, setAppStatusAC(status))
+    // @ts-ignore
+    const endState = appReducer(startState, setAppStatusAC({status}))
 
     expect(endState.status).toBe(status)
 

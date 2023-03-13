@@ -63,29 +63,29 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskType>) =>
 //thunks
 export const fetchTasksThunkCreator = (todolistId: string) => {
     return (dispatch: Dispatch<AppActionsType | SetErrorActionType | SetStatusActionType>) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: 'loading'}))
         todoListsApi.getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items
                 dispatch(setTasksAC(todolistId, tasks))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             })
             .catch((error) => {
                 console.log(error)
                 dispatch(setAppErrorAC(error.message))
-                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppStatusAC({status: 'failed'}))
             })
     }
 }
 
 export const removeTaskThunkCreator = (todolistId: string, taskId: string) => {
     return (dispatch: Dispatch<AppActionsType | SetErrorActionType | SetStatusActionType>) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: 'loading'}))
         todoListsApi.deleteTask(todolistId, taskId)
             .then((res) => {
                 const action = removeTaskAC(todolistId, taskId)
                 dispatch(action)
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             })
             .catch((error) => {
                 handleServerNetworkError(dispatch, error)
@@ -95,14 +95,14 @@ export const removeTaskThunkCreator = (todolistId: string, taskId: string) => {
 
 export const addTaskThunkCreator = (title: string, todoListId: string) => {
     return (dispatch: Dispatch<AppActionsType | SetErrorActionType | SetStatusActionType>) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: 'loading'}))
         todoListsApi.createTask(todoListId, title)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     const task = res.data.data.item
                     const action = addTaskAC(task)
                     dispatch(action)
-                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC({status: 'succeeded'}))
                 } else {
                     handleAppError(dispatch, res.data)
                 }
@@ -115,7 +115,7 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
 
 export const updateTaskThunkCreator = (todoListId: string, taskId: string, model: UpdateTaskType) => {
     return (dispatch: Dispatch<AppActionsType | SetErrorActionType>, getState: () => AppRootStateType) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: 'loading'}))
         const state = getState()
         const task = state.tasks[todoListId].find(el => el.id === taskId)
         if (!task) {
@@ -135,7 +135,7 @@ export const updateTaskThunkCreator = (todoListId: string, taskId: string, model
                 if(res.data.resultCode === 0) {
                     const action = updateTaskAC(todoListId, taskId, model)
                     dispatch(action)
-                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC({status: 'succeeded'}))
                 } else {
                     handleAppError(dispatch, res.data)
                 }
