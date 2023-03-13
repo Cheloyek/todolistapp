@@ -2,30 +2,54 @@ import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../../app
 import {AppThunk} from "../../app/store";
 import {authApi} from "../../api/todolists-api";
 import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState: InitialStateType = {
+// const initialState: InitialStateType = {
+//     isLoggedIn: false
+// }
+
+//rtk
+const initialState = {
     isLoggedIn: false
 }
-export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-            return {...state, isLoggedIn: action.value}
-        default:
-            return state
+
+//rtk
+const slice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setIsLoggedInAC(stateDraft, action: PayloadAction<{value: boolean}>) {
+            stateDraft.isLoggedIn = action.payload.value
+        }
     }
-}
+})
+
+//redux
+// export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
+//     switch (action.type) {
+//         case 'login/SET-IS-LOGGED-IN':
+//             return {...state, isLoggedIn: action.value}
+//         default:
+//             return state
+//     }
+// }
+
+//rtk
+export const authReducer = slice.reducer
+export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 
 //actions
-export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+// export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 //thunks
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async dispatch => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await authApi.login(email, password, rememberMe, captcha)
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setIsLoggedInAC({value: true}))
+            // dispatch(setIsLoggedInAC(true))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         } else {
             handleAppError(dispatch, res.data)
         }
@@ -35,12 +59,12 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
 }
 
 export const logoutThunkCreator = (): AppThunk => async dispatch => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await authApi.logout()
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(false))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setIsLoggedInAC({value: false}))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         } else {
             handleAppError(dispatch, res.data)
         }
@@ -52,4 +76,4 @@ export const logoutThunkCreator = (): AppThunk => async dispatch => {
 //types
 export type AuthActionsType = LoginActionType | SetStatusActionType | SetErrorActionType
 export type LoginActionType = ReturnType<typeof setIsLoggedInAC>
-type InitialStateType = {isLoggedIn: boolean}
+// type InitialStateType = {isLoggedIn: boolean}
