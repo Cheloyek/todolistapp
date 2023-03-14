@@ -154,7 +154,7 @@ const initialState: Array<TodoListDomainType> = []
 
 const slice = createSlice({
     name: 'todolists',
-    initialState: initialState,
+    initialState,
     reducers: {
         removeTodolistAC(stateDraft, action: PayloadAction<{id: string}>) {
             const index = stateDraft.findIndex(tl => tl.id === action.payload.id)
