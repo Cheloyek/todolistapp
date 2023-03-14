@@ -163,7 +163,7 @@ const slice = createSlice({
             }
         },
         addTodolistAC(stateDraft, action: PayloadAction<{todoList: TodoListType}>) {
-            stateDraft.push({...action.payload.todoList, filter: 'all', todolistStatus: 'idle'})
+            stateDraft.unshift({...action.payload.todoList, filter: 'all', todolistStatus: 'idle'})
         },
         changeTodolistTitleAC(stateDraft, action: PayloadAction<{id: string, title: string}>) {
             const index = stateDraft.findIndex(tl => tl.id === action.payload.id)

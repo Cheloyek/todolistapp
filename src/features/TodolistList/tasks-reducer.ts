@@ -1,4 +1,9 @@
-import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType,} from "./todolists-reducer";
+import {
+    addTodolistAC,
+    AddTodolistActionType, removeTodolistAC,
+    RemoveTodolistActionType, setTodolistsAC,
+    SetTodolistsActionType,
+} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
 import {Dispatch} from "redux";
 import {AppActionsType, AppRootStateType} from "../../app/store";
@@ -9,6 +14,7 @@ import {handleAppError, handleServerNetworkError} from "../../utils/error-utils"
 const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
+// export const tasksReducer = (state: TasksStateType = initialState, action: any): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             return {
@@ -29,17 +35,20 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
                     .map(t => t.id === action.taskId ? {...t, ...action.model} : t)
             }
         }
-        case 'ADD-TODOLIST': {
-            return {...state, [action.todoList.id]: []}
+        // case 'ADD-TODOLIST': {
+        case addTodolistAC.type: {
+            return {...state, [action.payload.todoList.id]: []}
         }
-        case 'REMOVE-TODOLIST': {
+        // case 'REMOVE-TODOLIST': {
+        case removeTodolistAC.type: {
             let copyState = {...state}
-            delete copyState[action.id]
+            delete copyState[action.payload.id]
             return copyState
         }
-        case 'SET-TODOLISTS': {
+        // case 'SET-TODOLISTS': {
+        case setTodolistsAC.type: {
             let copyState = {...state}
-            action.todoLists.forEach((tl) => copyState[tl.id] = [])
+            action.payload.todoLists.forEach((tl: any) => copyState[tl.id] = [])
             return copyState
         }
         case 'SET-TASKS': {
