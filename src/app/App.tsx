@@ -20,7 +20,7 @@ import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {logoutThunkCreator} from "../features/Login/auth-reducer";
 
-function AppWithRedux({demo = false}: DemoPropsType) {
+function App({demo = false}: DemoPropsType) {
     const dispatch = useAppDispatch()
 
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
@@ -28,7 +28,9 @@ function AppWithRedux({demo = false}: DemoPropsType) {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        dispatch(initializeAppThunkCreator())
+        if (!demo) {
+            dispatch(initializeAppThunkCreator())
+        }
     }, [])
 
     const logoutHandler = useCallback (() => {
@@ -43,7 +45,6 @@ function AppWithRedux({demo = false}: DemoPropsType) {
     }
 
     return (
-        <BrowserRouter>
             <div className="App">
                 <AppBar position="static">
                     <Toolbar variant="dense" style={{backgroundColor: '#5a8b96'}}>
@@ -68,11 +69,10 @@ function AppWithRedux({demo = false}: DemoPropsType) {
                     </Routes>
                 </Container>
             </div>
-        </BrowserRouter>
     );
 }
 
-export default AppWithRedux;
+export default App;
 
 //types
 export type DemoPropsType = {

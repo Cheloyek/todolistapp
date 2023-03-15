@@ -6,7 +6,7 @@ describe('app', () => {
         // API from jest-image-snapshot
         expect(image).toMatchImageSnapshot()
     })
-    it('AppWithRedux base example, visually looks correct', async () => {
+    it('App base example, visually looks correct', async () => {
         await page.goto('http://localhost:9009/iframe.html?id=example-appwithredux--app-stories')
         const image = await page.screenshot()
 

@@ -15,7 +15,7 @@ import {TaskStatuses, TaskType} from "../../api/todolists-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
-import {DemoPropsType} from "../../app/AppWithRedux";
+import {DemoPropsType} from "../../app/App";
 import {Navigate} from "react-router-dom";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
