@@ -23,8 +23,7 @@
 /*  background-color: #0000ff;*/
 /*}*/
 
-/*выделение completed task*/
-.completed-task {
+.completedTask {
   opacity: 0.9;
   color: #5d5a5a;
 }

@@ -68,7 +68,8 @@ function AppWithReducers() {
         const action = updateTaskAC({todolistId, taskId, model: {title: newTitle}})
         dispatchToTasksReducer(action)
     }
-
+    //"jest:integration": "jest -c integration/jest.config.js --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+//"test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration --transformIgnorePatterns \"node_modules/(?!axios)/\""
     //delete task
     const removeTask = (taskId: string, todolistId: string) => {
         const action = removeTaskAC({todolistId, taskId})
