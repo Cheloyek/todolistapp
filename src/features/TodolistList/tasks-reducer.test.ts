@@ -43,7 +43,7 @@ beforeEach(() => {
 
 
 test('correct task should be deleted from correct array', () => {
-    const action = removeTaskAC(todoListId1, taskId1)
+    const action = removeTaskAC({todolistId: todoListId1, taskId: taskId1})
     const endState = tasksReducer(startState, action)
 
     expect(endState).toEqual({
@@ -78,7 +78,7 @@ test('correct task should be added to correct array', () => {
 })
 
 test('status of task should be changed', () => {
-    const action = updateTaskAC(todoListId1, taskId2, {status: TaskStatuses.Completed})
+    const action = updateTaskAC({todolistId: todoListId1, taskId: taskId2, model: {status: TaskStatuses.Completed}})
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].status).toBe(TaskStatuses.Completed)
@@ -87,7 +87,7 @@ test('status of task should be changed', () => {
 })
 
 test('task title should be changed', () => {
-    const action = updateTaskAC(todoListId1, taskId2, {title: 'newTaskTitle'})
+    const action = updateTaskAC({todolistId: todoListId1, taskId: taskId2, model: {title: 'newTaskTitle'}})
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].title).toBe('newTaskTitle')
@@ -139,9 +139,9 @@ test('set todoLists', () => {
 
 test('tasks should be added for todolists', () => {
 
-    const action = setTasksAC(todoListId1, startState[todoListId1])
+    const action = setTasksAC({todolistId: todoListId1, tasks: startState[todoListId1]})
     const endState = tasksReducer({ [todoListId1]:[], [todoListId2]:[]}, action)
 
-    expect(endState[todoListId1].length).toBe(2)
-    expect(endState[todoListId2].length).toBe(3)
+    expect(endState[todoListId1].length).toBe(3)
+    expect(endState[todoListId2].length).toBe(0)
 })

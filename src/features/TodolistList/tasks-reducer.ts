@@ -219,8 +219,8 @@ const slice = createSlice({
                 tasks.splice(index, 1)
             }
         },
-        addTaskAC(stateDraft, action: PayloadAction<{task: TaskType}>) {
-            stateDraft[action.payload.task.todoListId].unshift(action.payload.task)
+        addTaskAC(stateDraft, action: PayloadAction<TaskType>) {
+            stateDraft[action.payload.todoListId].unshift(action.payload)
         },
         updateTaskAC(stateDraft, action: PayloadAction<{todolistId: string, taskId: string, model: UpdateTaskType}>) {
             const tasks = stateDraft[action.payload.todolistId]
@@ -299,7 +299,7 @@ export const addTaskThunkCreator = (title: string, todoListId: string) => {
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     const task = res.data.data.item
-                    const action = addTaskAC({task})
+                    const action = addTaskAC(task)
                     dispatch(action)
                     dispatch(setAppStatusAC({status: 'succeeded'}))
                 } else {

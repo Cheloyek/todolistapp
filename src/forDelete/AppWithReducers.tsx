@@ -57,20 +57,21 @@ function AppWithReducers() {
     }
 
     //change task status
-    const changeTaskStatus = (taskId: string, status: TaskStatuses, todoListId: string) => {
-        const action = updateTaskAC(todoListId, taskId, {status})
+    const changeTaskStatus = (taskId: string, status: TaskStatuses, todolistId: string) => {
+        const action = updateTaskAC({todolistId, taskId, model: {status}})
         dispatchToTasksReducer(action)
     }
 
     //change task title
-    const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
-        const action = updateTaskAC(todoListId, taskId, {title: newTitle})
+    const changeTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
+        // const action = updateTaskAC(todoListId, taskId, {title: newTitle})
+        const action = updateTaskAC({todolistId, taskId, model: {title: newTitle}})
         dispatchToTasksReducer(action)
     }
 
     //delete task
-    const removeTask = (id: string, todoListId: string) => {
-        const action = removeTaskAC(todoListId, id)
+    const removeTask = (taskId: string, todolistId: string) => {
+        const action = removeTaskAC({todolistId, taskId})
         dispatchToTasksReducer(action)
     }
 

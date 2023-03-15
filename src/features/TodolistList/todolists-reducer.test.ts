@@ -75,7 +75,6 @@ test('change todolistStatus', () => {
     const endState = todolistsReducer(startState, changeTodolistStatusAC({id: todoListId1, todoListStatus: 'loading'}))
 
     expect(endState[0].todolistStatus).toBe('loading')
-    expect(endState[0].todolistStatus).toBe('idle')
-    expect(endState[0].todolistStatus).toBe('idle')
+    expect(endState[1].todolistStatus).toBe('idle')
 })
 
