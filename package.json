@@ -23,7 +23,7 @@
     "@types/storybook-react-router": "^1.0.2",
     "@types/uuid": "^9.0.0",
     "axios": "^1.2.6",
-    "babel-jest": "^27.4.2",
+    "babel-jest": "^29.5.0",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",

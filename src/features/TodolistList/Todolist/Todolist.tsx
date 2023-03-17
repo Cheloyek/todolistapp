@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "./Task/Task";
 import {FilterValuesType, TodoListDomainType} from "../todolists-reducer";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
-import {fetchTasksThunkCreator} from "../tasks-reducer";
+import {fetchTasksTC} from "../tasks-reducer";
 import {RequestStatusType} from "../../../app/app-reducer";
 import {useAppDispatch} from "../../../app/store";
 
@@ -18,7 +18,7 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
         if (demo) {
             return;
         }
-        dispatch(fetchTasksThunkCreator(props.todolist.id))
+        dispatch(fetchTasksTC(props.todolist.id))
     }, [])
 
     //click button -> change filter

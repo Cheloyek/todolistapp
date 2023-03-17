@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {addTaskAC, removeTaskAC, setTasksAC, tasksReducer, updateTaskAC} from "./tasks-reducer";
+import {addTaskAC, fetchTasksTC, removeTaskAC, tasksReducer, updateTaskAC} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 import {TasksStateType} from "./TodolistsList";
@@ -139,7 +139,8 @@ test('set todoLists', () => {
 
 test('tasks should be added for todolists', () => {
 
-    const action = setTasksAC({todolistId: todoListId1, tasks: startState[todoListId1]})
+    // const action = setTasksAC({todolistId: todoListId1, tasks: startState[todoListId1]})
+    const action = fetchTasksTC.fulfilled({todolistId: todoListId1, tasks: startState[todoListId1]}, '', todoListId1)
     const endState = tasksReducer({ [todoListId1]:[], [todoListId2]:[]}, action)
 
     expect(endState[todoListId1].length).toBe(3)
