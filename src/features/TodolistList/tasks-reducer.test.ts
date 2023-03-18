@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {addTaskTC, fetchTasksTC, removeTaskTC, tasksReducer, updateTaskTC} from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
+import {addTodolistAC, fetchTodolistsTC, removeTodolistAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 import {TasksStateType} from "./TodolistsList";
 
@@ -133,7 +133,7 @@ test('set todoLists', () => {
         {id: todoListId1, title: 'Todolist1', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'},
         {id: todoListId2, title: 'Todolist2', filter: 'all', order: 0, addedDate: '', todolistStatus: 'idle'}
     ]
-    const action = setTodolistsAC({todoLists: startTodoLists})
+    const action = fetchTodolistsTC.fulfilled({todoLists: startTodoLists}, 'requestId')
     const endState = tasksReducer({}, action)
 
     const keys = Object.keys(endState)

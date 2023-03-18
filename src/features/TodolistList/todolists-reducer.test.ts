@@ -2,8 +2,8 @@ import {v1} from "uuid";
 import {
     addTodolistAC,
     changeTodolistFilterAC, changeTodolistStatusAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodoListDomainType,
+    changeTodolistTitleAC, fetchTodolistsTC, FilterValuesType,
+    removeTodolistAC, TodoListDomainType,
     todolistsReducer
 } from "./todolists-reducer";
 
@@ -59,7 +59,7 @@ test('correct filter of todolist should be changed', () => {
 
 test('correct set todolists', () => {
 
-    const endState = todolistsReducer([], setTodolistsAC({todoLists: startState}))
+    const endState = todolistsReducer([], fetchTodolistsTC.fulfilled({todoLists: startState}, 'requestId'))
 
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe('Todolist1')

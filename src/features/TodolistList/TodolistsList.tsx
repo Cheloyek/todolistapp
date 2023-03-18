@@ -4,7 +4,7 @@ import {
     addTodoListThunkCreator,
     changeTodolistFilterAC,
     changeTodoListTitleThunkCreator,
-    fetchTodolistsThunkCreator,
+    fetchTodolistsTC,
     FilterValuesType,
     removeTodolistThunkCreator,
     TodoListDomainType
@@ -29,7 +29,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        dispatch(fetchTodolistsThunkCreator())
+        dispatch(fetchTodolistsTC())
     }, [])
 
     const addTask = useCallback((title: string, todoListId: string) => {
