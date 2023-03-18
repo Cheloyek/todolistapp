@@ -6,7 +6,7 @@ import {
     changeTodoListTitleThunkCreator,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistThunkCreator,
+    removeTodolistTC,
     TodoListDomainType
 } from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
@@ -54,7 +54,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }, [dispatch])
 
     const removeTodoList = useCallback((todolistId: string) => {
-        dispatch(removeTodolistThunkCreator(todolistId))
+        dispatch(removeTodolistTC({id: todolistId}))
     }, [dispatch])
 
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {

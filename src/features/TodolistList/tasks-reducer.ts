@@ -1,8 +1,6 @@
 import {
     addTodolistAC,
-    AddTodolistActionType, fetchTodolistsTC,
-    removeTodolistAC,
-    RemoveTodolistActionType,
+    AddTodolistActionType, fetchTodolistsTC, removeTodolistTC,
 } from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
 import {Dispatch} from "redux";
@@ -402,7 +400,7 @@ const slice = createSlice({
             .addCase(addTodolistAC, (stateDraft, action) => {
                 stateDraft[action.payload.todoList.id] = []
             })
-            .addCase(removeTodolistAC, (stateDraft, action) => {
+            .addCase(removeTodolistTC.fulfilled, (stateDraft, action) => {
                 delete stateDraft[action.payload.id]
             })
             .addCase(fetchTodolistsTC.fulfilled, (stateDraft, action) => {
@@ -449,7 +447,7 @@ export type TasksActionsType =
 // | AddTaskActionType
 //     | UpdateTaskActionType
     | AddTodolistActionType
-    | RemoveTodolistActionType
+    // | RemoveTodolistActionType
     // | SetTodolistsActionType
 
 // export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>

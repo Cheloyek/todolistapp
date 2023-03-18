@@ -9,8 +9,7 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    FilterValuesType,
-    removeTodolistAC,
+    FilterValuesType, removeTodolistTC,
     TodoListDomainType,
     todolistsReducer
 } from "../features/TodolistList/todolists-reducer";
@@ -92,7 +91,8 @@ function AppWithReducers() {
 
     //delete todoList
     const removeTodoList = (todolistId: string) => {
-        const action = removeTodolistAC({id: todolistId})
+        let payload = {id: todolistId};
+        const action = removeTodolistTC.fulfilled(payload, 'requestId', payload)
         dispatchToTasksReducer(action)
         dispatchToTodolistsReducer(action)
     }
