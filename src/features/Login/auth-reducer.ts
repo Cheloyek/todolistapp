@@ -2,25 +2,63 @@ import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../../app
 import {AppThunk} from "../../app/store";
 import {authApi} from "../../api/todolists-api";
 import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // const initialState: InitialStateType = {
 //     isLoggedIn: false
 // }
 
-//rtk
-const initialState = {
-    isLoggedIn: false
-}
+//rtk thunks
+export const loginTC = createAsyncThunk('auth/login', async (param: {email: string, password: string, rememberMe: boolean, captcha?: string}, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
+    try {
+        const res = await authApi.login(param.email, param.password, param.rememberMe, param.captcha)
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            // thunkAPI.dispatch(setIsLoggedInAC({value: true}))
+            return {isLoggedIn: true}
+        } else {
+            handleAppError(thunkAPI.dispatch, res.data)
+            return {isLoggedIn: false}
+        }
+    } catch (error: any) {
+        handleServerNetworkError(thunkAPI.dispatch, error)
+        return {isLoggedIn: false}
+    }
+} )
+
+//redux thunks
+// export const _loginTC = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async dispatch => {
+//     dispatch(setAppStatusAC({status: 'loading'}))
+//     try {
+//         const res = await authApi.login(email, password, rememberMe, captcha)
+//         if (res.data.resultCode === 0) {
+//             dispatch(setIsLoggedInAC({value: true}))
+//             // dispatch(setIsLoggedInAC(true))
+//             dispatch(setAppStatusAC({status: 'succeeded'}))
+//         } else {
+//             handleAppError(dispatch, res.data)
+//         }
+//     } catch (error: any) {
+//         handleServerNetworkError(dispatch, error)
+//     }
+// }
 
 //rtk
 const slice = createSlice({
     name: 'auth',
-    initialState: initialState,
+    initialState: {
+        isLoggedIn: false
+    } ,
     reducers: {
         setIsLoggedInAC(stateDraft, action: PayloadAction<{value: boolean}>) {
             stateDraft.isLoggedIn = action.payload.value
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginTC.fulfilled, (stateDraft, action) => {
+                stateDraft.isLoggedIn = action.payload.isLoggedIn
+        })
     }
 })
 
@@ -42,21 +80,6 @@ export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 // export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 //thunks
-export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async dispatch => {
-    dispatch(setAppStatusAC({status: 'loading'}))
-    try {
-        const res = await authApi.login(email, password, rememberMe, captcha)
-        if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC({value: true}))
-            // dispatch(setIsLoggedInAC(true))
-            dispatch(setAppStatusAC({status: 'succeeded'}))
-        } else {
-            handleAppError(dispatch, res.data)
-        }
-    } catch (error: any) {
-        handleServerNetworkError(dispatch, error)
-    }
-}
 
 export const logoutThunkCreator = (): AppThunk => async dispatch => {
     dispatch(setAppStatusAC({status: 'loading'}))

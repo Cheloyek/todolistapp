@@ -14,7 +14,7 @@ import {
     TodoListDomainType,
     todolistsReducer
 } from "../features/TodolistList/todolists-reducer";
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../features/TodolistList/tasks-reducer";
+import {addTaskAC, removeTaskTC, tasksReducer, updateTaskAC} from "../features/TodolistList/tasks-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
 function AppWithReducers() {
@@ -72,7 +72,9 @@ function AppWithReducers() {
 //"test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration --transformIgnorePatterns \"node_modules/(?!axios)/\""
     //delete task
     const removeTask = (taskId: string, todolistId: string) => {
-        const action = removeTaskAC({todolistId, taskId})
+        // const action = removeTaskAC({todolistId, taskId})
+        let param = {todolistId, taskId}
+        const action = removeTaskTC.fulfilled(param, 'requestId', param)
         dispatchToTasksReducer(action)
     }
 

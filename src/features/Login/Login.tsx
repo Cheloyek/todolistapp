@@ -8,7 +8,7 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {loginThunkCreator} from "./auth-reducer";
+import {loginTC} from "./auth-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
@@ -43,7 +43,7 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            dispatch(loginThunkCreator(values.email, values.password, values.rememberMe))
+            dispatch(loginTC({email: values.email, password: values.password, rememberMe: values.rememberMe}))
             formik.resetForm()
         },
     })

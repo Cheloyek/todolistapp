@@ -10,7 +10,7 @@ import {
     TodoListDomainType
 } from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
-import {addTaskThunkCreator, removeTaskThunkCreator, updateTaskThunkCreator} from "./tasks-reducer";
+import {addTaskThunkCreator, removeTaskTC, updateTaskThunkCreator} from "./tasks-reducer";
 import {TaskStatuses, TaskType} from "../../api/todolists-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
@@ -44,8 +44,8 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
         dispatch(updateTaskThunkCreator(todoListId, taskId, {title: newTitle}))
     }, [dispatch])
 
-    const removeTask = useCallback((id: string, todoListId: string) => {
-        dispatch(removeTaskThunkCreator(todoListId, id))
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
+        dispatch(removeTaskTC({todolistId, taskId}))
     }, [dispatch])
 
     const addTodoList = useCallback((todoListTitle: string) => {
