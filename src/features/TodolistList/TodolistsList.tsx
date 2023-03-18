@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {
-    addTodoListThunkCreator,
+    addTodolistTC,
     changeTodolistFilterAC,
-    changeTodoListTitleThunkCreator,
+    changeTodolistTitleTC,
     fetchTodolistsTC,
     FilterValuesType,
     removeTodolistTC,
@@ -50,7 +50,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }, [dispatch])
 
     const addTodoList = useCallback((todoListTitle: string) => {
-        dispatch(addTodoListThunkCreator(todoListTitle))
+        dispatch(addTodolistTC({title: todoListTitle}))
     }, [dispatch])
 
     const removeTodoList = useCallback((todolistId: string) => {
@@ -58,7 +58,7 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }, [dispatch])
 
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
-        dispatch(changeTodoListTitleThunkCreator(todoListId, newTitle))
+        dispatch(changeTodolistTitleTC({id: todoListId, title: newTitle}))
     }
 
     const changeFilter = (value: FilterValuesType, todolistId: string) => {

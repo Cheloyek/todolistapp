@@ -1,16 +1,11 @@
-import {
-    addTodolistAC,
-    AddTodolistActionType, fetchTodolistsTC, removeTodolistTC,
-} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
-import {Dispatch} from "redux";
-import {AppActionsType, AppRootStateType} from "../../app/store";
-import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../../app/app-reducer";
+import {addTodolistTC, fetchTodolistsTC, removeTodolistTC} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
+import {AppRootStateType} from "../../app/store";
+import {setAppStatusAC} from "../../app/app-reducer";
 import {TasksStateType} from "./TodolistsList";
 import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
-import {action} from "@storybook/addon-actions";
 
 // const initialState: TasksStateType = {}
 //
@@ -397,7 +392,8 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(addTodolistAC, (stateDraft, action) => {
+            .addCase(addTodolistTC.fulfilled, (stateDraft, action) => {
+                if (action.payload)
                 stateDraft[action.payload.todoList.id] = []
             })
             .addCase(removeTodolistTC.fulfilled, (stateDraft, action) => {
@@ -442,11 +438,11 @@ export const tasksReducer = slice.reducer
 
 
 //types
-export type TasksActionsType =
+// export type TasksActionsType =
 // | RemoveTaskActionType
 // | AddTaskActionType
 //     | UpdateTaskActionType
-    | AddTodolistActionType
+//     | AddTodolistActionType
     // | RemoveTodolistActionType
     // | SetTodolistsActionType
 

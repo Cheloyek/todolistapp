@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {addTaskTC, fetchTasksTC, removeTaskTC, tasksReducer, updateTaskTC} from "./tasks-reducer";
-import {addTodolistAC, fetchTodolistsTC, removeTodolistTC, TodoListDomainType} from "./todolists-reducer";
+import {addTodolistTC, fetchTodolistsTC, removeTodolistTC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 import {TasksStateType} from "./TodolistsList";
 
@@ -102,7 +102,8 @@ test('task title should be changed', () => {
 })
 
 test('new array should be added when new todolist is added', () => {
-    const action = addTodolistAC({todoList: {id: v1(), title:'Todolist1', order: 0, addedDate: ''}})
+    let payload = {todoList: {id: v1(), title:'Todolist1', order: 0, addedDate: ''}};
+    const action = addTodolistTC.fulfilled(payload, 'requestId', {title: payload.todoList.title})
     const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState)

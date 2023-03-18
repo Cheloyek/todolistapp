@@ -6,9 +6,8 @@ import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    addTodolistTC,
+    changeTodolistFilterAC, changeTodolistTitleTC,
     FilterValuesType, removeTodolistTC,
     TodoListDomainType,
     todolistsReducer
@@ -84,7 +83,8 @@ function AppWithReducers() {
     //add new todoList
     const addTodoList = (todoListTitle: string) => {
         // const action = addTodolistAC(todoListTitle)
-        const action = addTodolistAC({todoList: {id: v1(), title: todoListTitle, order: 0, addedDate: ''}})
+        let payload = {todoList: {id: v1(), title: todoListTitle, order: 0, addedDate: ''}};
+        const action = addTodolistTC.fulfilled(payload, 'requestId', {title: todoListTitle})
         dispatchToTasksReducer(action)
         dispatchToTodolistsReducer(action)
     }
@@ -99,7 +99,8 @@ function AppWithReducers() {
 
     //change todoList title
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
-        const action = changeTodolistTitleAC({id: todoListId, title: newTitle})
+        let payload = {id: todoListId, title: newTitle};
+        const action = changeTodolistTitleTC.fulfilled(payload, 'requestId', payload)
         dispatchToTodolistsReducer(action)
     }
 
