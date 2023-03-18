@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
@@ -26,13 +26,13 @@ export const Login = () => {
         },
         validate: (values) => {
             const errors: FormikErrorType = {}
-            if (formik.touched.email) {
-                if (!values.email) {
-                    errors.email = 'Email is required'
-                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                    errors.email = 'Invalid email address'
-                }
-            }
+            // if (formik.touched.email) {
+            //     if (!values.email) {
+            //         errors.email = 'Email is required'
+            //     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            //         errors.email = 'Invalid email address'
+            //     }
+            // }
             if (formik.touched.password) {
                 if (!values.password) {
                     errors.password = "Password is required"
@@ -42,9 +42,17 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC({email: values.email, password: values.password, rememberMe: values.rememberMe}))
-            formik.resetForm()
+        onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const action = await dispatch(loginTC({email: values.email, password: values.password, rememberMe: values.rememberMe}))
+            if (loginTC.rejected.match(action)) {
+                if (action.payload?.fieldsErrors?.length) {
+                    const error = action.payload?.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            } else {
+                alert("Hello")
+            }
+            // formik.resetForm()
         },
     })
 
@@ -113,4 +121,10 @@ type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
+}
+
+type FormValuesType = {
+    email: string,
+    password: string,
+    rememberMe: boolean
 }

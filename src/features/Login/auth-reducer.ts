@@ -1,15 +1,16 @@
 import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../../app/app-reducer";
 import {AppThunk} from "../../app/store";
-import {authApi} from "../../api/todolists-api";
+import {authApi, FieldErrorType} from "../../api/todolists-api";
 import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
 
 // const initialState: InitialStateType = {
 //     isLoggedIn: false
 // }
 
 //rtk thunks
-export const loginTC = createAsyncThunk('auth/login', async (param: {email: string, password: string, rememberMe: boolean, captcha?: string}, thunkAPI) => {
+export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, {rejectValue: {errors: Array<string>, fieldsErrors?: Array<FieldErrorType>}}>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await authApi.login(param.email, param.password, param.rememberMe, param.captcha)
@@ -19,11 +20,12 @@ export const loginTC = createAsyncThunk('auth/login', async (param: {email: stri
             return {isLoggedIn: true}
         } else {
             handleAppError(thunkAPI.dispatch, res.data)
-            return {isLoggedIn: false}
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
-    } catch (error: any) {
+    } catch (err: any) {
+        const error: AxiosError = err
         handleServerNetworkError(thunkAPI.dispatch, error)
-        return {isLoggedIn: false}
+        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 } )
 
@@ -99,4 +101,5 @@ export const logoutThunkCreator = (): AppThunk => async dispatch => {
 //types
 export type AuthActionsType = LoginActionType | SetStatusActionType | SetErrorActionType
 export type LoginActionType = ReturnType<typeof setIsLoggedInAC>
+type LoginParamsType = {email: string, password: string, rememberMe: boolean, captcha?: string}
 // type InitialStateType = {isLoggedIn: boolean}

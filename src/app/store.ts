@@ -9,7 +9,7 @@ import {configureStore} from "@reduxjs/toolkit";
 
 export type AppRootStateType = ReturnType<RootReducerType>
 export type AppActionsType = TodolistsActionsType | AuthActionsType | TasksActionsType | AppReducerActionsType
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
+type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
