@@ -10,14 +10,14 @@ import {AxiosError} from "axios";
 // }
 
 //rtk thunks
-export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, {rejectValue: {errors: Array<string>, fieldsErrors?: Array<FieldErrorType>}}>('auth/login', async (param, thunkAPI) => {
+export const loginTC = createAsyncThunk<undefined, LoginParamsType, {rejectValue: {errors: Array<string>, fieldsErrors?: Array<FieldErrorType>}}>('auth/login', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await authApi.login(param.email, param.password, param.rememberMe, param.captcha)
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
             // thunkAPI.dispatch(setIsLoggedInAC({value: true}))
-            return {isLoggedIn: true}
+            return
         } else {
             handleAppError(thunkAPI.dispatch, res.data)
             return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
@@ -29,6 +29,23 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, 
     }
 } )
 
+export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI ) => {
+    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
+    try {
+        const res = await authApi.logout()
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+            return
+        } else {
+            handleAppError(thunkAPI.dispatch, res.data)
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+        }
+    } catch (err: any) {
+        const error: AxiosError = err
+        handleServerNetworkError(thunkAPI.dispatch, error)
+        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    }
+})
 //redux thunks
 // export const _loginTC = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async dispatch => {
 //     dispatch(setAppStatusAC({status: 'loading'}))
@@ -37,6 +54,21 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, 
 //         if (res.data.resultCode === 0) {
 //             dispatch(setIsLoggedInAC({value: true}))
 //             // dispatch(setIsLoggedInAC(true))
+//             dispatch(setAppStatusAC({status: 'succeeded'}))
+//         } else {
+//             handleAppError(dispatch, res.data)
+//         }
+//     } catch (error: any) {
+//         handleServerNetworkError(dispatch, error)
+//     }
+// }
+
+// export const _logoutTC = (): AppThunk => async dispatch => {
+//     dispatch(setAppStatusAC({status: 'loading'}))
+//     try {
+//         const res = await authApi.logout()
+//         if (res.data.resultCode === 0) {
+//             dispatch(setIsLoggedInAC({value: false}))
 //             dispatch(setAppStatusAC({status: 'succeeded'}))
 //         } else {
 //             handleAppError(dispatch, res.data)
@@ -58,9 +90,13 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (stateDraft, action) => {
-                stateDraft.isLoggedIn = action.payload.isLoggedIn
+        builder
+            .addCase(loginTC.fulfilled, (stateDraft) => {
+                stateDraft.isLoggedIn = true
         })
+            .addCase(logoutTC.fulfilled, (stateDraft) => {
+                stateDraft.isLoggedIn = false
+            })
     }
 })
 
@@ -80,23 +116,6 @@ export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 
 //actions
 // export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
-
-//thunks
-
-export const logoutThunkCreator = (): AppThunk => async dispatch => {
-    dispatch(setAppStatusAC({status: 'loading'}))
-    try {
-        const res = await authApi.logout()
-        if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC({value: false}))
-            dispatch(setAppStatusAC({status: 'succeeded'}))
-        } else {
-            handleAppError(dispatch, res.data)
-        }
-    } catch (error: any) {
-        handleServerNetworkError(dispatch, error)
-    }
-}
 
 //types
 export type AuthActionsType = LoginActionType | SetStatusActionType | SetErrorActionType

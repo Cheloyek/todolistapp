@@ -18,7 +18,7 @@ import {initializeAppThunkCreator, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
 import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {logoutThunkCreator} from "../features/Login/auth-reducer";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 function App({demo = false}: DemoPropsType) {
     const dispatch = useAppDispatch()
@@ -34,7 +34,7 @@ function App({demo = false}: DemoPropsType) {
     }, [])
 
     const logoutHandler = useCallback (() => {
-        dispatch(logoutThunkCreator())
+        dispatch(logoutTC())
     }, [])
 
     if (!isInitialized) {
