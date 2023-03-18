@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "./store";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
-import {initializeAppThunkCreator, RequestStatusType} from "./app-reducer";
+import {initializeAppTC, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
 import {Login} from "../features/Login/Login";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
@@ -29,7 +29,7 @@ function App({demo = false}: DemoPropsType) {
 
     useEffect(() => {
         if (!demo) {
-            dispatch(initializeAppThunkCreator())
+            dispatch(initializeAppTC())
         }
     }, [])
 
