@@ -62,8 +62,9 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
         const res = await authApi.me()
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setIsLoggedInAC({value: true}))
-            return
-        } else {
+        }
+        else {
+            // thunkAPI.dispatch(setIsLoggedInAC({value: true}))
             handleAppError(thunkAPI.dispatch, res.data)
             return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }

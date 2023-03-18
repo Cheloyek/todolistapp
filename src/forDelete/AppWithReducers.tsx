@@ -14,7 +14,7 @@ import {
     TodoListDomainType,
     todolistsReducer
 } from "../features/TodolistList/todolists-reducer";
-import {addTaskAC, removeTaskTC, tasksReducer, updateTaskAC} from "../features/TodolistList/tasks-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../features/TodolistList/tasks-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 
 function AppWithReducers() {
@@ -52,20 +52,24 @@ function AppWithReducers() {
     //add task
     const addTask = (title: string, todoListId: string) => {
         // const action = addTaskAC(todoListId, title)
-        const action = addTaskAC({id: v1(), title: title, status: TaskStatuses.New, todoListId: todoListId, addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi})
+        // const action = addTaskAC({id: v1(), title: title, status: TaskStatuses.New, todoListId: todoListId, addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi})
+        const action = addTaskTC({title: title, todoListId: todoListId})
+        // @ts-ignore
         dispatchToTasksReducer(action)
     }
 
     //change task status
     const changeTaskStatus = (taskId: string, status: TaskStatuses, todolistId: string) => {
-        const action = updateTaskAC({todolistId, taskId, model: {status}})
+        const action = updateTaskTC({todolistId, taskId, model: {status}})
+        // @ts-ignore
         dispatchToTasksReducer(action)
     }
 
     //change task title
     const changeTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
         // const action = updateTaskAC(todoListId, taskId, {title: newTitle})
-        const action = updateTaskAC({todolistId, taskId, model: {title: newTitle}})
+        const action = updateTaskTC({todolistId, taskId, model: {title: newTitle}})
+        // @ts-ignore
         dispatchToTasksReducer(action)
     }
     //"jest:integration": "jest -c integration/jest.config.js --transformIgnorePatterns \"node_modules/(?!axios)/\"",

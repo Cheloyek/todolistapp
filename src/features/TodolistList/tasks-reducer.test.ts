@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {addTaskAC, fetchTasksTC, removeTaskTC, tasksReducer, updateTaskAC} from "./tasks-reducer";
+import {addTaskTC, fetchTasksTC, removeTaskTC, tasksReducer, updateTaskTC} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC, TodoListDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 import {TasksStateType} from "./TodolistsList";
@@ -68,7 +68,8 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
     const newTask = {id: v1(), title: 'newTask', status: TaskStatuses.New, todoListId: todoListId2, addedDate: '', deadline: '', description: '', order: 0, startDate: '', priority: TaskPriorities.Hi}
-    const action = addTaskAC(newTask)
+    // const action = addTaskAC(newTask)
+    const action = addTaskTC.fulfilled(newTask, 'requestId', {title: newTask.title, todoListId: newTask.todoListId})
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1].length).toBe(3)
@@ -80,7 +81,9 @@ test('correct task should be added to correct array', () => {
 })
 
 test('status of task should be changed', () => {
-    const action = updateTaskAC({todolistId: todoListId1, taskId: taskId2, model: {status: TaskStatuses.Completed}})
+    // const action = updateTaskAC({todolistId: todoListId1, taskId: taskId2, model: {status: TaskStatuses.Completed}})
+    const changeModel = {todolistId: todoListId1, taskId: taskId2, model: {status: TaskStatuses.Completed}}
+    const action = updateTaskTC.fulfilled(changeModel, 'requestId', changeModel)
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].status).toBe(TaskStatuses.Completed)
@@ -89,7 +92,8 @@ test('status of task should be changed', () => {
 })
 
 test('task title should be changed', () => {
-    const action = updateTaskAC({todolistId: todoListId1, taskId: taskId2, model: {title: 'newTaskTitle'}})
+    const changeModel = {todolistId: todoListId1, taskId: taskId2, model: {title: 'newTaskTitle'}}
+    const action = updateTaskTC.fulfilled(changeModel, 'requestId', changeModel)
     const endState = tasksReducer(startState, action)
 
     expect(endState[todoListId1][1].title).toBe('newTaskTitle')

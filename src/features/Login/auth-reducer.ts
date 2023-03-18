@@ -46,6 +46,7 @@ export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI )
         return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 })
+
 //redux thunks
 // export const _loginTC = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async dispatch => {
 //     dispatch(setAppStatusAC({status: 'loading'}))
