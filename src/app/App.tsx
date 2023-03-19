@@ -43,7 +43,6 @@ function App({demo = false}: DemoPropsType) {
             <CircularProgress />
         </div>
     }
-
     return (
             <div className="App">
                 <AppBar position="static">
