@@ -1,6 +1,6 @@
 import {AppThunk} from "./store";
 import {authApi} from "../api/todolists-api";
-import {setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {setIsLoggedInAC} from "../features/Auth/auth-reducer";
 import {handleAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";

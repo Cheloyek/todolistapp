@@ -17,13 +17,15 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
 import {DemoPropsType} from "../../app/App";
 import {Navigate} from "react-router-dom";
+import {selectIsLoggedIn} from "../Auth/selectors";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
     const dispatch = useAppDispatch()
 
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
         if (demo || !isLoggedIn) {

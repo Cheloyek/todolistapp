@@ -16,16 +16,22 @@ import {AppRootStateType, useAppDispatch} from "./store";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {initializeAppTC, RequestStatusType} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
-import {Login} from "../features/Login/Login";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {logoutTC} from "../features/Login/auth-reducer";
+import {Login} from "../features/Auth/Login";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {logoutTC} from "../features/Auth/auth-reducer";
+import {selectIsInitialized, selectStatus} from "./selectors";
+import {selectIsLoggedIn} from "../features/Auth/selectors";
 
 function App({demo = false}: DemoPropsType) {
     const dispatch = useAppDispatch()
 
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    // const status = useSelector<AppRootStateType, RequestStatusType>(selectStatus)
+    // const isInitialized = useSelector<AppRootStateType, boolean>(selectIsInitialized)
+    // const isLoggedIn = useSelector<AppRootStateType, boolean>(selectIsLoggedIn)
+
+    const status = useSelector(selectStatus)
+    const isInitialized = useSelector(selectIsInitialized)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
         if (!demo) {
