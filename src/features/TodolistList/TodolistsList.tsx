@@ -18,6 +18,7 @@ import {Todolist} from "./Todolist/Todolist";
 import {DemoPropsType} from "../../app/App";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "../Auth/selectors";
+import {bindActionCreators} from "redux";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
     const dispatch = useAppDispatch()
@@ -35,17 +36,20 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
     }, [])
 
     const addTask = useCallback((title: string, todoListId: string) => {
+        // const callbacks = bindActionCreators({addTaskTC}, dispatch)
+        // callbacks.addTaskTC({title, todoListId})
+
         dispatch(addTaskTC({title, todoListId}))
-    }, [dispatch])
+    }, [])
 
     const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todolistId: string) => {
         dispatch(updateTaskTC({todolistId, taskId, model: {status}
     }))
-    }, [dispatch])
+    }, [])
 
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, newTitle: string) => {
         dispatch(updateTaskTC({todolistId, taskId, model: {title: newTitle}}))
-    }, [dispatch])
+    }, [])
 
     const removeTask = useCallback((taskId: string, todolistId: string) => {
         dispatch(removeTaskTC({todolistId, taskId}))
@@ -53,11 +57,11 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
 
     const addTodoList = useCallback((todoListTitle: string) => {
         dispatch(addTodolistTC({title: todoListTitle}))
-    }, [dispatch])
+    }, [])
 
     const removeTodoList = useCallback((todolistId: string) => {
         dispatch(removeTodolistTC({id: todolistId}))
-    }, [dispatch])
+    }, [])
 
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
         dispatch(changeTodolistTitleTC({id: todoListId, title: newTitle}))
