@@ -17,12 +17,12 @@ export const Task = React.memo((props: TaskPropsType) => {
         props.changeTaskTitle(props.todolistId, props.task.id, newTitle)
     }, [props.changeTaskTitle, props.todolistId, props.task.id])
 
-    return <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'completedTask' : ''}>
+    return <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'completedTask' : ''} style={{position: "relative"}}>
+        <IconButton aria-label="delete" size="small" style={{position: "absolute", right: "2px", top: "2px"}}>
+        <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>
+        </IconButton>
         <Checkbox checked={props.task.status === TaskStatuses.Completed} onChange={onChangeStatusHandler}/>
         <EditableSpan title={props.task.title} onChange={onChangeTaskTitleHandler}/>
-        <IconButton aria-label="delete" size="small">
-            <DeleteIcon fontSize="small" onClick={onClickTaskDeleteHandler}/>
-        </IconButton>
     </div>
 })
 

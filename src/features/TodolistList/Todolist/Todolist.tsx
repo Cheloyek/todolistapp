@@ -49,15 +49,15 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
 
     return (
         <div className='todolist' >
+            <IconButton aria-label="delete" size="medium" disabled={props.todolistStatus === 'loading'} style={{position: "absolute", right: "-7px", top: "-25px"}}>
+                <DeleteIcon fontSize="small" onClick={removeTodoList}/>
+            </IconButton>
             <h3>
                 <EditableSpan title={props.todolist.title} onChange={changeTodoListTitle} disabled={props.todolistStatus === 'loading'}/>
-                <IconButton aria-label="delete" size="medium" disabled={props.todolistStatus === 'loading'}>
-                    <DeleteIcon fontSize="small" onClick={removeTodoList}/>
-                </IconButton>
             </h3>
             <AddItemForm addItem={addTask} disabled={props.todolistStatus === 'loading'}/>
             <div>
-                {tasksForTodoList.map(task =>
+                {tasksForTodoList.length === 0 ? <div style={{padding: "15px", color: "white"}}>No tasks!</div> : tasksForTodoList.map(task =>
                     <Task
                     removeTask={props.removeTask}
                     task={task}
@@ -67,6 +67,7 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
                     key={task.id}
                     />
                 )}
+                {/*{tasksForTodoList.length === 0 ? <div> No Task</div> : <div>task</div>}*/}
             </div>
             <div>
                 <Button onClick={() => changeTodoListFilter('all')}
