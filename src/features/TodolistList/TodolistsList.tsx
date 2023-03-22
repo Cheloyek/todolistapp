@@ -11,14 +11,13 @@ import {
 } from "./todolists-reducer";
 import React, {useCallback, useEffect} from "react";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "./tasks-reducer";
-import {TaskStatuses, TaskType} from "../../api/todolists-api";
+import {TaskStatuses, TaskType} from "api";
 import {Grid, Paper} from "@mui/material";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "components";
 import {Todolist} from "./Todolist/Todolist";
 import {DemoPropsType} from "../../app/App";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "../Auth/selectors";
-import {bindActionCreators} from "redux";
 
 export const TodolistsList = ({demo= false}: DemoPropsType) => {
     const dispatch = useAppDispatch()

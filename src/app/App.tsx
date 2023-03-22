@@ -16,10 +16,8 @@ import {useAppDispatch} from "./store";
 import ErrorSnackbar from "../snackbars/errorSnackbar";
 import {initializeAppTC} from "./app-reducer";
 import {TodolistsList} from "../features/TodolistList/TodolistsList";
-import {Login} from "../features/Auth/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {logoutTC} from "../features/Auth/auth-reducer";
-import {authSelectors} from "../features/Auth";
+import {logoutTC, authSelectors, Login} from "../features/Auth";
 import {selectIsInitialized, selectStatus} from "./selectors";
 
 function App({demo = false}: DemoPropsType) {

@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react'
 import './todolistStyle.css';
-import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
-import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
+import {AddItemForm, EditableSpan} from "components";
+// import {EditableSpan} from "components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Task} from "./Task/Task";
+import {Task} from "./Task";
 import {FilterValuesType, TodoListDomainType} from "../todolists-reducer";
-import {TaskStatuses, TaskType} from "../../../api/todolists-api";
+import {TaskStatuses, TaskType} from "api";
 import {fetchTasksTC} from "../tasks-reducer";
-import {RequestStatusType} from "../../../app/app-reducer";
-import {useAppDispatch} from "../../../app/store";
+import {RequestStatusType} from "app";
+import {useAppDispatch} from "app/store";
 
 export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsType) => {
     const dispatch = useAppDispatch()

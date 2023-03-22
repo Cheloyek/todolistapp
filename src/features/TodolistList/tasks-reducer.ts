@@ -1,6 +1,6 @@
 import {addTodolistTC, fetchTodolistsTC, removeTodolistTC} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, todoListsApi, UpdateTaskModelType} from "../../api/todolists-api";
-import {AppRootStateType} from "../../app/store";
+import {TaskPriorities, TaskStatuses, todoListsApi, UpdateTaskModelType} from "api";
+import {AppRootStateType} from "app";
 import {setAppStatusAC} from "../../app/app-reducer";
 import {TasksStateType} from "./TodolistsList";
 import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
@@ -450,7 +450,7 @@ export const tasksReducer = slice.reducer
 // export type AddTaskActionType = ReturnType<typeof addTaskAC>
 // export type UpdateTaskActionType = ReturnType<typeof updateTaskAC>
 
-export type UpdateTaskType = {
+type UpdateTaskType = {
     title?: string,
     description?: string,
     status?: TaskStatuses,

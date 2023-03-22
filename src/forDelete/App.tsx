@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import '../app/App.css';
-import {Todolist} from "../features/TodolistList/Todolist/Todolist";
+import {Todolist} from "features/TodolistList/Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "components";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses, TaskType} from "api";
 import {FilterValuesType, TodoListDomainType} from "../features/TodolistList/todolists-reducer";
 
 function App() {

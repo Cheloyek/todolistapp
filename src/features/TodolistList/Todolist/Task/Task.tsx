@@ -2,7 +2,7 @@ import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskStatuses, TaskType} from "../../../../api/todolists-api";
+import {TaskStatuses, TaskType} from "api";
 
 export const Task = React.memo((props: TaskPropsType) => {
     const onClickTaskDeleteHandler = useCallback (() => {

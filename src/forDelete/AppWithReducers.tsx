@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react';
 import '../app/App.css';
-import {Todolist} from "../features/TodolistList/Todolist/Todolist";
+import {Todolist} from "features/TodolistList/Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "components";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -12,8 +12,9 @@ import {
     TodoListDomainType,
     todolistsReducer
 } from "../features/TodolistList/todolists-reducer";
-import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../features/TodolistList/tasks-reducer";
-import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+// import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "../features/TodolistList/tasks-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer, updateTaskTC} from "features/TodolistList";
+import {TaskPriorities, TaskStatuses} from "api";
 
 function AppWithReducers() {
 

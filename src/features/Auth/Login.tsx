@@ -10,9 +10,9 @@ import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useSelector} from "react-redux";
-import {useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "./selectors";
+import {useAppDispatch} from "../../app/store";
 
 export const Login = () => {
     const dispatch = useAppDispatch()
