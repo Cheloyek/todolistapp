@@ -1,8 +1,8 @@
+import {AxiosError} from "axios";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authApi} from "api";
 import {setIsLoggedInAC} from "features/Auth";
-import {handleAppError, handleServerNetworkError} from "../utils/error-utils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AxiosError} from "axios";
+import {handleAppError, handleServerNetworkError} from "utils/error-utils";
 
 //rtk
 export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, thunkAPI) => {

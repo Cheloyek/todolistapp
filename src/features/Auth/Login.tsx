@@ -1,18 +1,18 @@
 import React from 'react'
+import {useSelector} from "react-redux";
+import {Navigate} from "react-router-dom";
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import {FormikHelpers, useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
-import {useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "./selectors";
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch} from "app/store";
 
 export const Login = () => {
     const dispatch = useAppDispatch()

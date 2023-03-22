@@ -1,4 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
+import {Navigate, Route, Routes} from "react-router-dom";
+import {useSelector} from "react-redux";
 import './App.css';
 import {
     AppBar,
@@ -11,13 +13,11 @@ import {
     Typography
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import {useSelector} from "react-redux";
 import {useAppDispatch} from "./store";
-import ErrorSnackbar from "../snackbars/errorSnackbar";
+import ErrorSnackbar from "snackbars";
 import {initializeAppTC} from "./app-reducer";
-import {TodolistsList} from "../features/TodolistList/TodolistsList";
-import {Navigate, Route, Routes} from "react-router-dom";
-import {logoutTC, authSelectors, Login} from "../features/Auth";
+import {TodolistsList} from "features/TodolistList";
+import {logoutTC, authSelectors, Login} from "features/Auth";
 import {selectIsInitialized, selectStatus} from "./selectors";
 
 function App({demo = false}: DemoPropsType) {

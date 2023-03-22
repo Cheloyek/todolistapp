@@ -6,7 +6,8 @@ import {AddItemForm} from "components";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {TaskPriorities, TaskStatuses, TaskType} from "api";
-import {FilterValuesType, TodoListDomainType} from "../features/TodolistList/todolists-reducer";
+// import {FilterValuesType, TodoListDomainType} from "../features/TodolistList/todolists-reducer";
+import {FilterValuesType, TodoListDomainType} from "features/TodolistList";
 
 function App() {
 

@@ -14,8 +14,8 @@ import {addTaskTC, removeTaskTC, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses, TaskType} from "api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "components";
-import {Todolist} from "./Todolist/Todolist";
-import {DemoPropsType} from "../../app/App";
+import {Todolist} from "./Todolist";
+import {DemoPropsType} from "app";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "../Auth/selectors";
 

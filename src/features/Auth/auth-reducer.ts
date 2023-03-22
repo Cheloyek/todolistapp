@@ -1,13 +1,8 @@
-import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../../app/app-reducer";
-import {AppThunk} from "../../app/store";
-import {authApi, FieldErrorType} from "../../api/todolists-api";
-import {handleAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
-
-// const initialState: InitialStateType = {
-//     isLoggedIn: false
-// }
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authApi, FieldErrorType} from "api";
+import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "app"
+import {handleAppError, handleServerNetworkError} from "utils/error-utils";
 
 //rtk thunks
 export const loginTC = createAsyncThunk<undefined, LoginParamsType, {rejectValue: {errors: Array<string>, fieldsErrors?: Array<FieldErrorType>}}>('auth/login', async (param, thunkAPI) => {

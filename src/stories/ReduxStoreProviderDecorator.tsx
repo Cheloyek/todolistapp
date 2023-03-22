@@ -1,18 +1,14 @@
 import React from 'react'
+import {v1} from 'uuid'
 import {Provider} from "react-redux";
 import {combineReducers} from 'redux'
-import {v1} from 'uuid'
-// import {tasksReducer} from "../features/TodolistList/tasks-reducer";
-import {tasksReducer} from "features/TodolistList";
-import {todolistsReducer} from "../features/TodolistList/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "api";
-import {AppRootStateType, RootReducerType} from "app";
-import {appReducer} from "../app/app-reducer";
 import thunkMiddleware from "redux-thunk";
-import {authReducer} from "features/Auth";
-import {configureStore} from "@reduxjs/toolkit";
 import {HashRouter} from "react-router-dom";
-
+import {configureStore} from "@reduxjs/toolkit";
+import {tasksReducer, todolistsReducer} from "features/TodolistList";
+import {TaskPriorities, TaskStatuses} from "api";
+import {AppRootStateType, RootReducerType, appReducer} from "app";
+import {authReducer} from "features/Auth";
 
 const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,
@@ -49,8 +45,6 @@ const initialGlobalState: AppRootStateType = {
     }
 }
 
-
-// export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState, applyMiddleware(thunk))
 export const storyBookStore = configureStore({
     reducer: rootReducer,
     preloadedState: initialGlobalState,

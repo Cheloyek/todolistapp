@@ -1,9 +1,8 @@
-// import {todoListsApi, TodoListType} from "../../api/todolists-api";
-import {todoListsApi, TodoListType} from "api";
-import {RequestStatusType, setAppStatusAC, SetStatusActionType} from "../../app/app-reducer";
-import {handleServerNetworkError} from "../../utils/error-utils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {todoListsApi, TodoListType} from "api";
+import {setAppStatusAC, RequestStatusType, SetStatusActionType} from "app"
+import {handleServerNetworkError} from "utils/error-utils";
 
 // const initialState: Array<TodoListDomainType> = []
 
