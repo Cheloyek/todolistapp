@@ -91,12 +91,26 @@ export type TaskType = {
     deadline: string
     addedDate: string
 }
+
+/**
+ * Enum for task statuses.
+ * @readonly
+ * @enum
+ * {New | InProgress | Completed | Draft}
+ */
 export enum TaskStatuses {
     New ,
     InProgress,
     Completed,
     Draft
 }
+
+/**
+ * Enum for task priorities.
+ * @readonly
+ * @enum
+ * {Low | Middle | Hi | Urgently | Later}
+ */
 export enum TaskPriorities {
     Low ,
     Middle,
