@@ -9,4 +9,4 @@ export default {
     decorators: [ReduxStoreProviderDecorator, BrowserRouterDecorator]
 }
 
-export const AppStories = () => {return <App demo={true}/>};
+export const AppStories = () => {return <App/>};

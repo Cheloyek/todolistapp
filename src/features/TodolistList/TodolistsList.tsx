@@ -15,13 +15,11 @@ import {TaskStatuses, TaskType} from "api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "components";
 import {Todolist} from "./Todolist";
-import {DemoPropsType} from "app";
 import {Navigate} from "react-router-dom";
 import {selectIsLoggedIn} from "../Auth/selectors";
 
-export const TodolistsList = ({demo= false}: DemoPropsType) => {
+export const TodolistsList = ({demo= false}) => {
     const dispatch = useAppDispatch()
-
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
     // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -31,7 +29,9 @@ export const TodolistsList = ({demo= false}: DemoPropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        dispatch(fetchTodolistsTC())
+        if (!todoLists.length) {
+            dispatch(fetchTodolistsTC())
+        }
     }, [])
 
     const addTask = useCallback((title: string, todoListId: string) => {

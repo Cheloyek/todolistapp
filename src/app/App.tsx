@@ -20,7 +20,7 @@ import {TodolistsList} from "features/TodolistList";
 import {logoutTC, authSelectors, Login} from "features/Auth";
 import {selectIsInitialized, selectStatus} from "./selectors";
 
-function App({demo = false}: DemoPropsType) {
+function App(props: DemoPropsType) {
     const dispatch = useAppDispatch()
 
     // const status = useSelector<AppRootStateType, RequestStatusType>(selectStatus)
@@ -32,7 +32,7 @@ function App({demo = false}: DemoPropsType) {
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
 
     useEffect(() => {
-        if (!demo) {
+        if (!isInitialized) {
             dispatch(initializeAppTC())
         }
     }, [])
@@ -65,7 +65,7 @@ function App({demo = false}: DemoPropsType) {
                 </AppBar>
                 <Container fixed>
                     <Routes>
-                        <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                        <Route path='/' element={<TodolistsList demo={false}/>}/>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
                         <Route path='*' element={<Navigate to='/404'/>}/>
@@ -79,7 +79,6 @@ export default App;
 
 //types
 export type DemoPropsType = {
-    demo?: boolean
 }
 
 

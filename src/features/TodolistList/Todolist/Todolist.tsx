@@ -12,12 +12,13 @@ import {FilterValuesType, TodoListDomainType} from "../todolists-reducer";
 
 export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsType) => {
     const dispatch = useAppDispatch()
-
     useEffect(() => {
         if (demo) {
             return;
         }
-        dispatch(fetchTasksTC(props.todolist.id))
+        if (!props.tasks.length) {
+            dispatch(fetchTasksTC(props.todolist.id))
+        }
     }, [])
 
     //click button -> change filter

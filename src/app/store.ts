@@ -1,20 +1,12 @@
-import {combineReducers} from "redux";
 import {useDispatch} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {tasksReducer} from "features/TodolistList";
-import {AuthActionsType, authReducer} from "features/Auth";
-import {TodolistsActionsType, todolistsReducer} from "features/TodolistList";
-import {appReducer, AppReducerActionsType} from "./app-reducer";
+import {TodolistsActionsType} from "features/TodolistList";
+import {AuthActionsType} from "features/Auth";
+import {AppReducerActionsType} from "./app-reducer";
+import {rootReducer} from "./reducers";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
-const rootReducer = combineReducers({
-    todolists: todolistsReducer,
-    tasks: tasksReducer,
-    app: appReducer,
-    auth: authReducer
-})
-//redux
 // export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 export type RootReducerType = typeof rootReducer
@@ -26,6 +18,12 @@ export const store = configureStore({
 
 // @ts-ignore
 window.store = store
+
+if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+    })
+}
 
 //type
 export type AppRootStateType = ReturnType<RootReducerType>
