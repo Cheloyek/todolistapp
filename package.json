@@ -61,6 +61,7 @@
     "react-redux": "^8.0.5",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.9.0",
+    "react-script": "^2.0.5",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.2",
     "resolve": "^1.20.0",
@@ -160,6 +161,10 @@
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.ts"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
       "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
@@ -181,7 +186,8 @@
     "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "axios": "axios/dist/node/axios.cjs"
     },
     "moduleFileExtensions": [
       "web.js",
