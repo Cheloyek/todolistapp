@@ -50,7 +50,7 @@ function App(props: DemoPropsType) {
     return (
             <div className="App">
                 <AppBar position="static">
-                    <Toolbar variant="dense" style={{backgroundColor: '#5a8b96'}}>
+                    <Toolbar variant="dense" style={{backgroundColor: '#5a8b96', position: "fixed", top: 0, zIndex: "2", width: "100%"}}>
                         <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
                             <MenuIcon/>
                         </IconButton>

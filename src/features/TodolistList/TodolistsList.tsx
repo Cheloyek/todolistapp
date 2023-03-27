@@ -76,14 +76,14 @@ export const TodolistsList = ({demo= false}) => {
 
     return (
         <>
-            <Grid container>
-                <AddItemForm addItem={addTodoList}/>
+            <Grid container sx={{marginTop: "70px", zIndex: 1}}>
+                <AddItemForm addItem={addTodoList} />
             </Grid>
-            <Grid container spacing={1} style={{flexWrap: "nowrap", overflowX: "scroll"}}>
+            <Grid container spacing={1} style={{flexWrap: "nowrap", overflowX: "scroll", marginTop: "10px"}}>
                 {todoLists.map((todolist: TodoListDomainType) => {
                         let tasksForTodoList = tasks[todolist.id]
                         return <Grid className='todoList'>
-                            <Paper elevation={3} style={{margin: '30px', padding: '10px', backgroundColor: "#5a8b96", width: "300px"}}>
+                            <Paper elevation={3} style={{margin: '10px', padding: '10px', backgroundColor: "#5a8b96", width: "300px"}}>
                                 <Todolist key={todolist.id}
                                           todolist={todolist}
                                           tasks={tasksForTodoList}

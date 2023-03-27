@@ -22,7 +22,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/storybook-react-router": "^1.0.2",
     "@types/uuid": "^9.0.0",
-    "axios": "^1.2.6",
+    "axios": "^1.3.4",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
     "babel-plugin-named-asset-import": "^0.3.8",
@@ -186,8 +186,7 @@
     "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "axios": "axios/dist/node/axios.cjs"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "web.js",

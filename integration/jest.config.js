@@ -5,9 +5,9 @@ module.exports = {
     testEnvironmentOptions:{
         URL: "http://localhost"
     },
-    moduleNameMapper: {
-        axios: "axios/dist/node/axios.cjs"
-    }
+    // moduleNameMapper: {
+    //     axios: "axios/dist/node/axios.cjs"
+    // }
 
     // "jest": {
     //     verbose: true,
