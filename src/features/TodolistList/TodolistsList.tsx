@@ -22,7 +22,6 @@ export const TodolistsList = ({demo= false}) => {
     const dispatch = useAppDispatch()
     let todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>((state) => state.todolists)
     let tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
-    // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
     useEffect(() => {
@@ -79,11 +78,11 @@ export const TodolistsList = ({demo= false}) => {
             <Grid container sx={{marginTop: "70px", zIndex: 1}}>
                 <AddItemForm addItem={addTodoList} />
             </Grid>
-            <Grid container spacing={1} style={{flexWrap: "nowrap", overflowX: "scroll", marginTop: "10px"}}>
+            <Grid container spacing={1} style={{ marginTop: "10px", width: "100vw", overflowX: "scroll", height: "80vh", display: "flex", justifyContent: "center"}}>
                 {todoLists.map((todolist: TodoListDomainType) => {
                         let tasksForTodoList = tasks[todolist.id]
                         return <Grid className='todoList'>
-                            <Paper elevation={3} style={{margin: '10px', padding: '10px', backgroundColor: "#5a8b96", width: "300px"}}>
+                            <Paper elevation={3} style={{margin: '10px', padding: '10px', backgroundColor: "#5a8b96", width: "300px", display: "flex"}}>
                                 <Todolist key={todolist.id}
                                           todolist={todolist}
                                           tasks={tasksForTodoList}

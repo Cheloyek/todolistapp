@@ -48,13 +48,17 @@ export const Todolist = React.memo ( ({demo = false, ...props}: TodolistPropsTyp
     }
 
     return (
-        <div className='todolist' >
-            <IconButton aria-label="delete" size="medium" disabled={props.todolistStatus === 'loading'} style={{position: "absolute", right: "-7px", top: "-25px"}}>
-                <DeleteIcon fontSize="small" onClick={removeTodoList}/>
-            </IconButton>
-            <h3>
-                <EditableSpan title={props.todolist.title} onChange={changeTodoListTitle} disabled={props.todolistStatus === 'loading'}/>
-            </h3>
+        <div className='todolist'>
+            <div style={{display: "flex", justifyContent: "flex-start"}}>
+                   <h3 style={{width: "250px", wordWrap: "break-word"}}>
+                    <EditableSpan title={props.todolist.title} onChange={changeTodoListTitle} disabled={props.todolistStatus === 'loading'}/>
+                </h3>
+
+                <IconButton aria-label="delete" size="medium" disabled={props.todolistStatus === 'loading'} style={{ left: "7px"}}>
+                    <DeleteIcon fontSize="small" onClick={removeTodoList}/>
+                </IconButton>
+            </div>
+
             <AddItemForm addItem={addTask} disabled={props.todolistStatus === 'loading'}/>
             <div>
                 {tasksForTodoList.length === 0 ? <div style={{padding: "15px", color: "white"}}>No tasks!</div> : tasksForTodoList.map(task =>

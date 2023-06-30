@@ -63,7 +63,7 @@ function App(props: DemoPropsType) {
                         style={{backgroundColor: "#e17a02", position: "absolute", marginTop: "44px", width: "100%"}}/>}
                     <ErrorSnackbar/>
                 </AppBar>
-                <Container fixed>
+                <Container fixed style={{marginLeft: "10px"}}>
                     <Routes>
                         <Route path='/' element={<TodolistsList demo={false}/>}/>
                         <Route path='/login' element={<Login/>}/>
