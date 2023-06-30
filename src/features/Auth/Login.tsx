@@ -67,7 +67,12 @@ export const Login = () => {
                 <FormControl>
                     <FormLabel>
                         <p>To log in get registered
-                            <a href={'https://social-network.samuraijs.com/'}
+                            {/*local*/}
+                            {/*<a href={'https://social-network.samuraijs.com/'}*/}
+                            {/*   target={'_blank'}> here*/}
+                            {/*</a>*/}
+                            {/*vercel*/}
+                            <a href={'https://cors-anywhere.herokuapp.com/https://social-network.samuraijs.com/'}
                                target={'_blank'}> here
                             </a>
                         </p>
