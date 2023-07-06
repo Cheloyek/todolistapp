@@ -2,6 +2,7 @@
   "name": "todolistapp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cheloyek.github.io/todolistapp",
   "dependencies": {
     "@babel/core": "^7.22.5",
     "@emotion/react": "^11.10.5",
@@ -89,7 +90,9 @@
     "storybook": "start-storybook -p 9009 --no-dll",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c integration/jest.config.js",
-    "test:integration": "start-server-and-test storybook http-get://localhost:9009"
+    "test:integration": "start-server-and-test storybook http-get://localhost:9009",
+    "predeploy": "yarn run deploy",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
