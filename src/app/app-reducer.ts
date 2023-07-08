@@ -14,7 +14,8 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
         else {
             // thunkAPI.dispatch(setIsLoggedInAC({value: true}))
             handleAppError(thunkAPI.dispatch, res.data)
-            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+            console.log(thunkAPI.rejectWithValue({errors: res.data.messages[0], fieldsErrors: res.data.fieldsErrors}))
+            thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (err: any) {
         const error: AxiosError = err

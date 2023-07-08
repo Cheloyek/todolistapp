@@ -65,10 +65,14 @@ function App(props: DemoPropsType) {
                 </AppBar>
                 <Container fixed style={{marginLeft: "10px"}}>
                     <Routes>
-                        <Route path='/' element={<TodolistsList demo={false}/>}/>
-                        <Route path='/login' element={<Login/>}/>
-                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
-                        <Route path='*' element={<Navigate to='/404'/>}/>
+                        {/*<Route path='/' element={<TodolistsList demo={false}/>}/>*/}
+                        <Route path='/todolistapp/' element={<TodolistsList demo={false}/>}/>
+                        {/*<Route path='/login' element={<Login/>}/>*/}
+                        <Route path='/todolistapp/login' element={<Login/>}/>
+                        {/*<Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>*/}
+                        <Route path='/todolistapp/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                        {/*<Route path='*' element={<Navigate to='/404'/>}/>*/}
+                        <Route path='/todolistapp/*' element={<Navigate to='/404'/>}/>
                     </Routes>
                 </Container>
             </div>
