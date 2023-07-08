@@ -9,10 +9,10 @@ const settings = {
 
 const instance = axios.create({
     //local
-    // baseURL: 'https://social-network.samuraijs.com/api/1.1',
+    baseURL: 'https://social-network.samuraijs.com/api/1.1',
 
     //vercel
-    baseURL: 'https://cors-anywhere.herokuapp.com/https://social-network.samuraijs.com/api/1.1',
+    // baseURL: 'https://cors-anywhere.herokuapp.com/https://social-network.samuraijs.com/api/1.1',
     ...settings
 })
 
