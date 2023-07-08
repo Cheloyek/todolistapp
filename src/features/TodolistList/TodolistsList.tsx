@@ -70,7 +70,8 @@ export const TodolistsList = ({demo= false}) => {
     }
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
+        // return <Navigate to={'/login'}/>
+        return <Navigate to={'/todolistapp/login'}/>
     }
 
     return (
