@@ -1,3 +1,14 @@
+Todolistapp
+This application is designed for creating tasks. The application implements the following functions:
+- creating tasks;
+- editing tasks;
+- completing tasks;
+- deleting tasks;
+- grouping tasks into todolists;
+- editing todolists names;
+- removal of todolists.
+Tasks and todolists are stored on the server.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
